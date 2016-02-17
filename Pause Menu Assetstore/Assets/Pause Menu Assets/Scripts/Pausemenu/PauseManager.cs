@@ -143,6 +143,16 @@ namespace GreatArcStudios
         /// Aniso drop down menu.
         /// </summary>
         public UnityEngine.UI.Dropdown afCombo;
+        public UnityEngine.UI.Slider fovSlider;
+        public UnityEngine.UI.Slider modelQualSlider;
+        public UnityEngine.UI.Slider terrainQualSlider;
+        public UnityEngine.UI.Slider highQualTreeSlider;
+        public UnityEngine.UI.Slider renderDistSlider;
+        public UnityEngine.UI.Slider terrainDensitySlider;
+        public UnityEngine.UI.Slider shadowDistSlider;
+        public UnityEngine.UI.Slider audioMasterSlider;
+        public UnityEngine.UI.Slider audioMusicSlider;
+        public UnityEngine.UI.Slider audioEffectsSlider;
         /// <summary>
         /// Lod bias float array. You should manually assign these based on the quality level.
         /// </summary>
@@ -171,6 +181,14 @@ namespace GreatArcStudios
         /// Resolution text label.
         /// </summary>
         public Text resolutionLabel;
+        /// <summary>
+        /// Editor boolean for hardcoding certain video settings. It will allow you to use the values defined in LOD Bias and Shadow Distance
+        /// </summary>
+        public Boolean hardCodeSomeVideoSettings;
+        /// <summary>
+        /// Boolean for turning on simple terrain
+        /// </summary>
+        public Boolean useSimpleTerrain;
         //int for amount of effects
         private int _audioEffectAmt = 0;
         //Inital audio effect volumes
@@ -191,7 +209,6 @@ namespace GreatArcStudios
         private Boolean isFullscreen;
         //current resoultion
         private Resolution currentRes;
-
 
         /*
         //Color fade duration value
@@ -214,8 +231,6 @@ namespace GreatArcStudios
         //public Shader blurEffectShader;
         //Boolean for if the blur effect was originally enabled
         //public Boolean blurBool;
-
-
 
         /// <summary>
         /// The start method; you will need to place all of your inital value getting/setting here. 
@@ -416,6 +431,15 @@ namespace GreatArcStudios
         public void audioIn()
         {
             audioPanelAnimator.Play("Audio Panel In");
+            for (int i = 0; i < effects.Length; i++)
+            {
+                audioEffectsSlider.value = effects[i].volume;
+            }
+            for (int i = 0; i < music.Length; i++)
+            {
+                audioMusicSlider.value = effects[i].volume;
+            }
+            audioMasterSlider.value = AudioListener.volume;
         }
         /// <summary>
         /// Audio Option Methods
@@ -474,6 +498,7 @@ namespace GreatArcStudios
             mainPanel.SetActive(true);
             vidPanel.SetActive(false);
             audioPanel.SetActive(false);
+
         }
         /// <summary>
         /// Cancel the audio setting changes
@@ -530,6 +555,59 @@ namespace GreatArcStudios
         public void videoIn()
         {
             vidPanelAnimator.Play("Video Panel In");
+
+            if (QualitySettings.antiAliasing == 0)
+            {
+                aaCombo.value = 0;
+            }
+            else if (QualitySettings.antiAliasing == 1)
+            {
+                aaCombo.value = 1;
+            }
+            else if (QualitySettings.antiAliasing == 2)
+            {
+                aaCombo.value = 2;
+            }
+            else if (QualitySettings.antiAliasing == 3)
+            {
+                aaCombo.value = 3;
+            }
+            if (QualitySettings.anisotropicFiltering == AnisotropicFiltering.ForceEnable)
+            {
+                afCombo.value = 2;
+            }
+            else if (QualitySettings.anisotropicFiltering == AnisotropicFiltering.Disable)
+            {
+                afCombo.value = 0;
+            }
+            else if (QualitySettings.anisotropicFiltering == AnisotropicFiltering.Enable)
+            {
+                afCombo.value = 1;
+            }
+            fovSlider.value = mainCam.fieldOfView;
+            modelQualSlider.value = QualitySettings.lodBias;
+            renderDistSlider.value = mainCam.farClipPlane;
+            shadowDistSlider.value = QualitySettings.shadowDistance;
+            try
+            {
+                if (useSimpleTerrain == true)
+                {
+                    highQualTreeSlider.value = simpleTerrain.treeMaximumFullLODCount;
+                    terrainDensitySlider.value = simpleTerrain.detailObjectDensity;
+                    terrainQualSlider.value = terrain.heightmapMaximumLOD;
+                }
+                else
+                {
+                    highQualTreeSlider.value = terrain.treeMaximumFullLODCount;
+                    terrainDensitySlider.value = terrain.detailObjectDensity;
+                    terrainQualSlider.value = terrain.heightmapMaximumLOD;
+                }
+            }
+            catch
+            {
+                return;
+            }
+
         }
 
         /// <summary>
@@ -598,6 +676,26 @@ namespace GreatArcStudios
             mainPanel.SetActive(true);
             vidPanel.SetActive(false);
             audioPanel.SetActive(false);
+
+            renderDistINI = mainCam.farClipPlane;
+            shadowDistINI = QualitySettings.shadowDistance;
+            fovINI = mainCam.fieldOfView;
+            try {
+                if (useSimpleTerrain == true)
+                {
+                    treeMeshAmtINI = simpleTerrain.treeMaximumFullLODCount;
+                }
+                else
+                {
+                    treeMeshAmtINI = simpleTerrain.treeMaximumFullLODCount;
+                }
+            }
+            catch(Exception e) { Debug.Log(e); }
+
+            
+            
+            
+
         }
         /// <summary>
         /// Video Options
@@ -621,8 +719,16 @@ namespace GreatArcStudios
         /// <param name="f"></param>
         public void updateTreeMeshAmt(int f)
         {
-            treeMeshAmtINI = terrain.treeMaximumFullLODCount;
-            terrain.treeMaximumFullLODCount = (int)f;
+
+            if (useSimpleTerrain == true)
+            {
+                simpleTerrain.treeMaximumFullLODCount = (int)f;
+            }
+            else
+            {
+                terrain.treeMaximumFullLODCount = (int)f;
+            }
+
         }
         /// <summary>
         /// Change the lod bias using
@@ -648,13 +754,13 @@ namespace GreatArcStudios
             try
             {
                 mainCam.farClipPlane = f;
-                renderDistINI = f;
+                
             }
             catch
             {
                 Debug.Log(" Finding main camera now...it is still suggested that you manually assign this");
                 Camera.main.farClipPlane = f;
-                renderDistINI = f;
+               
             }
 
         }
@@ -678,7 +784,7 @@ namespace GreatArcStudios
         public void updateShadowDistance(float dist)
         {
             QualitySettings.shadowDistance = dist;
-            shadowDistINI = dist;
+            
         }
         /// <summary>
         /// Change the max amount of high quality trees using 
@@ -689,7 +795,15 @@ namespace GreatArcStudios
         /// <param name="qual"></param>
         public void treeMaxLod(float qual)
         {
-            terrain.treeMaximumFullLODCount = (int)qual;
+            if (useSimpleTerrain == true)
+            {
+                simpleTerrain.treeMaximumFullLODCount = (int)qual;
+            }
+            else
+            {
+                terrain.treeMaximumFullLODCount = (int)qual;
+            }
+
         }
         /// <summary>
         /// Change the height map max LOD using 
@@ -700,7 +814,7 @@ namespace GreatArcStudios
         /// <param name="qual"></param>
         public void updateTerrainLod(float qual)
         {
-            try { terrain.heightmapMaximumLOD = (int)qual; }
+            try { if (useSimpleTerrain == true) { simpleTerrain.heightmapMaximumLOD = (int)qual; } else { terrain.heightmapMaximumLOD = (int)qual; } }
             catch { Debug.Log("Terrain not assigned"); return; }
 
         }
@@ -711,6 +825,7 @@ namespace GreatArcStudios
         public void updateFOV(float fov)
         {
             mainCam.fieldOfView = fov;
+
 
         }
         /// <summary>
@@ -965,6 +1080,11 @@ namespace GreatArcStudios
             QualitySettings.IncreaseLevel();
             _currentLevel = QualitySettings.GetQualityLevel();
             presetLabel.text = presets[_currentLevel].ToString();
+            if (hardCodeSomeVideoSettings == true)
+            {
+                QualitySettings.shadowDistance = shadowDist[_currentLevel];
+                QualitySettings.lodBias = LODBias[_currentLevel];
+            }
         }
         /// <summary>
         /// Set the quality level one level lower. This is done by getting the current quality level, then using 
@@ -979,6 +1099,12 @@ namespace GreatArcStudios
             QualitySettings.DecreaseLevel();
             _currentLevel = QualitySettings.GetQualityLevel();
             presetLabel.text = presets[_currentLevel].ToString();
+            if (hardCodeSomeVideoSettings == true)
+            {
+                QualitySettings.shadowDistance = shadowDist[_currentLevel];
+                QualitySettings.lodBias = LODBias[_currentLevel];
+            }
+
         }
         /// <summary>
         /// Hard code the minimal settings

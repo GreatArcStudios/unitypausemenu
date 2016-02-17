@@ -68,8 +68,6 @@
     <Compile Include="Assets\Pause Menu Assets\Scripts\Utlities\Rotate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Editor\Doxygen\ReadMe.txt" />
-    <None Include="Assets\Editor\Doxygen\Resources\BaseDoxyfile.txt" />
     <None Include="Assets\Pause Menu Assets\Fonts\exo\SIL Open Font License.txt" />
     <None Include="Assets\Pause Menu Assets\Fonts\open-sans\Apache License.txt" />
   </ItemGroup>
