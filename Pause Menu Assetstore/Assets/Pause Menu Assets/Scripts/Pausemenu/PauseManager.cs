@@ -126,10 +126,6 @@ namespace GreatArcStudios
         /// QualitySettings.vSyncCount = 1;
         /// </code>
         /// <code>
-        /// //This will set the game to have two VSync per frame
-        /// QualitySettings.vSyncCount = 2;
-        /// </code>
-        /// <code>
         /// //This will disable vsync
         /// QualitySettings.vSyncCount = 0;
         /// </code>
@@ -153,6 +149,18 @@ namespace GreatArcStudios
         public UnityEngine.UI.Slider audioMasterSlider;
         public UnityEngine.UI.Slider audioMusicSlider;
         public UnityEngine.UI.Slider audioEffectsSlider;
+        public UnityEngine.UI.Toggle vSyncToggle;
+        public UnityEngine.UI.Toggle aoToggle;
+        public UnityEngine.UI.Toggle dofToggle;
+        public UnityEngine.UI.Toggle fullscreenToggle;
+        /// <summary>
+        /// The preset text label.
+        /// </summary>
+        public Text presetLabel;
+        /// <summary>
+        /// Resolution text label.
+        /// </summary>
+        public Text resolutionLabel;
         /// <summary>
         /// Lod bias float array. You should manually assign these based on the quality level.
         /// </summary>
@@ -173,14 +181,6 @@ namespace GreatArcStudios
         /// An array of the other UI elements, which is used for disabling the other elements when the game is paused.
         /// </summary>
         public GameObject[] otherUIElements;
-        /// <summary>
-        /// The preset text label.
-        /// </summary>
-        public Text presetLabel;
-        /// <summary>
-        /// Resolution text label.
-        /// </summary>
-        public Text resolutionLabel;
         /// <summary>
         /// Editor boolean for hardcoding certain video settings. It will allow you to use the values defined in LOD Bias and Shadow Distance
         /// </summary>
@@ -209,7 +209,8 @@ namespace GreatArcStudios
         private Boolean isFullscreen;
         //current resoultion
         private Resolution currentRes;
-
+        private Boolean aoBool;
+        private Boolean dofBool;
         /*
         //Color fade duration value
         //public float crossFadeDuration;
@@ -247,8 +248,10 @@ namespace GreatArcStudios
             Debug.Log("ini res" + currentRes);
             resolutionLabel.text = Screen.currentResolution.width.ToString() + " x " + Screen.currentResolution.height.ToString();
             isFullscreen = Screen.fullScreen;
-            //get all ini values
+            //get all specified audio source volumes
             _beforeEffectVol = new float[_audioEffectAmt];
+            _beforeMaster = AudioListener.volume;
+            //get all ini values
             aaQualINI = QualitySettings.antiAliasing;
             renderDistINI = mainCam.farClipPlane;
             shadowDistINI = QualitySettings.shadowDistance;
@@ -431,15 +434,16 @@ namespace GreatArcStudios
         public void audioIn()
         {
             audioPanelAnimator.Play("Audio Panel In");
-            for (int i = 0; i < effects.Length; i++)
-            {
-                audioEffectsSlider.value = effects[i].volume;
-            }
+            audioMasterSlider.value = AudioListener.volume;
             for (int i = 0; i < music.Length; i++)
             {
                 audioMusicSlider.value = effects[i].volume;
             }
-            audioMasterSlider.value = AudioListener.volume;
+            for (int i = 0; i < effects.Length; i++)
+            {   
+                audioEffectsSlider.value = effects[i].volume;
+            }
+            
         }
         /// <summary>
         /// Audio Option Methods
@@ -447,7 +451,7 @@ namespace GreatArcStudios
         /// <param name="f"></param>
         public void updateMasterVol(float f)
         {
-            _beforeMaster = AudioListener.volume;
+            
             //Controls volume of all audio listeners 
             AudioListener.volume = f;
         }
@@ -498,7 +502,7 @@ namespace GreatArcStudios
             mainPanel.SetActive(true);
             vidPanel.SetActive(false);
             audioPanel.SetActive(false);
-
+            _beforeMaster = AudioListener.volume;
         }
         /// <summary>
         /// Cancel the audio setting changes
@@ -517,17 +521,16 @@ namespace GreatArcStudios
             audioPanelAnimator.Play("Audio Panel Out");
             // Debug.Log(audioPanelAnimator.GetCurrentAnimatorClipInfo(0).Length);
             yield return StartCoroutine(CoroutineUtilities.WaitForRealTime((float)audioPanelAnimator.GetCurrentAnimatorClipInfo(0).Length));
-            Debug.Log("Passed");
             mainPanel.SetActive(true);
             vidPanel.SetActive(false);
             audioPanel.SetActive(false);
+            AudioListener.volume = _beforeMaster;
+            Debug.Log(_beforeMaster +AudioListener.volume);
             for (_audioEffectAmt = 0; _audioEffectAmt < effects.Length; _audioEffectAmt++)
             {
                 //get the values for all effects before the change
                 effects[_audioEffectAmt].volume = _beforeEffectVol[_audioEffectAmt];
-
             }
-            AudioListener.volume = _beforeMaster;
             for (int _musicAmt = 0; _musicAmt < music.Length; _musicAmt++)
             {
                 music[_musicAmt].volume = _beforeMusic;
@@ -588,6 +591,17 @@ namespace GreatArcStudios
             modelQualSlider.value = QualitySettings.lodBias;
             renderDistSlider.value = mainCam.farClipPlane;
             shadowDistSlider.value = QualitySettings.shadowDistance;
+            fullscreenToggle.isOn = Screen.fullScreen;
+            aoToggle.isOn = aoBool;
+            dofToggle.isOn = dofBool;
+            if(QualitySettings.vSyncCount == 0)
+            {
+                vSyncToggle.isOn = false;
+            }
+            else
+            {
+                vSyncToggle.isOn = true;
+            }
             try
             {
                 if (useSimpleTerrain == true)
@@ -638,6 +652,7 @@ namespace GreatArcStudios
                 mainPanel.SetActive(true);
                 vidPanel.SetActive(false);
                 audioPanel.SetActive(false);
+                Screen.fullScreen = isFullscreen;
             }
             catch (Exception e)
             {
@@ -666,7 +681,7 @@ namespace GreatArcStudios
 
         }
         /// <summary>
-        /// Use an IEnumerator to first play the animation and then change the video settings
+        /// Use an IEnumerator to first play the animation and then change the video settings.
         /// </summary>
         /// <returns></returns>
         protected IEnumerator applyVideo()
@@ -676,10 +691,10 @@ namespace GreatArcStudios
             mainPanel.SetActive(true);
             vidPanel.SetActive(false);
             audioPanel.SetActive(false);
-
             renderDistINI = mainCam.farClipPlane;
             shadowDistINI = QualitySettings.shadowDistance;
             fovINI = mainCam.fieldOfView;
+            isFullscreen = Screen.fullScreen;
             try {
                 if (useSimpleTerrain == true)
                 {
@@ -691,11 +706,6 @@ namespace GreatArcStudios
                 }
             }
             catch(Exception e) { Debug.Log(e); }
-
-            
-            
-            
-
         }
         /// <summary>
         /// Video Options
@@ -825,8 +835,6 @@ namespace GreatArcStudios
         public void updateFOV(float fov)
         {
             mainCam.fieldOfView = fov;
-
-
         }
         /// <summary>
         /// Toggle on or off Depth of Field. This is meant to be used with a checkbox.
@@ -838,10 +846,12 @@ namespace GreatArcStudios
             if (b == true)
             {
                 tempScript.enabled = true;
+                dofBool = true;
             }
             else
             {
                 tempScript.enabled = false;
+                dofBool = false;
             }
 
         }
@@ -855,10 +865,12 @@ namespace GreatArcStudios
             if (b == true)
             {
                 tempScript.enabled = true;
+                aoBool = true;
             }
             else
             {
                 tempScript.enabled = false;
+                aoBool = false;
             }
 
         }
