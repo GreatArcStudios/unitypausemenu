@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/Pause Menu Assets/Pausemenu.unity
+  isLoaded: 1
+  isActive: 1
