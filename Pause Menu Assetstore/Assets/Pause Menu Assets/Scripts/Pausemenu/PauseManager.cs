@@ -211,6 +211,9 @@ namespace GreatArcStudios
         private Resolution currentRes;
         private Boolean aoBool;
         private Boolean dofBool;
+        private Boolean lastAOBool;
+        private Boolean lastDOFBool;
+        
         /*
         //Color fade duration value
         //public float crossFadeDuration;
@@ -245,9 +248,12 @@ namespace GreatArcStudios
             //Get the current resoultion, if the game is in fullscreen, and set the label to the original resolution
             allRes = Screen.resolutions;
             currentRes = Screen.currentResolution;
-            Debug.Log("ini res" + currentRes);
+            //Debug.Log("ini res" + currentRes);
             resolutionLabel.text = Screen.currentResolution.width.ToString() + " x " + Screen.currentResolution.height.ToString();
             isFullscreen = Screen.fullScreen;
+            //get initial screen effect bools
+            lastAOBool = aoToggle.isOn;
+            lastDOFBool = dofToggle.isOn;
             //get all specified audio source volumes
             _beforeEffectVol = new float[_audioEffectAmt];
             _beforeMaster = AudioListener.volume;
@@ -598,7 +604,7 @@ namespace GreatArcStudios
             {
                 vSyncToggle.isOn = false;
             }
-            else
+            else if(QualitySettings.vSyncCount == 1)
             {
                 vSyncToggle.isOn = true;
             }
@@ -652,7 +658,9 @@ namespace GreatArcStudios
                 mainPanel.SetActive(true);
                 vidPanel.SetActive(false);
                 audioPanel.SetActive(false);
-                Screen.fullScreen = isFullscreen;
+                aoBool = lastAOBool;
+                dofBool = lastDOFBool;
+                //Screen.fullScreen = isFullscreen;
             }
             catch (Exception e)
             {
@@ -667,6 +675,9 @@ namespace GreatArcStudios
                 mainPanel.SetActive(true);
                 vidPanel.SetActive(false);
                 audioPanel.SetActive(false);
+                aoBool = lastAOBool;
+                dofBool = lastDOFBool;
+                //Screen.fullScreen = isFullscreen;
 
             }
 
@@ -694,7 +705,9 @@ namespace GreatArcStudios
             renderDistINI = mainCam.farClipPlane;
             shadowDistINI = QualitySettings.shadowDistance;
             fovINI = mainCam.fieldOfView;
-            isFullscreen = Screen.fullScreen;
+            aoToggle.isOn = lastAOBool;
+            dofToggle.isOn = lastDOFBool;
+            //isFullscreen = Screen.fullScreen;
             try {
                 if (useSimpleTerrain == true)
                 {
@@ -713,6 +726,7 @@ namespace GreatArcStudios
         /// <param name="B"></param>
         public void toggleVSync(Boolean B)
         {
+            vsyncINI = QualitySettings.vSyncCount;
             if (B == true)
             {
                 QualitySettings.vSyncCount = 1;
@@ -842,6 +856,7 @@ namespace GreatArcStudios
         /// <param name="b"></param>
         public void toggleDOF(Boolean b)
         {
+            lastDOFBool = dofToggle.isOn;
             tempScript = (MonoBehaviour)mainCamObj.GetComponent(DOFScriptName);
             if (b == true)
             {
@@ -861,6 +876,7 @@ namespace GreatArcStudios
         /// <param name="b"></param>
         public void toggleAO(Boolean b)
         {
+            lastAOBool = aoToggle.isOn;
             tempScript = (MonoBehaviour)mainCamObj.GetComponent(AOScriptName);
             if (b == true)
             {
@@ -880,15 +896,17 @@ namespace GreatArcStudios
         /// <param name="b"></param>
         public void setFullScreen(Boolean b)
         {
+           // isFullscreen = Screen.fullScreen;
+            
             if (b == true)
             {
                 Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
-                isFullscreen = true;
+               
             }
             else
             {
                 Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, false);
-                isFullscreen = false;
+               
             }
         }
         /// <summary>
