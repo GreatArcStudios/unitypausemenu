@@ -209,6 +209,8 @@ namespace GreatArcStudios
         private Boolean isFullscreen;
         //current resoultion
         private Resolution currentRes;
+        //Last resoultion 
+        private Resolution beforeRes;
         private Boolean aoBool;
         private Boolean dofBool;
         private Boolean lastAOBool;
@@ -660,6 +662,7 @@ namespace GreatArcStudios
                 audioPanel.SetActive(false);
                 aoBool = lastAOBool;
                 dofBool = lastDOFBool;
+                Screen.SetResolution(beforeRes.width, beforeRes.height, Screen.fullScreen);
                 //Screen.fullScreen = isFullscreen;
             }
             catch (Exception e)
@@ -677,6 +680,7 @@ namespace GreatArcStudios
                 audioPanel.SetActive(false);
                 aoBool = lastAOBool;
                 dofBool = lastDOFBool;
+                Screen.SetResolution(beforeRes.width, beforeRes.height, Screen.fullScreen);
                 //Screen.fullScreen = isFullscreen;
 
             }
@@ -707,6 +711,7 @@ namespace GreatArcStudios
             fovINI = mainCam.fieldOfView;
             aoToggle.isOn = lastAOBool;
             dofToggle.isOn = lastDOFBool;
+            beforeRes = currentRes;
             //isFullscreen = Screen.fullScreen;
             try
             {
@@ -859,17 +864,19 @@ namespace GreatArcStudios
         {
             lastDOFBool = dofToggle.isOn;
             tempScript = (MonoBehaviour)mainCamObj.GetComponent(DOFScriptName);
-            if (b == true)
-            {
-                tempScript.enabled = true;
-                dofBool = true;
-            }
-            else
-            {
-                tempScript.enabled = false;
-                dofBool = false;
-            }
-
+           
+                if (b == true)
+                {
+                    tempScript.enabled = true;
+                    dofBool = true;
+                }
+                else
+                {
+                    tempScript.enabled = false;
+                    dofBool = false;
+                }
+            
+            
         }
         /// <summary>
         /// Toggle on or off Ambient Occulusion. This is meant to be used with a checkbox.
@@ -879,17 +886,18 @@ namespace GreatArcStudios
         {
             lastAOBool = aoToggle.isOn;
             tempScript = (MonoBehaviour)mainCamObj.GetComponent(AOScriptName);
-            if (b == true)
-            {
-                tempScript.enabled = true;
-                aoBool = true;
-            }
-            else
-            {
-                tempScript.enabled = false;
-                aoBool = false;
-            }
-
+            
+                if (b == true)
+                {
+                    tempScript.enabled = true;
+                    aoBool = true;
+                }
+                else
+                {
+                    tempScript.enabled = false;
+                    aoBool = false;
+                }
+           
         }
         /// <summary>
         /// Set the game to windowed or full screen. This is meant to be used with a checkbox
@@ -916,6 +924,7 @@ namespace GreatArcStudios
         //Method for moving to the next resoution in the allRes array. WARNING: This is not finished/buggy.  
         public void nextRes()
         {
+            beforeRes = currentRes;
             //Iterate through all of the resoultions. 
             for (int i = 0; i < allRes.Length; i++)
             {
@@ -939,6 +948,7 @@ namespace GreatArcStudios
         //Method for moving to the last resoution in the allRes array. WARNING: This is not finished/buggy.  
         public void lastRes()
         {
+            beforeRes = currentRes;
             //Iterate through all of the resoultions. 
             for (int i = 0; i < allRes.Length; i++)
             {
@@ -956,7 +966,10 @@ namespace GreatArcStudios
             }
 
         }
-
+        public void enableSimpleTerrain(Boolean b)
+        {
+            useSimpleTerrain = b;
+        }
         /// <summary>
         /// Force aniso on using quality settings
         /// </summary>
