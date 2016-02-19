@@ -213,7 +213,7 @@ namespace GreatArcStudios
         private Boolean dofBool;
         private Boolean lastAOBool;
         private Boolean lastDOFBool;
-        
+
         /*
         //Color fade duration value
         //public float crossFadeDuration;
@@ -446,10 +446,10 @@ namespace GreatArcStudios
                 audioMusicSlider.value = effects[i].volume;
             }
             for (int i = 0; i < effects.Length; i++)
-            {   
+            {
                 audioEffectsSlider.value = effects[i].volume;
             }
-            
+
         }
         /// <summary>
         /// Audio Option Methods
@@ -457,7 +457,7 @@ namespace GreatArcStudios
         /// <param name="f"></param>
         public void updateMasterVol(float f)
         {
-            
+
             //Controls volume of all audio listeners 
             AudioListener.volume = f;
         }
@@ -531,7 +531,7 @@ namespace GreatArcStudios
             vidPanel.SetActive(false);
             audioPanel.SetActive(false);
             AudioListener.volume = _beforeMaster;
-            Debug.Log(_beforeMaster +AudioListener.volume);
+            Debug.Log(_beforeMaster + AudioListener.volume);
             for (_audioEffectAmt = 0; _audioEffectAmt < effects.Length; _audioEffectAmt++)
             {
                 //get the values for all effects before the change
@@ -600,11 +600,11 @@ namespace GreatArcStudios
             fullscreenToggle.isOn = Screen.fullScreen;
             aoToggle.isOn = aoBool;
             dofToggle.isOn = dofBool;
-            if(QualitySettings.vSyncCount == 0)
+            if (QualitySettings.vSyncCount == 0)
             {
                 vSyncToggle.isOn = false;
             }
-            else if(QualitySettings.vSyncCount == 1)
+            else if (QualitySettings.vSyncCount == 1)
             {
                 vSyncToggle.isOn = true;
             }
@@ -708,7 +708,8 @@ namespace GreatArcStudios
             aoToggle.isOn = lastAOBool;
             dofToggle.isOn = lastDOFBool;
             //isFullscreen = Screen.fullScreen;
-            try {
+            try
+            {
                 if (useSimpleTerrain == true)
                 {
                     treeMeshAmtINI = simpleTerrain.treeMaximumFullLODCount;
@@ -718,7 +719,7 @@ namespace GreatArcStudios
                     treeMeshAmtINI = simpleTerrain.treeMaximumFullLODCount;
                 }
             }
-            catch(Exception e) { Debug.Log(e); }
+            catch (Exception e) { Debug.Log(e); }
         }
         /// <summary>
         /// Video Options
@@ -778,13 +779,13 @@ namespace GreatArcStudios
             try
             {
                 mainCam.farClipPlane = f;
-                
+
             }
             catch
             {
                 Debug.Log(" Finding main camera now...it is still suggested that you manually assign this");
                 Camera.main.farClipPlane = f;
-               
+
             }
 
         }
@@ -808,7 +809,7 @@ namespace GreatArcStudios
         public void updateShadowDistance(float dist)
         {
             QualitySettings.shadowDistance = dist;
-            
+
         }
         /// <summary>
         /// Change the max amount of high quality trees using 
@@ -896,17 +897,17 @@ namespace GreatArcStudios
         /// <param name="b"></param>
         public void setFullScreen(Boolean b)
         {
-           // isFullscreen = Screen.fullScreen;
-            
+            // isFullscreen = Screen.fullScreen;
+
             if (b == true)
             {
                 Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
-               
+                isFullscreen = true;
             }
             else
             {
                 Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, false);
-               
+                isFullscreen = false;
             }
         }
         /// <summary>
@@ -923,9 +924,9 @@ namespace GreatArcStudios
                 {
                     Debug.Log("found " + i);
                     //If the user is playing fullscreen. Then set the resoution to one element higher in the array, set the full screen boolean to true, reset the current resolution, and then update the resolution label.
-                    if (isFullscreen == true) { Screen.SetResolution(allRes[i + 1].width, allRes[i + 1].height, true); isFullscreen = true; currentRes = Screen.currentResolution; resolutionLabel.text = Screen.currentResolution.width.ToString() + " x " + Screen.currentResolution.height.ToString(); }
+                    if (isFullscreen == true) { Screen.SetResolution(allRes[i + 1].width, allRes[i + 1].height, true); isFullscreen = true; currentRes = Screen.resolutions[i + 1]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString(); }
                     //If the user is playing in a window. Then set the resoution to one element higher in the array, set the full screen boolean to false, reset the current resolution, and then update the resolution label.
-                    if (isFullscreen == false) { Screen.SetResolution(allRes[i + 1].width, allRes[i + 1].height, false); isFullscreen = false; currentRes = Screen.currentResolution; resolutionLabel.text = Screen.currentResolution.width.ToString() + " x " + Screen.currentResolution.height.ToString(); }
+                    if (isFullscreen == false) { Screen.SetResolution(allRes[i + 1].width, allRes[i + 1].height, false); isFullscreen = false; currentRes = Screen.resolutions[i + 1]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString(); }
 
                     Debug.Log("Res after: " + currentRes);
                 }
@@ -946,9 +947,9 @@ namespace GreatArcStudios
 
                     Debug.Log("found " + i);
                     //If the user is playing fullscreen. Then set the resoution to one element lower in the array, set the full screen boolean to true, reset the current resolution, and then update the resolution label.
-                    if (isFullscreen == true) { Screen.SetResolution(allRes[i - 1].width, allRes[i - 1].height, true); isFullscreen = true; currentRes = Screen.currentResolution; resolutionLabel.text = Screen.currentResolution.width.ToString() + " x " + Screen.currentResolution.height.ToString(); }
+                    if (isFullscreen == true) { Screen.SetResolution(allRes[i - 1].width, allRes[i - 1].height, true); isFullscreen = true; currentRes = Screen.resolutions[i - 1]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString(); }
                     //If the user is playing in a window. Then set the resoution to one element lower in the array, set the full screen boolean to false, reset the current resolution, and then update the resolution label.
-                    if (isFullscreen == false) { Screen.SetResolution(allRes[i - 1].width, allRes[i - 1].height, false); isFullscreen = false; currentRes = Screen.currentResolution; resolutionLabel.text = Screen.currentResolution.width.ToString() + " x " + Screen.currentResolution.height.ToString(); }
+                    if (isFullscreen == false) { Screen.SetResolution(allRes[i - 1].width, allRes[i - 1].height, false); isFullscreen = false; currentRes = Screen.resolutions[i - 1]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString(); }
 
                     Debug.Log("Res after: " + currentRes);
                 }
