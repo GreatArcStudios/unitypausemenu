@@ -1048,7 +1048,7 @@ namespace GreatArcStudios
         {
             if (msaaAmount == 0)
             {
-                disMSAA();
+                disableMSAA();
             }
             else if (msaaAmount == 1)
             {
@@ -1067,7 +1067,7 @@ namespace GreatArcStudios
         /// <summary>
         /// Set MSAA to 0x (disabling it) using quality settings
         /// </summary>
-        public void disMSAA()
+        public void disableMSAA()
         {
 
             QualitySettings.antiAliasing = 0;
