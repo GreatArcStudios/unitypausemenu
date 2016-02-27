@@ -134,25 +134,28 @@ namespace GreatArcStudios
         /// <summary>
         /// AA drop down menu.
         /// </summary>
-        public UnityEngine.UI.Dropdown aaCombo;
+        public Dropdown aaCombo;
         /// <summary>
         /// Aniso drop down menu.
         /// </summary>
-        public UnityEngine.UI.Dropdown afCombo;
-        public UnityEngine.UI.Slider fovSlider;
-        public UnityEngine.UI.Slider modelQualSlider;
-        public UnityEngine.UI.Slider terrainQualSlider;
-        public UnityEngine.UI.Slider highQualTreeSlider;
-        public UnityEngine.UI.Slider renderDistSlider;
-        public UnityEngine.UI.Slider terrainDensitySlider;
-        public UnityEngine.UI.Slider shadowDistSlider;
-        public UnityEngine.UI.Slider audioMasterSlider;
-        public UnityEngine.UI.Slider audioMusicSlider;
-        public UnityEngine.UI.Slider audioEffectsSlider;
-        public UnityEngine.UI.Toggle vSyncToggle;
-        public UnityEngine.UI.Toggle aoToggle;
-        public UnityEngine.UI.Toggle dofToggle;
-        public UnityEngine.UI.Toggle fullscreenToggle;
+        public Dropdown afCombo;
+
+        public Slider fovSlider;
+        public Slider modelQualSlider;
+        public Slider terrainQualSlider;
+        public Slider highQualTreeSlider;
+        public Slider renderDistSlider;
+        public Slider terrainDensitySlider;
+        public Slider shadowDistSlider;
+        public Slider audioMasterSlider;
+        public Slider audioMusicSlider;
+        public Slider audioEffectsSlider;
+        public Slider masterTexSlider;
+        public Slider shadowCascadesSlider;
+        public Toggle vSyncToggle;
+        public Toggle aoToggle;
+        public Toggle dofToggle;
+        public Toggle fullscreenToggle;
         /// <summary>
         /// The preset text label.
         /// </summary>
@@ -211,6 +214,11 @@ namespace GreatArcStudios
         private Resolution currentRes;
         //Last resoultion 
         private Resolution beforeRes;
+        //last texture limit 
+        private int lastTexLimit;
+        //last shadow cascade value
+        private int lastShadowCascade;
+
         private Boolean aoBool;
         private Boolean dofBool;
         private Boolean lastAOBool;
@@ -276,6 +284,10 @@ namespace GreatArcStudios
             audioPanel.SetActive(false);
             //Enable mask
             mask.SetActive(false);
+            //set last texture limit
+            lastTexLimit = QualitySettings.masterTextureLimit;
+            //set last shadow cascade 
+            lastShadowCascade = QualitySettings.shadowCascades;
             //set the blur boolean to false;
             //blurBool = false;
             try
@@ -599,6 +611,8 @@ namespace GreatArcStudios
             modelQualSlider.value = QualitySettings.lodBias;
             renderDistSlider.value = mainCam.farClipPlane;
             shadowDistSlider.value = QualitySettings.shadowDistance;
+            masterTexSlider.value = QualitySettings.masterTextureLimit;
+            shadowCascadesSlider.value = QualitySettings.shadowCascades;
             fullscreenToggle.isOn = Screen.fullScreen;
             aoToggle.isOn = aoBool;
             dofToggle.isOn = dofBool;
@@ -646,41 +660,45 @@ namespace GreatArcStudios
         protected IEnumerator cancelVideoMain()
         {
             vidPanelAnimator.Play("Video Panel Out");
-            // Debug.Log(audioPanelAnimator.GetCurrentAnimatorClipInfo(0).Length);
+           
             yield return StartCoroutine(CoroutineUtilities.WaitForRealTime((float)vidPanelAnimator.GetCurrentAnimatorClipInfo(0).Length));
             try
             {
-                QualitySettings.shadowDistance = shadowDistINI;
                 mainCam.farClipPlane = renderDistINI;
-                QualitySettings.antiAliasing = (int)aaQualINI;
                 Terrain.activeTerrain.detailObjectDensity = densityINI;
                 mainCam.fieldOfView = fovINI;
-                QualitySettings.antiAliasing = msaaINI;
-                QualitySettings.vSyncCount = vsyncINI;
                 mainPanel.SetActive(true);
                 vidPanel.SetActive(false);
                 audioPanel.SetActive(false);
                 aoBool = lastAOBool;
                 dofBool = lastDOFBool;
                 Screen.SetResolution(beforeRes.width, beforeRes.height, Screen.fullScreen);
+                QualitySettings.shadowDistance = shadowDistINI;
+                QualitySettings.antiAliasing = (int)aaQualINI;
+                QualitySettings.antiAliasing = msaaINI;
+                QualitySettings.vSyncCount = vsyncINI;
+                QualitySettings.masterTextureLimit = lastTexLimit;
+                QualitySettings.shadowCascades = lastShadowCascade;
                 //Screen.fullScreen = isFullscreen;
             }
             catch (Exception e)
             {
 
                 Debug.Log("A problem occured (chances are the terrain was not assigned ): " + e);
-                QualitySettings.shadowDistance = shadowDistINI;
                 mainCam.farClipPlane = renderDistINI;
-                QualitySettings.antiAliasing = (int)aaQualINI;
                 mainCam.fieldOfView = fovINI;
-                QualitySettings.antiAliasing = msaaINI;
-                QualitySettings.vSyncCount = vsyncINI;
                 mainPanel.SetActive(true);
                 vidPanel.SetActive(false);
                 audioPanel.SetActive(false);
                 aoBool = lastAOBool;
                 dofBool = lastDOFBool;
+                QualitySettings.shadowDistance = shadowDistINI;
                 Screen.SetResolution(beforeRes.width, beforeRes.height, Screen.fullScreen);
+                QualitySettings.antiAliasing = (int)aaQualINI;
+                QualitySettings.antiAliasing = msaaINI;
+                QualitySettings.vSyncCount = vsyncINI;
+                QualitySettings.masterTextureLimit = lastTexLimit;
+                QualitySettings.shadowCascades = lastShadowCascade;
                 //Screen.fullScreen = isFullscreen;
 
             }
@@ -712,6 +730,8 @@ namespace GreatArcStudios
             aoToggle.isOn = lastAOBool;
             dofToggle.isOn = lastDOFBool;
             beforeRes = currentRes;
+            lastTexLimit = QualitySettings.masterTextureLimit;
+            lastShadowCascade = QualitySettings.shadowCascades;
             //isFullscreen = Screen.fullScreen;
             try
             {
@@ -801,6 +821,7 @@ namespace GreatArcStudios
         /// <param name="qual"></param>
         public void updateTex(float qual)
         {
+            
             int f = Mathf.RoundToInt(qual);
             QualitySettings.masterTextureLimit = f;
         }
@@ -1020,6 +1041,7 @@ namespace GreatArcStudios
         /// <param name="cascades"></param>
         public void updateCascades(float cascades)
         {
+          
             int c = Mathf.RoundToInt(cascades);
             if (c == 1)
             {
