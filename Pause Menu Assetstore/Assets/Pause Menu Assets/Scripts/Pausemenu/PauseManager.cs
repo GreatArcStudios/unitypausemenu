@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 //using UnityStandardAssets.ImageEffects;
 /// <summary>
 ///  Copyright (c) 2016 Eric Zhu 
@@ -192,6 +193,22 @@ namespace GreatArcStudios
         /// Boolean for turning on simple terrain
         /// </summary>
         public Boolean useSimpleTerrain;
+        /// <summary>
+        /// Event system
+        /// </summary>
+        public EventSystem uiEventSystem;
+        /// <summary>
+        /// Defualt selected on the video panel
+        /// </summary>
+        public GameObject defualtSelectedVideo;
+        /// <summary>
+        /// Defualt selected on the video panel
+        /// </summary>
+        public GameObject defualtSelectedAudio;
+        /// <summary>
+        /// Defualt selected on the video panel
+        /// </summary>
+        public GameObject defualtSelectedMain;
         //int for amount of effects
         private int _audioEffectAmt = 0;
         //Inital audio effect volumes
@@ -251,6 +268,7 @@ namespace GreatArcStudios
         /// </summary>
         public void Start()
         {
+            uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
             //Get the presets from the quality settings 
             presets = QualitySettings.names;
             presetLabel.text = presets[QualitySettings.GetQualityLevel()].ToString();
@@ -318,6 +336,7 @@ namespace GreatArcStudios
         public void Restart()
         {
             Application.LoadLevel(Application.loadedLevel);
+            uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
         }
         /// <summary>
         /// Method to resume the game, so disable the pause menu and re-enable all other ui elements
@@ -379,6 +398,7 @@ namespace GreatArcStudios
         public void returnToMenu()
         {
             Application.LoadLevel(mainMenu);
+            uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
         }
 
         // Update is called once per frame
@@ -403,6 +423,7 @@ namespace GreatArcStudios
             }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
+                uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
                 mainPanel.SetActive(true);
                 vidPanel.SetActive(false);
                 audioPanel.SetActive(false);
@@ -453,15 +474,32 @@ namespace GreatArcStudios
         /// </summary>
         public void audioIn()
         {
+            uiEventSystem.firstSelectedGameObject = defualtSelectedAudio;
             audioPanelAnimator.Play("Audio Panel In");
             audioMasterSlider.value = AudioListener.volume;
-            for (int i = 0; i < music.Length; i++)
+            //Perform modulo to find factor f to allow for non uniform music volumes
+            float a; float b; float f;
+            try
             {
-                audioMusicSlider.value = effects[i].volume;
+                a = music[0].volume;
+                b = music[1].volume;
+                f = a % b;
+                audioMusicSlider.value = f;
+            }catch(Exception e)
+            {
+                Debug.Log(e);
             }
-            for (int i = 0; i < effects.Length; i++)
+            //Do this with the effects
+            try
+            {     
+                a = effects[0].volume;
+                b = effects[1].volume;
+                f = a % b;
+                audioEffectsSlider.value = f;
+            }
+            catch (Exception e)
             {
-                audioEffectsSlider.value = effects[i].volume;
+                Debug.Log(e);
             }
 
         }
@@ -483,7 +521,7 @@ namespace GreatArcStudios
         {
             for (int _musicAmt = 0; _musicAmt < music.Length; _musicAmt++)
             {
-                music[_musicAmt].volume = f;
+                music[_musicAmt].volume *= f;
             }
             //_beforeMusic = music.volume;
         }
@@ -501,15 +539,14 @@ namespace GreatArcStudios
                 //lower it by a factor of f because we don't want every effect to be set to a uniform volume
                 effects[_audioEffectAmt].volume *= f;
             }
-
         }
-        /// <summary>
+        /// <summary> 
         /// The method for changing the applying new audio settings
         /// </summary>
         public void applyAudio()
         {
             StartCoroutine(applyAudioMain());
-
+            uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
         }
         /// <summary>
         /// Use an IEnumerator to first play the animation and then change the audio settings
@@ -529,7 +566,7 @@ namespace GreatArcStudios
         /// </summary>
         public void cancelAudio()
         {
-
+            uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
             StartCoroutine(cancelAudioMain());
         }
         /// <summary>
@@ -577,6 +614,7 @@ namespace GreatArcStudios
         /// </summary>
         public void videoIn()
         {
+            uiEventSystem.firstSelectedGameObject = defualtSelectedVideo;
             vidPanelAnimator.Play("Video Panel In");
 
             if (QualitySettings.antiAliasing == 0)
@@ -651,6 +689,7 @@ namespace GreatArcStudios
         /// </summary>
         public void cancelVideo()
         {
+            uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
             StartCoroutine(cancelVideoMain());
         }
         /// <summary>
@@ -711,7 +750,7 @@ namespace GreatArcStudios
         public void apply()
         {
             StartCoroutine(applyVideo());
-
+            uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
         }
         /// <summary>
         /// Use an IEnumerator to first play the animation and then change the video settings.
