@@ -7,3 +7,13 @@ Delete the pause menu **folder** and install the new version.
 Assign the main cam obj as the camera with your image effects like DOF and AO. 
 
 The docs are located here: https://github.com/GreatArcStudios/UnityPauseMenuDocs
+### Joystick/Controller support
+Using a joystick/controller should work fine. Just remeber to change the highlighted dropdown to Joystick.
+![alt text](http://i.imgur.com/Pf7poMk.png)
+ 
+### Enbaling pause blur
+First, make sure you have the unity image effects package. Then uncomment everything shown in the pictures. \
+![alt text](http://i.imgur.com/l9gr0Kl.png)
+![alt text](http://i.imgur.com/9sxTxvg.png)
+![alt text](http://i.imgur.com/KZpPiZL.png)
+![alt text](http://i.imgur.com/sd6a8GD.png)
