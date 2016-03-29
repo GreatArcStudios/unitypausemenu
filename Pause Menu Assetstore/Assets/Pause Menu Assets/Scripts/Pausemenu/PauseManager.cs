@@ -235,6 +235,10 @@ namespace GreatArcStudios
         private int lastTexLimit;
         //last shadow cascade value
         private int lastShadowCascade;
+        //last music multiplier; this should be a value between 0-1
+        private float lastMusicMult;
+        //last audio multiplier; this should be a value between 0-1
+        private float lastAudioMult;
 
         private Boolean aoBool;
         private Boolean dofBool;
@@ -268,6 +272,10 @@ namespace GreatArcStudios
         /// </summary>
         public void Start()
         {
+            //Set the lastmusicmult and last audiomult
+            lastMusicMult = audioMusicSlider.value;
+            lastAudioMult = audioEffectsSlider.value;
+            //Set the first selected item
             uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
             //Get the presets from the quality settings 
             presets = QualitySettings.names;
@@ -306,8 +314,7 @@ namespace GreatArcStudios
             lastTexLimit = QualitySettings.masterTextureLimit;
             //set last shadow cascade 
             lastShadowCascade = QualitySettings.shadowCascades;
-            //set the blur boolean to false;
-            //blurBool = false;
+            
             try
             {
                 densityINI = Terrain.activeTerrain.detailObjectDensity;
@@ -318,11 +325,9 @@ namespace GreatArcStudios
                 {
                     Debug.Log("Terrain Not Assigned");
                 }
-                else
-                {
-                    Debug.Log(e);
-                }
             }
+            //set the blur boolean to false;
+            //blurBool = false;
             //Add the blur effect
             /*mainCamObj.AddComponent(typeof(Blur));
             blurEffect = (Blur)mainCamObj.GetComponent(typeof(Blur));
@@ -398,7 +403,7 @@ namespace GreatArcStudios
         public void returnToMenu()
         {
             Application.LoadLevel(mainMenu);
-            uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
+            uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
         }
 
         // Update is called once per frame
@@ -423,7 +428,8 @@ namespace GreatArcStudios
             }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
+                
+                uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
                 mainPanel.SetActive(true);
                 vidPanel.SetActive(false);
                 audioPanel.SetActive(false);
@@ -474,7 +480,7 @@ namespace GreatArcStudios
         /// </summary>
         public void audioIn()
         {
-            uiEventSystem.firstSelectedGameObject = defualtSelectedAudio;
+            uiEventSystem.SetSelectedGameObject(defualtSelectedAudio);
             audioPanelAnimator.Play("Audio Panel In");
             audioMasterSlider.value = AudioListener.volume;
             //Perform modulo to find factor f to allow for non uniform music volumes
@@ -487,7 +493,8 @@ namespace GreatArcStudios
                 audioMusicSlider.value = f;
             }catch(Exception e)
             {
-                Debug.Log(e);
+                Debug.Log("You do not have multiple audio sources");
+                audioMusicSlider.value = lastMusicMult;
             }
             //Do this with the effects
             try
@@ -499,7 +506,8 @@ namespace GreatArcStudios
             }
             catch (Exception e)
             {
-                Debug.Log(e);
+                Debug.Log("You do not have multiple audio sources");
+                audioEffectsSlider.value = lastAudioMult;
             }
 
         }
@@ -546,7 +554,7 @@ namespace GreatArcStudios
         public void applyAudio()
         {
             StartCoroutine(applyAudioMain());
-            uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
+            uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
         }
         /// <summary>
         /// Use an IEnumerator to first play the animation and then change the audio settings
@@ -560,13 +568,15 @@ namespace GreatArcStudios
             vidPanel.SetActive(false);
             audioPanel.SetActive(false);
             _beforeMaster = AudioListener.volume;
+            lastMusicMult = audioMusicSlider.value;
+            lastAudioMult = audioEffectsSlider.value;
         }
         /// <summary>
         /// Cancel the audio setting changes
         /// </summary>
         public void cancelAudio()
         {
-            uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
+            uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
             StartCoroutine(cancelAudioMain());
         }
         /// <summary>
@@ -582,7 +592,7 @@ namespace GreatArcStudios
             vidPanel.SetActive(false);
             audioPanel.SetActive(false);
             AudioListener.volume = _beforeMaster;
-            Debug.Log(_beforeMaster + AudioListener.volume);
+            //Debug.Log(_beforeMaster + AudioListener.volume);
             for (_audioEffectAmt = 0; _audioEffectAmt < effects.Length; _audioEffectAmt++)
             {
                 //get the values for all effects before the change
@@ -592,7 +602,7 @@ namespace GreatArcStudios
             {
                 music[_musicAmt].volume = _beforeMusic;
             }
-
+         
         }
         /////Video Options
         /// <summary>
@@ -614,7 +624,7 @@ namespace GreatArcStudios
         /// </summary>
         public void videoIn()
         {
-            uiEventSystem.firstSelectedGameObject = defualtSelectedVideo;
+            uiEventSystem.SetSelectedGameObject(defualtSelectedVideo);
             vidPanelAnimator.Play("Video Panel In");
 
             if (QualitySettings.antiAliasing == 0)
@@ -689,7 +699,7 @@ namespace GreatArcStudios
         /// </summary>
         public void cancelVideo()
         {
-            uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
+            uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
             StartCoroutine(cancelVideoMain());
         }
         /// <summary>
@@ -750,7 +760,7 @@ namespace GreatArcStudios
         public void apply()
         {
             StartCoroutine(applyVideo());
-            uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
+            uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
         }
         /// <summary>
         /// Use an IEnumerator to first play the animation and then change the video settings.
@@ -783,7 +793,7 @@ namespace GreatArcStudios
                     treeMeshAmtINI = simpleTerrain.treeMaximumFullLODCount;
                 }
             }
-            catch (Exception e) { Debug.Log(e); }
+            catch (Exception e) { Debug.Log("You probably did not assign a terrain."); }
         }
         /// <summary>
         /// Video Options
@@ -991,13 +1001,13 @@ namespace GreatArcStudios
                 //If the resoultion matches the current resoution height and width then go through the statement.
                 if (allRes[i].height == currentRes.height && allRes[i].width == currentRes.width)
                 {
-                    Debug.Log("found " + i);
+                    //Debug.Log("found " + i);
                     //If the user is playing fullscreen. Then set the resoution to one element higher in the array, set the full screen boolean to true, reset the current resolution, and then update the resolution label.
                     if (isFullscreen == true) { Screen.SetResolution(allRes[i + 1].width, allRes[i + 1].height, true); isFullscreen = true; currentRes = Screen.resolutions[i + 1]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString(); }
                     //If the user is playing in a window. Then set the resoution to one element higher in the array, set the full screen boolean to false, reset the current resolution, and then update the resolution label.
                     if (isFullscreen == false) { Screen.SetResolution(allRes[i + 1].width, allRes[i + 1].height, false); isFullscreen = false; currentRes = Screen.resolutions[i + 1]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString(); }
 
-                    Debug.Log("Res after: " + currentRes);
+                    //Debug.Log("Res after: " + currentRes);
                 }
             }
 
@@ -1015,13 +1025,13 @@ namespace GreatArcStudios
                 if (allRes[i].height == currentRes.height && allRes[i].width == currentRes.width)
                 {
 
-                    Debug.Log("found " + i);
+                    //Debug.Log("found " + i);
                     //If the user is playing fullscreen. Then set the resoution to one element lower in the array, set the full screen boolean to true, reset the current resolution, and then update the resolution label.
                     if (isFullscreen == true) { Screen.SetResolution(allRes[i - 1].width, allRes[i - 1].height, true); isFullscreen = true; currentRes = Screen.resolutions[i - 1]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString(); }
                     //If the user is playing in a window. Then set the resoution to one element lower in the array, set the full screen boolean to false, reset the current resolution, and then update the resolution label.
                     if (isFullscreen == false) { Screen.SetResolution(allRes[i - 1].width, allRes[i - 1].height, false); isFullscreen = false; currentRes = Screen.resolutions[i - 1]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString(); }
 
-                    Debug.Log("Res after: " + currentRes);
+                    //Debug.Log("Res after: " + currentRes);
                 }
             }
 
@@ -1131,10 +1141,7 @@ namespace GreatArcStudios
         public void disableMSAA()
         {
 
-            QualitySettings.antiAliasing = 0;
-
-
-            Debug.Log(QualitySettings.antiAliasing);
+            QualitySettings.antiAliasing = 0;     
             // aaOption.text = "MSAA: " + QualitySettings.antiAliasing.ToString();
         }
         /// <summary>
@@ -1144,8 +1151,6 @@ namespace GreatArcStudios
         {
 
             QualitySettings.antiAliasing = 2;
-
-            Debug.Log(QualitySettings.antiAliasing);
             // aaOption.text = "MSAA: " + QualitySettings.antiAliasing.ToString();
         }
         /// <summary>
@@ -1155,9 +1160,7 @@ namespace GreatArcStudios
         {
 
             QualitySettings.antiAliasing = 4;
-
-
-            Debug.Log(QualitySettings.antiAliasing);
+           
             // aaOption.text = "MSAA: " + QualitySettings.antiAliasing.ToString();
         }
         /// <summary>
@@ -1167,9 +1170,6 @@ namespace GreatArcStudios
         {
 
             QualitySettings.antiAliasing = 8;
-
-
-            Debug.Log(QualitySettings.antiAliasing);
             // aaOption.text = "MSAA: " + QualitySettings.antiAliasing.ToString();
         }
         /// <summary>
