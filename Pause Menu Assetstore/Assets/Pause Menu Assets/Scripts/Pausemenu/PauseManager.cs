@@ -314,12 +314,12 @@ namespace GreatArcStudios
             lastTexLimit = QualitySettings.masterTextureLimit;
             //set last shadow cascade 
             lastShadowCascade = QualitySettings.shadowCascades;
-            
+
             try
             {
                 densityINI = Terrain.activeTerrain.detailObjectDensity;
             }
-            catch (Exception e)
+            catch
             {
                 if (terrain = null)
                 {
@@ -428,7 +428,7 @@ namespace GreatArcStudios
             }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                
+
                 uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
                 mainPanel.SetActive(true);
                 vidPanel.SetActive(false);
@@ -491,20 +491,21 @@ namespace GreatArcStudios
                 b = music[1].volume;
                 f = a % b;
                 audioMusicSlider.value = f;
-            }catch(Exception e)
+            }
+            catch
             {
                 Debug.Log("You do not have multiple audio sources");
                 audioMusicSlider.value = lastMusicMult;
             }
             //Do this with the effects
             try
-            {     
+            {
                 a = effects[0].volume;
                 b = effects[1].volume;
                 f = a % b;
                 audioEffectsSlider.value = f;
             }
-            catch (Exception e)
+            catch
             {
                 Debug.Log("You do not have multiple audio sources");
                 audioEffectsSlider.value = lastAudioMult;
@@ -527,9 +528,16 @@ namespace GreatArcStudios
         /// <param name="f"></param>
         public void updateMusicVol(float f)
         {
-            for (int _musicAmt = 0; _musicAmt < music.Length; _musicAmt++)
+            try
             {
-                music[_musicAmt].volume *= f;
+                for (int _musicAmt = 0; _musicAmt < music.Length; _musicAmt++)
+                {
+                    music[_musicAmt].volume *= f;
+                }
+            }
+            catch
+            {
+                Debug.Log("Please assign music sources in the manager");
             }
             //_beforeMusic = music.volume;
         }
@@ -539,14 +547,22 @@ namespace GreatArcStudios
         /// <param name="f"></param>
         public void updateEffectsVol(float f)
         {
-            for (_audioEffectAmt = 0; _audioEffectAmt < effects.Length; _audioEffectAmt++)
+            try
             {
-                //get the values for all effects before the change
-                _beforeEffectVol[_audioEffectAmt] = effects[_audioEffectAmt].volume;
+                for (_audioEffectAmt = 0; _audioEffectAmt < effects.Length; _audioEffectAmt++)
+                {
+                    //get the values for all effects before the change
+                    _beforeEffectVol[_audioEffectAmt] = effects[_audioEffectAmt].volume;
 
-                //lower it by a factor of f because we don't want every effect to be set to a uniform volume
-                effects[_audioEffectAmt].volume *= f;
+                    //lower it by a factor of f because we don't want every effect to be set to a uniform volume
+                    effects[_audioEffectAmt].volume *= f;
+                }
             }
+            catch
+            {
+                Debug.Log("Please assign audio effects sources in the manager.");
+            }
+
         }
         /// <summary> 
         /// The method for changing the applying new audio settings
@@ -593,16 +609,24 @@ namespace GreatArcStudios
             audioPanel.SetActive(false);
             AudioListener.volume = _beforeMaster;
             //Debug.Log(_beforeMaster + AudioListener.volume);
-            for (_audioEffectAmt = 0; _audioEffectAmt < effects.Length; _audioEffectAmt++)
+            try
             {
-                //get the values for all effects before the change
-                effects[_audioEffectAmt].volume = _beforeEffectVol[_audioEffectAmt];
+
+
+                for (_audioEffectAmt = 0; _audioEffectAmt < effects.Length; _audioEffectAmt++)
+                {
+                    //get the values for all effects before the change
+                    effects[_audioEffectAmt].volume = _beforeEffectVol[_audioEffectAmt];
+                }
+                for (int _musicAmt = 0; _musicAmt < music.Length; _musicAmt++)
+                {
+                    music[_musicAmt].volume = _beforeMusic;
+                }
             }
-            for (int _musicAmt = 0; _musicAmt < music.Length; _musicAmt++)
+            catch
             {
-                music[_musicAmt].volume = _beforeMusic;
+                Debug.Log("please assign the audio sources in the manager");
             }
-         
         }
         /////Video Options
         /// <summary>
@@ -709,7 +733,7 @@ namespace GreatArcStudios
         protected IEnumerator cancelVideoMain()
         {
             vidPanelAnimator.Play("Video Panel Out");
-           
+
             yield return StartCoroutine(CoroutineUtilities.WaitForRealTime((float)vidPanelAnimator.GetCurrentAnimatorClipInfo(0).Length));
             try
             {
@@ -730,10 +754,10 @@ namespace GreatArcStudios
                 QualitySettings.shadowCascades = lastShadowCascade;
                 //Screen.fullScreen = isFullscreen;
             }
-            catch (Exception e)
+            catch
             {
 
-                Debug.Log("A problem occured (chances are the terrain was not assigned ): " + e);
+                Debug.Log("A problem occured (chances are the terrain was not assigned )");
                 mainCam.farClipPlane = renderDistINI;
                 mainCam.fieldOfView = fovINI;
                 mainPanel.SetActive(true);
@@ -793,7 +817,7 @@ namespace GreatArcStudios
                     treeMeshAmtINI = simpleTerrain.treeMaximumFullLODCount;
                 }
             }
-            catch (Exception e) { Debug.Log("You probably did not assign a terrain."); }
+            catch { Debug.Log("You probably did not assign a terrain. Here's the error anyway"); }
         }
         /// <summary>
         /// Video Options
@@ -870,7 +894,7 @@ namespace GreatArcStudios
         /// <param name="qual"></param>
         public void updateTex(float qual)
         {
-            
+
             int f = Mathf.RoundToInt(qual);
             QualitySettings.masterTextureLimit = f;
         }
@@ -932,9 +956,11 @@ namespace GreatArcStudios
         /// <param name="b"></param>
         public void toggleDOF(Boolean b)
         {
-            lastDOFBool = dofToggle.isOn;
-            tempScript = (MonoBehaviour)mainCamObj.GetComponent(DOFScriptName);
-           
+            try
+            {
+                lastDOFBool = dofToggle.isOn;
+                tempScript = (MonoBehaviour)mainCamObj.GetComponent(DOFScriptName);
+
                 if (b == true)
                 {
                     tempScript.enabled = true;
@@ -945,8 +971,15 @@ namespace GreatArcStudios
                     tempScript.enabled = false;
                     dofBool = false;
                 }
-            
-            
+            }
+            catch
+            {
+                Debug.Log("No AO post processing found");
+                return;
+            }
+
+
+
         }
         /// <summary>
         /// Toggle on or off Ambient Occulusion. This is meant to be used with a checkbox.
@@ -954,9 +987,12 @@ namespace GreatArcStudios
         /// <param name="b"></param>
         public void toggleAO(Boolean b)
         {
-            lastAOBool = aoToggle.isOn;
-            tempScript = (MonoBehaviour)mainCamObj.GetComponent(AOScriptName);
-            
+            try
+            {
+
+                lastAOBool = aoToggle.isOn;
+                tempScript = (MonoBehaviour)mainCamObj.GetComponent(AOScriptName);
+
                 if (b == true)
                 {
                     tempScript.enabled = true;
@@ -967,7 +1003,12 @@ namespace GreatArcStudios
                     tempScript.enabled = false;
                     aoBool = false;
                 }
-           
+            }
+            catch
+            {
+                Debug.Log("No AO post processing found");
+                return;
+            }
         }
         /// <summary>
         /// Set the game to windowed or full screen. This is meant to be used with a checkbox
@@ -1090,7 +1131,7 @@ namespace GreatArcStudios
         /// <param name="cascades"></param>
         public void updateCascades(float cascades)
         {
-          
+
             int c = Mathf.RoundToInt(cascades);
             if (c == 1)
             {
@@ -1109,7 +1150,15 @@ namespace GreatArcStudios
         public void updateDensity(float density)
         {
             detailDensity = density;
-            terrain.detailObjectDensity = detailDensity;
+            try
+            {
+                terrain.detailObjectDensity = detailDensity;
+            }
+            catch
+            {
+                Debug.Log("Please assign a terrain");
+            }
+
         }
         /// <summary>
         /// Update MSAA quality using quality settings
@@ -1141,7 +1190,7 @@ namespace GreatArcStudios
         public void disableMSAA()
         {
 
-            QualitySettings.antiAliasing = 0;     
+            QualitySettings.antiAliasing = 0;
             // aaOption.text = "MSAA: " + QualitySettings.antiAliasing.ToString();
         }
         /// <summary>
@@ -1160,7 +1209,7 @@ namespace GreatArcStudios
         {
 
             QualitySettings.antiAliasing = 4;
-           
+
             // aaOption.text = "MSAA: " + QualitySettings.antiAliasing.ToString();
         }
         /// <summary>
