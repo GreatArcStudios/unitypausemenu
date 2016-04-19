@@ -78,7 +78,7 @@ namespace GreatArcStudios
         /// <summary>
         /// The terrain detail density float. It's only public because you may want to adjust it in editor
         /// </summary> 
-        public float detailDensity;
+        public static float detailDensity;
 
         /// <summary>
         /// Timescale value. The defualt is 1 for most games. You may want to change it if you are pausing the game in a slow motion situation 
@@ -87,39 +87,39 @@ namespace GreatArcStudios
         /// <summary>
         /// One terrain variable used if you have a terrain plugin like rtp. 
         /// </summary>
-        public Terrain terrain;
+        public static Terrain terrain;
         /// <summary>
         /// Other terrain variable used if you want to have an option to target low end harware.
         /// </summary>
-        public Terrain simpleTerrain;
+        public static Terrain simpleTerrain;
         /// <summary>
         /// Inital shadow distance 
         /// </summary>
-        protected float shadowDistINI;
+        internal static float shadowDistINI;
         /// <summary>
         /// Inital render distance 
         /// </summary>
-        protected float renderDistINI;
+        internal static float renderDistINI;
         /// <summary>
         /// Inital AA quality 2, 4, or 8
         /// </summary>
-        protected float aaQualINI;
+        internal static float aaQualINI;
         /// <summary>
         /// Inital terrain detail density
         /// </summary>
-        protected float densityINI;
+        internal static float densityINI;
         /// <summary>
         /// Amount of trees that are acutal meshes
         /// </summary>
-        protected float treeMeshAmtINI;
+        internal static float treeMeshAmtINI;
         /// <summary>
         /// Inital fov 
         /// </summary>
-        protected float fovINI;
+        internal static float fovINI;
         /// <summary>
         /// Inital msaa amount 
         /// </summary>
-        protected int msaaINI;
+        internal static int msaaINI;
         /// <summary>
         /// Inital vsync count, the Unity docs say,
         /// <code> 
@@ -131,7 +131,7 @@ namespace GreatArcStudios
         /// QualitySettings.vSyncCount = 0;
         /// </code>
         /// </summary>
-        protected int vsyncINI;
+        internal static int vsyncINI;
         /// <summary>
         /// AA drop down menu.
         /// </summary>
@@ -168,19 +168,19 @@ namespace GreatArcStudios
         /// <summary>
         /// Lod bias float array. You should manually assign these based on the quality level.
         /// </summary>
-        public float[] LODBias;
+        public static float[] LODBias;
         /// <summary>
         /// Shadow distance array. You should manually assign these based on the quality level.
         /// </summary>
-        public float[] shadowDist;
+        public static float[] shadowDist;
         /// <summary>
         /// An array of music audio sources
         /// </summary>
-        public AudioSource[] music;
+        public static AudioSource[] music;
         /// <summary>
         /// An array of sound effect audio sources
         /// </summary>
-        public AudioSource[] effects;
+        public static AudioSource[] effects;
         /// <summary>
         /// An array of the other UI elements, which is used for disabling the other elements when the game is paused.
         /// </summary>
@@ -188,11 +188,11 @@ namespace GreatArcStudios
         /// <summary>
         /// Editor boolean for hardcoding certain video settings. It will allow you to use the values defined in LOD Bias and Shadow Distance
         /// </summary>
-        public Boolean hardCodeSomeVideoSettings;
+        public static Boolean hardCodeSomeVideoSettings;
         /// <summary>
         /// Boolean for turning on simple terrain
         /// </summary>
-        public Boolean useSimpleTerrain;
+        public static Boolean useSimpleTerrain;
         /// <summary>
         /// Event system
         /// </summary>
@@ -209,12 +209,19 @@ namespace GreatArcStudios
         /// Defualt selected on the video panel
         /// </summary>
         public GameObject defualtSelectedMain;
+        //last music multiplier; this should be a value between 0-1
+        internal static float lastMusicMult;
+        //last audio multiplier; this should be a value between 0-1
+        internal static float lastAudioMult;
+        //Initial master volume
+        internal static float beforeMaster;
+        //last texture limit 
+        internal static int lastTexLimit;
         //int for amount of effects
         private int _audioEffectAmt = 0;
         //Inital audio effect volumes
         private float[] _beforeEffectVol;
-        //Initial master volume
-        private float _beforeMaster;
+        
         //Initial music volume
         private float _beforeMusic;
         //Preset level
@@ -231,20 +238,16 @@ namespace GreatArcStudios
         private Resolution currentRes;
         //Last resoultion 
         private Resolution beforeRes;
-        //last texture limit 
-        private int lastTexLimit;
+
         //last shadow cascade value
         private int lastShadowCascade;
-        //last music multiplier; this should be a value between 0-1
-        private float lastMusicMult;
-        //last audio multiplier; this should be a value between 0-1
-        private float lastAudioMult;
+       
 
         private Boolean aoBool;
         private Boolean dofBool;
         private Boolean lastAOBool;
         private Boolean lastDOFBool;
-
+        private SaveSettings saveSettings = new SaveSettings();
         /*
         //Color fade duration value
         //public float crossFadeDuration;
@@ -272,6 +275,7 @@ namespace GreatArcStudios
         /// </summary>
         public void Start()
         {
+
             //Set the lastmusicmult and last audiomult
             lastMusicMult = audioMusicSlider.value;
             lastAudioMult = audioEffectsSlider.value;
@@ -292,7 +296,7 @@ namespace GreatArcStudios
             lastDOFBool = dofToggle.isOn;
             //get all specified audio source volumes
             _beforeEffectVol = new float[_audioEffectAmt];
-            _beforeMaster = AudioListener.volume;
+            beforeMaster = AudioListener.volume;
             //get all ini values
             aaQualINI = QualitySettings.antiAliasing;
             renderDistINI = mainCam.farClipPlane;
@@ -326,6 +330,7 @@ namespace GreatArcStudios
                     Debug.Log("Terrain Not Assigned");
                 }
             }
+            saveSettings.LoadGameSettings();
             //set the blur boolean to false;
             //blurBool = false;
             //Add the blur effect
@@ -571,21 +576,23 @@ namespace GreatArcStudios
         {
             StartCoroutine(applyAudioMain());
             uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
+            saveSettings.SaveGameSettings();
         }
         /// <summary>
         /// Use an IEnumerator to first play the animation and then change the audio settings
         /// </summary>
         /// <returns></returns>
-        protected IEnumerator applyAudioMain()
+        internal IEnumerator applyAudioMain()
         {
             audioPanelAnimator.Play("Audio Panel Out");
             yield return StartCoroutine(CoroutineUtilities.WaitForRealTime((float)audioPanelAnimator.GetCurrentAnimatorClipInfo(0).Length));
             mainPanel.SetActive(true);
             vidPanel.SetActive(false);
             audioPanel.SetActive(false);
-            _beforeMaster = AudioListener.volume;
+            beforeMaster = AudioListener.volume;
             lastMusicMult = audioMusicSlider.value;
             lastAudioMult = audioEffectsSlider.value;
+           
         }
         /// <summary>
         /// Cancel the audio setting changes
@@ -599,7 +606,7 @@ namespace GreatArcStudios
         /// Use an IEnumerator to first play the animation and then change the audio settings
         /// </summary>
         /// <returns></returns>
-        protected IEnumerator cancelAudioMain()
+        internal IEnumerator cancelAudioMain()
         {
             audioPanelAnimator.Play("Audio Panel Out");
             // Debug.Log(audioPanelAnimator.GetCurrentAnimatorClipInfo(0).Length);
@@ -607,7 +614,7 @@ namespace GreatArcStudios
             mainPanel.SetActive(true);
             vidPanel.SetActive(false);
             audioPanel.SetActive(false);
-            AudioListener.volume = _beforeMaster;
+            AudioListener.volume = beforeMaster;
             //Debug.Log(_beforeMaster + AudioListener.volume);
             try
             {
@@ -730,7 +737,7 @@ namespace GreatArcStudios
         /// Use an IEnumerator to first play the animation and then changethe video settings
         /// </summary>
         /// <returns></returns>
-        protected IEnumerator cancelVideoMain()
+        internal IEnumerator cancelVideoMain()
         {
             vidPanelAnimator.Play("Video Panel Out");
 
@@ -785,12 +792,13 @@ namespace GreatArcStudios
         {
             StartCoroutine(applyVideo());
             uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
+            saveSettings.SaveGameSettings();
         }
         /// <summary>
         /// Use an IEnumerator to first play the animation and then change the video settings.
         /// </summary>
         /// <returns></returns>
-        protected IEnumerator applyVideo()
+        internal IEnumerator applyVideo()
         {
             vidPanelAnimator.Play("Video Panel Out");
             yield return StartCoroutine(CoroutineUtilities.WaitForRealTime((float)vidPanelAnimator.GetCurrentAnimatorClipInfo(0).Length));
@@ -817,7 +825,9 @@ namespace GreatArcStudios
                     treeMeshAmtINI = simpleTerrain.treeMaximumFullLODCount;
                 }
             }
-            catch { Debug.Log("You probably did not assign a terrain. Here's the error anyway"); }
+            catch { Debug.Log("Please assign a terrain"); }
+           
+          
         }
         /// <summary>
         /// Video Options
