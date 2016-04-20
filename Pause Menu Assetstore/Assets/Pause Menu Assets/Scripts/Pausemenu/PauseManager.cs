@@ -330,7 +330,7 @@ namespace GreatArcStudios
                     Debug.Log("Terrain Not Assigned");
                 }
             }
-            SaveSettings.LoadGameSettings();
+         
             //set the blur boolean to false;
             //blurBool = false;
             //Add the blur effect

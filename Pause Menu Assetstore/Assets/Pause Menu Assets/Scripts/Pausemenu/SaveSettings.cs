@@ -9,40 +9,23 @@ namespace GreatArcStudios
     [System.Serializable]
     public class SaveSettings : MonoBehaviour
     {
-        public static string fileName = "GameSettings.json";
-        public static  float musicVolume;
-        public static  float effectsVolume;
-        public static  float masterVolume;
-        public static  float shadowDistINI;
-        public static  float renderDistINI;
-        public static  float aaQualINI;
-        public static  float densityINI;
-        public static  float treeMeshAmtINI;
-        public static  float fovINI;
-        public static  int msaaINI;
-        public static  int vsyncINI;
-        public static  int textureLimit;
+        internal static string fileName = "GameSettings.json";
+        internal float musicVolume;
+        internal float effectsVolume;
+        internal float masterVolume;
+        internal float shadowDistINI;
+        internal float renderDistINI;
+        internal float aaQualINI;
+        internal float densityINI;
+        internal float treeMeshAmtINI;
+        internal float fovINI;
+        internal int msaaINI;
+        internal int vsyncINI;
+        internal int textureLimit;
         static string jsonString;
-        // Load Settings
-        public static void LoadGameSettings()
-        {
-            jsonString = File.ReadAllText(Application.persistentDataPath + "/" + fileName);
-            JsonUtility.FromJson<SaveSettings>(jsonString);
-            QualitySettings.antiAliasing = (int)aaQualINI;
-            PauseManager.densityINI = densityINI;
-           QualitySettings.shadowDistance = shadowDistINI;
-            //PauseManager.mainCamShared.farClipPlane = renderDistINI;
-            PauseManager.treeMeshAmtINI = treeMeshAmtINI ;
-           // PauseManager.mainCamShared.fieldOfView = fovINI;
-            QualitySettings.antiAliasing = msaaINI ;
-            QualitySettings.vSyncCount =vsyncINI;
-            PauseManager.lastTexLimit = textureLimit;
-            PauseManager.beforeMaster = masterVolume;
-            PauseManager.lastAudioMult =effectsVolume;
-            PauseManager.lastMusicMult =musicVolume;
-        }
+       
         //Save Settings
-        public  void SaveGameSettings()
+        public void SaveGameSettings()
         {
             if (File.Exists(Application.persistentDataPath + "/" + fileName))
             {
