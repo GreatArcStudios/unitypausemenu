@@ -69,7 +69,7 @@ namespace GreatArcStudios
         /// The main camera, assign this through the editor. 
         /// </summary>        
         public Camera mainCam;
-
+        internal static Camera mainCamShared;
         /// <summary>
         /// The main camera game object, assign this through the editor. 
         /// </summary> 
@@ -275,7 +275,7 @@ namespace GreatArcStudios
         /// </summary>
         public void Start()
         {
-
+            mainCamShared = mainCam;
             //Set the lastmusicmult and last audiomult
             lastMusicMult = audioMusicSlider.value;
             lastAudioMult = audioEffectsSlider.value;
@@ -330,7 +330,7 @@ namespace GreatArcStudios
                     Debug.Log("Terrain Not Assigned");
                 }
             }
-            saveSettings.LoadGameSettings();
+            SaveSettings.LoadGameSettings();
             //set the blur boolean to false;
             //blurBool = false;
             //Add the blur effect
@@ -892,7 +892,8 @@ namespace GreatArcStudios
             catch
             {
                 Debug.Log(" Finding main camera now...it is still suggested that you manually assign this");
-                Camera.main.farClipPlane = f;
+                mainCam = Camera.main;
+               mainCam.farClipPlane = f;
 
             }
 

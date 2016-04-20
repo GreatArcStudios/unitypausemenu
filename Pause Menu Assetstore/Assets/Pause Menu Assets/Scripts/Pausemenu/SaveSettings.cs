@@ -9,32 +9,33 @@ namespace GreatArcStudios
     [System.Serializable]
     public class SaveSettings : MonoBehaviour
     {
-        public  string fileName = "GameSettings.json";
-        public  float musicVolume;
-        public  float effectsVolume;
-        public  float masterVolume;
-        public  float shadowDistINI;
-        public  float renderDistINI;
-        public  float aaQualINI;
-        public  float densityINI;
-        public  float treeMeshAmtINI;
-        public  float fovINI;
-        public  int msaaINI;
-        public  int vsyncINI;
-        public  int textureLimit;
-        string jsonString;
+        public static string fileName = "GameSettings.json";
+        public static  float musicVolume;
+        public static  float effectsVolume;
+        public static  float masterVolume;
+        public static  float shadowDistINI;
+        public static  float renderDistINI;
+        public static  float aaQualINI;
+        public static  float densityINI;
+        public static  float treeMeshAmtINI;
+        public static  float fovINI;
+        public static  int msaaINI;
+        public static  int vsyncINI;
+        public static  int textureLimit;
+        static string jsonString;
         // Load Settings
-        public  void LoadGameSettings()
+        public static void LoadGameSettings()
         {
+            jsonString = File.ReadAllText(Application.persistentDataPath + "/" + fileName);
             JsonUtility.FromJson<SaveSettings>(jsonString);
-            PauseManager.aaQualINI = aaQualINI;
+            QualitySettings.antiAliasing = (int)aaQualINI;
             PauseManager.densityINI = densityINI;
-            PauseManager.shadowDistINI = shadowDistINI;
-            PauseManager.renderDistINI = renderDistINI;
+           QualitySettings.shadowDistance = shadowDistINI;
+            //PauseManager.mainCamShared.farClipPlane = renderDistINI;
             PauseManager.treeMeshAmtINI = treeMeshAmtINI ;
-            PauseManager.fovINI = fovINI;
-            PauseManager.msaaINI = msaaINI ;
-            PauseManager.vsyncINI =vsyncINI;
+           // PauseManager.mainCamShared.fieldOfView = fovINI;
+            QualitySettings.antiAliasing = msaaINI ;
+            QualitySettings.vSyncCount =vsyncINI;
             PauseManager.lastTexLimit = textureLimit;
             PauseManager.beforeMaster = masterVolume;
             PauseManager.lastAudioMult =effectsVolume;
@@ -50,9 +51,9 @@ namespace GreatArcStudios
             aaQualINI = QualitySettings.antiAliasing;
             densityINI = PauseManager.densityINI;
             shadowDistINI = PauseManager.shadowDistINI;
-            renderDistINI = PauseManager.renderDistINI;
+            renderDistINI = PauseManager.mainCamShared.farClipPlane;
             treeMeshAmtINI = PauseManager.treeMeshAmtINI;
-            fovINI = PauseManager.fovINI;
+            fovINI = PauseManager.mainCamShared.fieldOfView;
             msaaINI = PauseManager.msaaINI;
             vsyncINI = PauseManager.vsyncINI;
             textureLimit = PauseManager.lastTexLimit;
