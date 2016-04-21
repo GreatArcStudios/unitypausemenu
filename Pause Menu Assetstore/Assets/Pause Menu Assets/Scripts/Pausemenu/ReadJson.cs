@@ -7,19 +7,19 @@ namespace GreatArcStudios
     public class ReadJson
     {
 
-        internal static string fileName = "GameSettings.json";
-        internal static float musicVolume;
-        internal static float effectsVolume;
-        internal static float masterVolume;
-        internal static float shadowDistINI;
-        internal static float renderDistINI;
-        internal static float aaQualINI;
-        internal static float densityINI;
-        internal static float treeMeshAmtINI;
-        internal static float fovINI;
-        internal static int msaaINI;
-        internal static int vsyncINI;
-        internal static int textureLimit;
+        public  string fileName = "GameSettings.json";
+        public float musicVolume;
+        public float effectsVolume;
+        public float masterVolume;
+        public float shadowDistINI;
+        public float renderDistINI;
+        public float aaQualINI;
+        public float densityINI;
+        public float treeMeshAmtINI;
+        public float fovINI;
+        public int msaaINI;
+        public int vsyncINI;
+        public int textureLimit;
 
         public static ReadJson createJSONOBJ(string jsonString)
         {

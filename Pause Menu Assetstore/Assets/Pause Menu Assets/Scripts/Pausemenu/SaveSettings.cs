@@ -9,48 +9,57 @@ namespace GreatArcStudios
     [System.Serializable]
     public class SaveSettings : MonoBehaviour
     {
-        public string fileName = "GameSettings.json";
-        internal float musicVolume;
-        internal float effectsVolume;
-        internal float masterVolume;
-        internal float shadowDistINI;
-        internal float renderDistINI;
-        internal float aaQualINI;
-        internal float densityINI;
-        internal float treeMeshAmtINI;
-        internal float fovINI;
-        internal int msaaINI;
-        internal int vsyncINI;
-        internal int textureLimit;
-        string jsonString;
-
+        public static string fileName = "GameSettings.json";
+        public float musicVolume;
+        public float effectsVolume;
+        public float masterVolume;
+        public float shadowDistINI;
+        public float renderDistINI;
+        public float aaQualINI;
+        public float densityINI;
+        public float treeMeshAmtINI;
+        public float fovINI;
+        public int msaaINI;
+        public int vsyncINI;
+        public int textureLimit;
+        static string jsonString;
+        public static string readString;
         public void Start()
         {
-            LoadGameSettings();
-
+            try
+            {
+                LoadGameSettings();
+            }
+            catch (FileNotFoundException)
+            {
+                Debug.Log("Game settings not found in: " + Application.persistentDataPath + "/" + fileName);
+            }
+           
         }
 
-        // Load Settings
+        /// <summary>
+        /// Load the same settings
+        /// </summary>
         public void LoadGameSettings()
         {
-            jsonString = File.ReadAllText(Application.persistentDataPath + "/" + fileName);
-           
-            ReadJson.createJSONOBJ(jsonString);
-            QualitySettings.antiAliasing = (int)aaQualINI;
-            PauseManager.densityINI = densityINI;
-            QualitySettings.shadowDistance = shadowDistINI;
-            Debug.Log(ReadJson.renderDistINI);
-            //PauseManager.mainCamShared.farClipPlane = renderDistINI;
-            PauseManager.treeMeshAmtINI = treeMeshAmtINI;
-            // PauseManager.mainCamShared.fieldOfView = fovINI;
-            QualitySettings.antiAliasing = msaaINI;
-            QualitySettings.vSyncCount = vsyncINI;
-            PauseManager.lastTexLimit = textureLimit;
-            PauseManager.beforeMaster = masterVolume;
-            PauseManager.lastAudioMult = effectsVolume;
-            PauseManager.lastMusicMult = musicVolume;
+            readString = File.ReadAllText(Application.persistentDataPath + "/" + fileName);
+            ReadJson read =  ReadJson.createJSONOBJ(readString);
+            QualitySettings.antiAliasing = (int)read.aaQualINI;
+            PauseManager.densityINI = read.densityINI;
+            QualitySettings.shadowDistance = read.shadowDistINI;
+            PauseManager.mainCamShared.farClipPlane = read.renderDistINI;
+            PauseManager.treeMeshAmtINI = read.treeMeshAmtINI;
+            PauseManager.mainCamShared.fieldOfView = read.fovINI;
+            QualitySettings.antiAliasing = read.msaaINI;
+            QualitySettings.vSyncCount = read.vsyncINI;
+            PauseManager.lastTexLimit = read.textureLimit;
+            PauseManager.beforeMaster = read.masterVolume;
+            PauseManager.lastAudioMult = read.effectsVolume;
+            PauseManager.lastMusicMult = read.musicVolume;
         }
-        //Save Settings
+        /// <summary>
+        /// Get the quality/music settings before saving 
+        /// </summary>
         public void SaveGameSettings()
         {
             if (File.Exists(Application.persistentDataPath + "/" + fileName))
@@ -71,8 +80,8 @@ namespace GreatArcStudios
             musicVolume = PauseManager.lastMusicMult;
             jsonString = JsonUtility.ToJson(this);
             File.WriteAllText(Application.persistentDataPath + "/" + fileName, jsonString);
-
         }
+       
 
     }
 }

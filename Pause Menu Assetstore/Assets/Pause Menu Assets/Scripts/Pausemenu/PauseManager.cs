@@ -241,13 +241,13 @@ namespace GreatArcStudios
 
         //last shadow cascade value
         private int lastShadowCascade;
-
+        private SaveSettings saveSettings = new SaveSettings();
 
         private Boolean aoBool;
         private Boolean dofBool;
         private Boolean lastAOBool;
         private Boolean lastDOFBool;
-        private SaveSettings saveSettings = new SaveSettings();
+      
         /*
         //Color fade duration value
         //public float crossFadeDuration;
@@ -793,6 +793,7 @@ namespace GreatArcStudios
             StartCoroutine(applyVideo());
             uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
             saveSettings.SaveGameSettings();
+            
         }
         /// <summary>
         /// Use an IEnumerator to first play the animation and then change the video settings.
