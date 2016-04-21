@@ -221,7 +221,7 @@ namespace GreatArcStudios
         private int _audioEffectAmt = 0;
         //Inital audio effect volumes
         private float[] _beforeEffectVol;
-        
+
         //Initial music volume
         private float _beforeMusic;
         //Preset level
@@ -241,7 +241,7 @@ namespace GreatArcStudios
 
         //last shadow cascade value
         private int lastShadowCascade;
-       
+
 
         private Boolean aoBool;
         private Boolean dofBool;
@@ -330,7 +330,7 @@ namespace GreatArcStudios
                     Debug.Log("Terrain Not Assigned");
                 }
             }
-         
+
             //set the blur boolean to false;
             //blurBool = false;
             //Add the blur effect
@@ -592,7 +592,7 @@ namespace GreatArcStudios
             beforeMaster = AudioListener.volume;
             lastMusicMult = audioMusicSlider.value;
             lastAudioMult = audioEffectsSlider.value;
-           
+
         }
         /// <summary>
         /// Cancel the audio setting changes
@@ -826,8 +826,8 @@ namespace GreatArcStudios
                 }
             }
             catch { Debug.Log("Please assign a terrain"); }
-           
-          
+
+
         }
         /// <summary>
         /// Video Options
@@ -893,7 +893,7 @@ namespace GreatArcStudios
             {
                 Debug.Log(" Finding main camera now...it is still suggested that you manually assign this");
                 mainCam = Camera.main;
-               mainCam.farClipPlane = f;
+                mainCam.farClipPlane = f;
 
             }
 

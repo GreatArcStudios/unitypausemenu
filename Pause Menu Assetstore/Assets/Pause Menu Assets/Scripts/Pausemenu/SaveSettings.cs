@@ -9,7 +9,7 @@ namespace GreatArcStudios
     [System.Serializable]
     public class SaveSettings : MonoBehaviour
     {
-        internal static string fileName = "GameSettings.json";
+        public string fileName = "GameSettings.json";
         internal float musicVolume;
         internal float effectsVolume;
         internal float masterVolume;
@@ -22,8 +22,34 @@ namespace GreatArcStudios
         internal int msaaINI;
         internal int vsyncINI;
         internal int textureLimit;
-        static string jsonString;
-       
+        string jsonString;
+
+        public void Start()
+        {
+            LoadGameSettings();
+
+        }
+
+        // Load Settings
+        public void LoadGameSettings()
+        {
+            jsonString = File.ReadAllText(Application.persistentDataPath + "/" + fileName);
+           
+            ReadJson.createJSONOBJ(jsonString);
+            QualitySettings.antiAliasing = (int)aaQualINI;
+            PauseManager.densityINI = densityINI;
+            QualitySettings.shadowDistance = shadowDistINI;
+            Debug.Log(ReadJson.renderDistINI);
+            //PauseManager.mainCamShared.farClipPlane = renderDistINI;
+            PauseManager.treeMeshAmtINI = treeMeshAmtINI;
+            // PauseManager.mainCamShared.fieldOfView = fovINI;
+            QualitySettings.antiAliasing = msaaINI;
+            QualitySettings.vSyncCount = vsyncINI;
+            PauseManager.lastTexLimit = textureLimit;
+            PauseManager.beforeMaster = masterVolume;
+            PauseManager.lastAudioMult = effectsVolume;
+            PauseManager.lastMusicMult = musicVolume;
+        }
         //Save Settings
         public void SaveGameSettings()
         {
@@ -43,10 +69,10 @@ namespace GreatArcStudios
             masterVolume = PauseManager.beforeMaster;
             effectsVolume = PauseManager.lastAudioMult;
             musicVolume = PauseManager.lastMusicMult;
-            jsonString = JsonUtility.ToJson(this, true);
-            File.WriteAllText(Application.persistentDataPath + "/" + fileName, jsonString); 
-            
+            jsonString = JsonUtility.ToJson(this);
+            File.WriteAllText(Application.persistentDataPath + "/" + fileName, jsonString);
+
         }
-       
+
     }
 }
