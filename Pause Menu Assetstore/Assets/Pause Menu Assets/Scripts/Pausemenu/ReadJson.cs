@@ -17,10 +17,19 @@ namespace GreatArcStudios
         public float densityINI;
         public float treeMeshAmtINI;
         public float fovINI;
+        public float terrainHeightMapLOD;
         public int msaaINI;
         public int vsyncINI;
         public int textureLimit;
-
+        public int curQualityLevel;
+        public bool aoBool;
+        public bool dofBool;
+        public bool useSimpleTerrain;
+        /// <summary>
+        /// Method to create JSON Object by passing through a json string. 
+        /// </summary>
+        /// <param name="jsonString"></param>
+        /// <returns></returns>
         public static ReadJson createJSONOBJ(string jsonString)
         {
             return JsonUtility.FromJson<ReadJson>(jsonString);
