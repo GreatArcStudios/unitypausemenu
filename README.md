@@ -1,4 +1,4 @@
-#Read me 
+![alt text](http://i.imgur.com/QvaVqvN.png)
 ##Setup
 Just drag the pause menu prefab from the prefab folder into your scene, and then bring it into view by editing the x value of the PREFAB to 0 , y to 0 and Z to 0. 
 ##Updating
