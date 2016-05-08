@@ -236,20 +236,21 @@ namespace GreatArcStudios
         //Fullscreen Boolean
         private Boolean isFullscreen;
         //current resoultion
-        private Resolution currentRes;
+        internal static Resolution currentRes;
         //Last resoultion 
         private Resolution beforeRes;
 
         //last shadow cascade value
-        private int lastShadowCascade;
-        private SaveSettings saveSettings = new SaveSettings();
-
+        internal static int lastShadowCascade;
+       
         public static Boolean aoBool;
         public static Boolean dofBool;
         private Boolean lastAOBool;
         private Boolean lastDOFBool;
         public static Terrain readTerrain;
         public static Terrain readSimpleTerrain;
+
+        private SaveSettings saveSettings = new SaveSettings();
         /*
         //Color fade duration value
         //public float crossFadeDuration;
@@ -588,7 +589,6 @@ namespace GreatArcStudios
         public void applyAudio()
         {
             StartCoroutine(applyAudioMain());
-            saveSettings.SaveGameSettings();
             uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
            
         }
@@ -606,7 +606,7 @@ namespace GreatArcStudios
             beforeMaster = AudioListener.volume;
             lastMusicMult = audioMusicSlider.value;
             lastAudioMult = audioEffectsSlider.value;
-
+            saveSettings.SaveGameSettings();
         }
         /// <summary>
         /// Cancel the audio setting changes
@@ -676,21 +676,21 @@ namespace GreatArcStudios
             {
                 aaCombo.value = 0;
             }
-            else if (QualitySettings.antiAliasing == 1)
+            else if (QualitySettings.antiAliasing == 2)
             {
                 aaCombo.value = 1;
             }
-            else if (QualitySettings.antiAliasing == 2)
+            else if (QualitySettings.antiAliasing == 4)
             {
                 aaCombo.value = 2;
             }
-            else if (QualitySettings.antiAliasing == 3)
+            else if (QualitySettings.antiAliasing == 8)
             {
                 aaCombo.value = 3;
             }
             if (QualitySettings.anisotropicFiltering == AnisotropicFiltering.ForceEnable)
             {
-                afCombo.value = 2;
+                afCombo.value = 1;
             }
             else if (QualitySettings.anisotropicFiltering == AnisotropicFiltering.Disable)
             {
@@ -698,7 +698,7 @@ namespace GreatArcStudios
             }
             else if (QualitySettings.anisotropicFiltering == AnisotropicFiltering.Enable)
             {
-                afCombo.value = 1;
+                afCombo.value = 2;
             }
             presetLabel.text = presets[QualitySettings.GetQualityLevel()].ToString();
             fovSlider.value = mainCam.fieldOfView;
@@ -774,7 +774,7 @@ namespace GreatArcStudios
                 QualitySettings.vSyncCount = vsyncINI;
                 QualitySettings.masterTextureLimit = lastTexLimit;
                 QualitySettings.shadowCascades = lastShadowCascade;
-                //Screen.fullScreen = isFullscreen;
+                Screen.fullScreen = isFullscreen;
             }
             catch
             {
@@ -824,13 +824,15 @@ namespace GreatArcStudios
             shadowDistINI = QualitySettings.shadowDistance;
             Debug.Log("Shadow dist ini" + shadowDistINI);
             fovINI = mainCam.fieldOfView;
-            aoToggle.isOn = lastAOBool;
-            dofToggle.isOn = lastDOFBool;
+            aoBool = aoToggle.isOn;
+            dofBool = dofToggle.isOn;
+            lastAOBool = aoBool;
+            lastDOFBool = dofBool;
             beforeRes = currentRes;
             lastTexLimit = QualitySettings.masterTextureLimit;
             lastShadowCascade = QualitySettings.shadowCascades;
             vsyncINI = QualitySettings.vSyncCount;
-            //isFullscreen = Screen.fullScreen;
+            isFullscreen = Screen.fullScreen;
             try
             {
                 if (useSimpleTerrain == true)
@@ -988,7 +990,6 @@ namespace GreatArcStudios
         {
             try
             {
-                lastDOFBool = dofToggle.isOn;
                 tempScript = (MonoBehaviour)mainCamObj.GetComponent(DOFScriptName);
 
                 if (b == true)
@@ -1020,7 +1021,6 @@ namespace GreatArcStudios
             try
             {
 
-                lastAOBool = aoToggle.isOn;
                 tempScript = (MonoBehaviour)mainCamObj.GetComponent(AOScriptName);
 
                 if (b == true)
@@ -1046,17 +1046,15 @@ namespace GreatArcStudios
         /// <param name="b"></param>
         public void setFullScreen(Boolean b)
         {
-            // isFullscreen = Screen.fullScreen;
+           
 
             if (b == true)
             {
                 Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
-                isFullscreen = true;
             }
             else
             {
                 Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, false);
-                isFullscreen = false;
             }
         }
         /// <summary>

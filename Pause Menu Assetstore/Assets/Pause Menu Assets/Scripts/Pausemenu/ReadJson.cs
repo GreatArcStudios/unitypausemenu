@@ -22,9 +22,13 @@ namespace GreatArcStudios
         public int vsyncINI;
         public int textureLimit;
         public int curQualityLevel;
+        public int lastShadowCascade;
+        public int anisoLevel;
         public bool aoBool;
         public bool dofBool;
         public bool useSimpleTerrain;
+        public bool fullscreenBool;
+        public Resolution res;
         /// <summary>
         /// Method to create JSON Object by passing through a json string. 
         /// </summary>

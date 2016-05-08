@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.IO;
-using System;
+﻿using System.IO;
+using UnityEngine;
 /// <summary>
 ///  Copyright (c) 2016 Eric Zhu 
 /// </summary>
@@ -27,9 +26,13 @@ namespace GreatArcStudios
         public int vsyncINI;
         public int textureLimit;
         public int curQualityLevel;
+        public int lastShadowCascade;
+        public int anisoLevel;
         public bool aoBool;
         public bool dofBool;
-        public bool useSimpleTerrian;    
+        public bool useSimpleTerrian;
+        public bool fullscreenBool;
+        public Resolution res;
         /// <summary>
         /// The string that will be saved.
         /// </summary>
@@ -71,12 +74,26 @@ namespace GreatArcStudios
             QualitySettings.vSyncCount = read.vsyncINI;
             PauseManager.lastTexLimit = read.textureLimit;
             QualitySettings.masterTextureLimit = read.textureLimit;
-            PauseManager.beforeMaster = read.masterVolume;
+            AudioListener.volume = read.masterVolume;
             PauseManager.lastAudioMult = read.effectsVolume;
             PauseManager.lastMusicMult = read.musicVolume;
             PauseManager.dofBool = read.dofBool;
             PauseManager.aoBool = read.aoBool;
             QualitySettings.SetQualityLevel(read.curQualityLevel);
+            QualitySettings.shadowCascades = read.lastShadowCascade;
+            Screen.SetResolution(read.res.width, read.res.height, read.fullscreenBool);
+            if (read.anisoLevel == 0 )
+            {
+                QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
+            }
+            else if (read.anisoLevel == 1)
+            {
+                QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
+            }
+            else if (read.anisoLevel == 2)
+            {
+                QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
+            }
             try
             {
                 if (read.useSimpleTerrain)
@@ -109,7 +126,7 @@ namespace GreatArcStudios
             renderDistINI = PauseManager.mainCamShared.farClipPlane;
             treeMeshAmtINI = PauseManager.treeMeshAmtINI;
             fovINI = PauseManager.mainCamShared.fieldOfView;
-            msaaINI = PauseManager.msaaINI;
+            msaaINI = QualitySettings.antiAliasing;
             vsyncINI = PauseManager.vsyncINI;
             textureLimit = PauseManager.lastTexLimit;
             masterVolume = PauseManager.beforeMaster;
@@ -118,6 +135,20 @@ namespace GreatArcStudios
             aoBool = PauseManager.aoBool;
             dofBool = PauseManager.dofBool;
             curQualityLevel = QualitySettings.GetQualityLevel();
+            lastShadowCascade = PauseManager.lastShadowCascade;
+            res = PauseManager.currentRes;
+            fullscreenBool = Screen.fullScreen;
+            if(QualitySettings.anisotropicFiltering == AnisotropicFiltering.Disable)
+            {
+                anisoLevel = 0;
+            }else if(QualitySettings.anisotropicFiltering == AnisotropicFiltering.ForceEnable)
+            {
+                anisoLevel = 1;
+            }
+            else if (QualitySettings.anisotropicFiltering == AnisotropicFiltering.Enable)
+            {
+                anisoLevel = 2;
+            }
             try
             {
                 if (PauseManager.readUseSimpleTerrain)
