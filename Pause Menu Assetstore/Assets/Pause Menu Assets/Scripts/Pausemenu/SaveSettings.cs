@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using UnityEngine;
 /// <summary>
 ///  Copyright (c) 2016 Eric Zhu 
@@ -6,7 +7,7 @@ using UnityEngine;
 namespace GreatArcStudios
 {
     [System.Serializable]
-    public class SaveSettings : MonoBehaviour
+    public class SaveSettings
     {
         /// <summary>
         /// Change the file name if something else floats your boat
@@ -38,78 +39,65 @@ namespace GreatArcStudios
         /// </summary>
         static string jsonString;
         /// <summary>
-        /// The string that will be read.
+        /// Load the same settings
         /// </summary>
-        static string readString;
-        /// <summary>
-        /// Load the game settings and check if the game settings file is missing. In that case throw an exception. 
-        /// </summary>
-        public void Start()
+        public void LoadGameSettings(String readString)
         {
             try
             {
-                LoadGameSettings();
+                ReadJson read = ReadJson.createJSONOBJ(readString);
+                QualitySettings.antiAliasing = (int)read.aaQualINI;
+                PauseManager.densityINI = read.densityINI;
+                QualitySettings.shadowDistance = read.shadowDistINI;
+                PauseManager.mainCamShared.farClipPlane = read.renderDistINI;
+                PauseManager.treeMeshAmtINI = read.treeMeshAmtINI;
+                PauseManager.mainCamShared.fieldOfView = read.fovINI;
+                QualitySettings.antiAliasing = read.msaaINI;
+                QualitySettings.vSyncCount = read.vsyncINI;
+                PauseManager.lastTexLimit = read.textureLimit;
+                QualitySettings.masterTextureLimit = read.textureLimit;
+                AudioListener.volume = read.masterVolume;
+                PauseManager.lastAudioMult = read.effectsVolume;
+                PauseManager.lastMusicMult = read.musicVolume;
+                PauseManager.dofBool = read.dofBool;
+                PauseManager.aoBool = read.aoBool;
+                QualitySettings.SetQualityLevel(read.curQualityLevel);
+                QualitySettings.shadowCascades = read.lastShadowCascade;
+                Screen.SetResolution(read.res.width, read.res.height, read.fullscreenBool);
+                if (read.anisoLevel == 0)
+                {
+                    QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
+                }
+                else if (read.anisoLevel == 1)
+                {
+                    QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
+                }
+                else if (read.anisoLevel == 2)
+                {
+                    QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
+                }
+                try
+                {
+                    if (read.useSimpleTerrain)
+                    {
+                        PauseManager.readTerrain.heightmapMaximumLOD = (int)read.terrainHeightMapLOD;
+                    }
+                    else
+                    {
+                        PauseManager.readSimpleTerrain.heightmapMaximumLOD = (int)read.terrainHeightMapLOD;
+                    }
+                    PauseManager.readUseSimpleTerrain = read.useSimpleTerrain;
+                }
+                catch
+                {
+                    Debug.Log("Cannot read terain heightmap LOD because the terrain was not assigned.");
+                }
             }
             catch (FileNotFoundException)
             {
                 Debug.Log("Game settings not found in: " + Application.persistentDataPath + "/" + fileName);
             }
 
-        }
-
-        /// <summary>
-        /// Load the same settings
-        /// </summary>
-        public void LoadGameSettings()
-        {
-            readString = File.ReadAllText(Application.persistentDataPath + "/" + fileName);
-            ReadJson read = ReadJson.createJSONOBJ(readString);
-            QualitySettings.antiAliasing = (int)read.aaQualINI;
-            PauseManager.densityINI = read.densityINI;
-            QualitySettings.shadowDistance = read.shadowDistINI;
-            PauseManager.mainCamShared.farClipPlane = read.renderDistINI;
-            PauseManager.treeMeshAmtINI = read.treeMeshAmtINI;
-            PauseManager.mainCamShared.fieldOfView = read.fovINI;
-            QualitySettings.antiAliasing = read.msaaINI;
-            QualitySettings.vSyncCount = read.vsyncINI;
-            PauseManager.lastTexLimit = read.textureLimit;
-            QualitySettings.masterTextureLimit = read.textureLimit;
-            AudioListener.volume = read.masterVolume;
-            PauseManager.lastAudioMult = read.effectsVolume;
-            PauseManager.lastMusicMult = read.musicVolume;
-            PauseManager.dofBool = read.dofBool;
-            PauseManager.aoBool = read.aoBool;
-            QualitySettings.SetQualityLevel(read.curQualityLevel);
-            QualitySettings.shadowCascades = read.lastShadowCascade;
-            Screen.SetResolution(read.res.width, read.res.height, read.fullscreenBool);
-            if (read.anisoLevel == 0 )
-            {
-                QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
-            }
-            else if (read.anisoLevel == 1)
-            {
-                QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
-            }
-            else if (read.anisoLevel == 2)
-            {
-                QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
-            }
-            try
-            {
-                if (read.useSimpleTerrain)
-                {
-                    PauseManager.readTerrain.heightmapMaximumLOD = (int)read.terrainHeightMapLOD;
-                }
-                else
-                {
-                    PauseManager.readSimpleTerrain.heightmapMaximumLOD = (int)read.terrainHeightMapLOD;
-                }
-                PauseManager.readUseSimpleTerrain = read.useSimpleTerrain;
-            }
-            catch
-            {
-                Debug.Log("Cannot read terain heightmap LOD because the terrain was not assigned.");
-            }
         }
         /// <summary>
         /// Get the quality/music settings before saving 
@@ -138,10 +126,11 @@ namespace GreatArcStudios
             lastShadowCascade = PauseManager.lastShadowCascade;
             res = PauseManager.currentRes;
             fullscreenBool = Screen.fullScreen;
-            if(QualitySettings.anisotropicFiltering == AnisotropicFiltering.Disable)
+            if (QualitySettings.anisotropicFiltering == AnisotropicFiltering.Disable)
             {
                 anisoLevel = 0;
-            }else if(QualitySettings.anisotropicFiltering == AnisotropicFiltering.ForceEnable)
+            }
+            else if (QualitySettings.anisotropicFiltering == AnisotropicFiltering.ForceEnable)
             {
                 anisoLevel = 1;
             }
