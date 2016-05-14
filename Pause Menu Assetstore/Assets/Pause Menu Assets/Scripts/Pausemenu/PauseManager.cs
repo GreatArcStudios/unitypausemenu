@@ -447,7 +447,8 @@ namespace GreatArcStudios
             {
                 pauseMenu.text = "Pause Menu";
             }
-            if (Input.GetKeyDown(KeyCode.Escape))
+
+            if (Input.GetKeyDown(KeyCode.Escape) && mainPanel.active == false)
             {
 
                 uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
@@ -466,6 +467,19 @@ namespace GreatArcStudios
                      blurEffect.enabled = true;
                  }  */
             }
+            else if(Input.GetKeyDown(KeyCode.Escape) && mainPanel.active == true) {
+                Time.timeScale = timeScale;
+                mainPanel.SetActive(false);
+                vidPanel.SetActive(false);
+                audioPanel.SetActive(false);
+                TitleTexts.SetActive(false);
+                mask.SetActive(false);
+                for (int i = 0; i < otherUIElements.Length; i++)
+                {
+                    otherUIElements[i].gameObject.SetActive(true);
+                }
+            }
+
 
 
         }
