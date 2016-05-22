@@ -18,11 +18,11 @@ Uncomment the following variable declarations found starting at line <b>270</b>
 ```csharp
  //Blur Variables
  //Blur Effect Script (using the standard image effects package) 
- //public Blur blurEffect;
+ public Blur blurEffect;
  //Blur Effect Shader (should be the one that came with the package)
- //public Shader blurEffectShader;
+ public Shader blurEffectShader;
  //Boolean for if the blur effect was originally enabled
- //public Boolean blurBool;
+ public Boolean blurBool;
  ```
  <br>
  Find and uncomment the following code found starting at line <b>349</b>
