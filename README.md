@@ -12,8 +12,45 @@ Using a joystick/controller should work fine. Just remeber to change the highlig
 ![alt text](http://i.imgur.com/Pf7poMk.png)
  
 ### Enbaling pause blur
-First, make sure you have the unity image effects package. Then uncomment everything shown in the pictures. \
-![alt text](http://i.imgur.com/l9gr0Kl.png)
-![alt text](http://i.imgur.com/9sxTxvg.png)
-![alt text](http://i.imgur.com/KZpPiZL.png)
-![alt text](http://i.imgur.com/sd6a8GD.png)
+First, make sure you have the unity image effects package. Then uncomment everything shown here:
+```csharp
+ //Blur Variables
+ //Blur Effect Script (using the standard image effects package) 
+ //public Blur blurEffect;
+ //Blur Effect Shader (should be the one that came with the package)
+ //public Shader blurEffectShader;
+ //Boolean for if the blur effect was originally enabled
+ //public Boolean blurBool;
+ 
+  //set the blur boolean to false;
+  //blurBool = false;
+  //Add the blur effect
+  /*mainCamObj.AddComponent(typeof(Blur));
+  blurEffect = (Blur)mainCamObj.GetComponent(typeof(Blur));
+  blurEffect.blurShader = blurEffectShader;
+  blurEffect.enabled = false;  */
+  
+  /* if (blurBool == false)
+  {
+  blurEffect.enabled = false;
+  }
+  else
+   {
+   //if you want to add in your own stuff do so here
+   return;
+   } */
+   
+   
+  /* if (blurBool == false)
+  {
+ blurEffect.enabled = false;
+  }
+  else
+  {
+  //if you want to add in your own stuff do so here
+   return;
+   } */
+   
+   
+```
+And that's it. Just two steps to enable blur!
