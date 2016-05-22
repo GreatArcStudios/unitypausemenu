@@ -12,7 +12,9 @@ Using a joystick/controller should work fine. Just remeber to change the highlig
 ![alt text](http://i.imgur.com/Pf7poMk.png)
  
 ### Enbaling pause blur
-First, make sure you have the unity image effects package. Then uncomment everything shown here:
+First, make sure you have the unity image effects package. Then follow the next few steps.
+<hr>
+Uncomment the following variable declarations found starting at line <b>270</b>
 ```csharp
  //Blur Variables
  //Blur Effect Script (using the standard image effects package) 
@@ -21,16 +23,22 @@ First, make sure you have the unity image effects package. Then uncomment everyt
  //public Shader blurEffectShader;
  //Boolean for if the blur effect was originally enabled
  //public Boolean blurBool;
- 
+ ```
+ <br>
+ Find and uncomment the following code found starting at line <b>349</b>
+ ```csharp
   //set the blur boolean to false;
-  //blurBool = false;
+  blurBool = false;
   //Add the blur effect
-  /*mainCamObj.AddComponent(typeof(Blur));
+  mainCamObj.AddComponent(typeof(Blur));
   blurEffect = (Blur)mainCamObj.GetComponent(typeof(Blur));
   blurEffect.blurShader = blurEffectShader;
-  blurEffect.enabled = false;  */
-  
-  /* if (blurBool == false)
+  blurEffect.enabled = false;  
+  ```
+  <br>
+  Uncomment the following code found starting at line <b>382</b> .
+  ```csharp
+ if (blurBool == false)
   {
   blurEffect.enabled = false;
   }
@@ -38,19 +46,14 @@ First, make sure you have the unity image effects package. Then uncomment everyt
    {
    //if you want to add in your own stuff do so here
    return;
-   } */
-   
-   
-  /* if (blurBool == false)
+   } 
+   ```
+   <br>
+  Uncomment the following code found starting at line <b>465</b> .
+  ```csharp
+ /* if (blurBool == false)
   {
- blurEffect.enabled = false;
-  }
-  else
-  {
-  //if you want to add in your own stuff do so here
-   return;
-   } */
-   
-   
-```
-And that's it. Just two steps to enable blur!
+   blurEffect.enabled = true;
+  }  */
+  ```
+And that's it. Just a few steps to enable a blury background on your pause menu!
