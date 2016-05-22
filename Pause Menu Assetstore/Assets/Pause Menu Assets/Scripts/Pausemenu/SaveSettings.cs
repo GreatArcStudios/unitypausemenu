@@ -31,9 +31,10 @@ namespace GreatArcStudios
         public int anisoLevel;
         public bool aoBool;
         public bool dofBool;
-        public bool useSimpleTerrian;
+        public bool useSimpleTerrain;
         public bool fullscreenBool;
-        public Resolution res;
+        public int resHeight;
+        public int resWidth;
         /// <summary>
         /// The string that will be saved.
         /// </summary>
@@ -41,11 +42,17 @@ namespace GreatArcStudios
         /// <summary>
         /// Load the same settings
         /// </summary>
+        public static object createJSONOBJ(string jsonString)
+        {
+            return JsonUtility.FromJson<SaveSettings>(jsonString);
+
+        }
         public void LoadGameSettings(String readString)
         {
             try
             {
-                ReadJson read = ReadJson.createJSONOBJ(readString);
+
+                SaveSettings read = (SaveSettings)createJSONOBJ(readString);
                 QualitySettings.antiAliasing = (int)read.aaQualINI;
                 PauseManager.densityINI = read.densityINI;
                 QualitySettings.shadowDistance = read.shadowDistINI;
@@ -63,7 +70,7 @@ namespace GreatArcStudios
                 PauseManager.aoBool = read.aoBool;
                 QualitySettings.SetQualityLevel(read.curQualityLevel);
                 QualitySettings.shadowCascades = read.lastShadowCascade;
-                Screen.SetResolution(read.res.width, read.res.height, read.fullscreenBool);
+                Screen.SetResolution(read.resWidth, read.resHeight, read.fullscreenBool);
                 if (read.anisoLevel == 0)
                 {
                     QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
@@ -124,7 +131,8 @@ namespace GreatArcStudios
             dofBool = PauseManager.dofBool;
             curQualityLevel = QualitySettings.GetQualityLevel();
             lastShadowCascade = PauseManager.lastShadowCascade;
-            res = PauseManager.currentRes;
+            resHeight = Screen.currentResolution.height;
+            resWidth = Screen.currentResolution.width;
             fullscreenBool = Screen.fullScreen;
             if (QualitySettings.anisotropicFiltering == AnisotropicFiltering.Disable)
             {
@@ -153,7 +161,7 @@ namespace GreatArcStudios
             {
                 Debug.Log("Cannot save terain heightmap LOD because the terrain was not assigned.");
             }
-            useSimpleTerrian = PauseManager.readUseSimpleTerrain;
+            useSimpleTerrain = PauseManager.readUseSimpleTerrain;
             jsonString = JsonUtility.ToJson(this);
             Debug.Log(jsonString);
             File.WriteAllText(Application.persistentDataPath + "/" + fileName, jsonString);

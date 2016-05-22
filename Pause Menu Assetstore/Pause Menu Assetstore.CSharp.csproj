@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Pause Menu Assets\Scripts\Pausemenu\PauseManager.cs" />
-    <Compile Include="Assets\Pause Menu Assets\Scripts\Pausemenu\ReadJson.cs" />
     <Compile Include="Assets\Pause Menu Assets\Scripts\Pausemenu\SaveSettings.cs" />
     <Compile Include="Assets\Pause Menu Assets\Scripts\Utlities\CoroutineUtlities.cs" />
     <Compile Include="Assets\Pause Menu Assets\Scripts\Utlities\Rotate.cs" />
