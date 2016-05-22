@@ -51,9 +51,9 @@ Uncomment the following variable declarations found starting at line <b>270</b>
    <br>
   Uncomment the following code found starting at line <b>465</b> .
   ```csharp
- /* if (blurBool == false)
+  if (blurBool == false)
   {
    blurEffect.enabled = true;
-  }  */
+  }  
   ```
 And that's it. Just a few steps to enable a blury background on your pause menu!
