@@ -2,9 +2,12 @@
 ##Setup
 Just drag the pause menu prefab from the prefab folder into your scene, and then bring it into view by editing the x value of the PREFAB to 0 , y to 0 and Z to 0. 
 ##Updating
-Delete the pause menu **folder** and install the new version. 
+Completely delete the pause menu **folder** and install the new version. 
+
+If you have a custom prefab or manager you can always keep that version in a different folder and merge the changes from there.
 ##Things to note
 Assign the main cam obj as the camera with your image effects like DOF and AO. 
+
 The docs are located here: https://github.com/GreatArcStudios/UnityPauseMenuDocs
 ### Joystick/Controller support
 Using a joystick/controller should work fine. Just remeber to change the highlighted dropdown to Joystick.
