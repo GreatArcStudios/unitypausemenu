@@ -13,7 +13,7 @@ Using a joystick/controller should work fine. Just remeber to change the highlig
  
 ### Enbaling pause blur
 First, make sure you have the unity image effects package. Then follow the next few steps.
-<hr>
+
 Uncomment the following variable declarations found starting at line <b>270</b>
 ```csharp
  //Blur Variables
