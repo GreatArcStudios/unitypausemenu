@@ -13,40 +13,109 @@ namespace GreatArcStudios
         /// Change the file name if something else floats your boat
         /// </summary>
         public string fileName = "GameSettings.json";
+        /// <summary>
+        /// Music volume
+        /// </summary>
         public float musicVolume;
+        /// <summary>
+        /// Effects volume
+        /// </summary>
         public float effectsVolume;
+        /// <summary>
+        /// Master volume
+        /// </summary>
         public float masterVolume;
+        /// <summary>
+        /// Shadow Distance
+        /// </summary>
         public float shadowDistINI;
+        /// <summary>
+        /// Render distance
+        /// </summary>
         public float renderDistINI;
+        /// <summary>
+        /// MSAA quality
+        /// </summary>
         public float aaQualINI;
+        /// <summary>
+        /// Density
+        /// </summary>
         public float densityINI;
+        /// <summary>
+        /// Terrain trees rendered as meshes amount
+        /// </summary>
         public float treeMeshAmtINI;
+        /// <summary>
+        /// Camera FOV
+        /// </summary>
         public float fovINI;
+        /// <summary>
+        /// Terrain heightmap quality
+        /// </summary>
         public float terrainHeightMapLOD;
         public int msaaINI;
+        /// <summary>
+        /// VSync settings
+        /// </summary>
         public int vsyncINI;
+        /// <summary>
+        /// Texture quality
+        /// </summary>
         public int textureLimit;
+        /// <summary>
+        /// Quality preset
+        /// </summary>
         public int curQualityLevel;
+        /// <summary>
+        /// Shadwo Cascade
+        /// </summary>
         public int lastShadowCascade;
+        /// <summary>
+        /// Aniso texture level
+        /// </summary>
         public int anisoLevel;
+        /// <summary>
+        /// AO on or off
+        /// </summary>
         public bool aoBool;
+        /// <summary>
+        /// DOF on or off
+        /// </summary>
         public bool dofBool;
+        /// <summary>
+        /// Use simple terrain or high quality terrain ie: RTP. 
+        /// </summary>
         public bool useSimpleTerrain;
+        /// <summary>
+        /// Is the game in fullscreen
+        /// </summary>
         public bool fullscreenBool;
+        /// <summary>
+        /// Resolution heigh
+        /// </summary>
         public int resHeight;
+        /// <summary>
+        /// Resolution Width
+        /// </summary>
         public int resWidth;
         /// <summary>
         /// The string that will be saved.
         /// </summary>
         static string jsonString;
         /// <summary>
-        /// Load the same settings
+        /// Create the JSON object needed to save settings.
         /// </summary>
+        /// <param name="jsonString"></param>
+        /// <returns></returns>
         public static object createJSONOBJ(string jsonString)
         {
             return JsonUtility.FromJson<SaveSettings>(jsonString);
 
         }
+        /// <summary>
+        /// Read the game settings from the file
+        /// </summary>
+        /// <param name="readString"></param>
         public void LoadGameSettings(String readString)
         {
             try
