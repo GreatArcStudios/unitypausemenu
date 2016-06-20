@@ -98,88 +98,70 @@ namespace GreatArcStudios
         /// Resolution Width
         /// </summary>
         public int resWidth;
-        /// <summary>
-        /// The string that will be saved.
-        /// </summary>
-        static string jsonString;
-        /// <summary>
-        /// Create the JSON object needed to save settings.
-        /// </summary>
-        /// <param name="jsonString"></param>
-        /// <returns></returns>
-        public static object createJSONOBJ(string jsonString)
-        {
-            return JsonUtility.FromJson<SaveSettings>(jsonString);
 
-        }
         /// <summary>
         /// Read the game settings from the file
         /// </summary>
         /// <param name="readString"></param>
         public void LoadGameSettings(String readString)
         {
+            SaveSettings read = JsonUtility.FromJson<SaveSettings>(readString);
+            QualitySettings.antiAliasing = (int)read.aaQualINI;
+            PauseManager.densityINI = read.densityINI;
+            QualitySettings.shadowDistance = read.shadowDistINI;
+            PauseManager.mainCamShared.farClipPlane = read.renderDistINI;
+            PauseManager.treeMeshAmtINI = read.treeMeshAmtINI;
+            PauseManager.mainCamShared.fieldOfView = read.fovINI;
+            QualitySettings.antiAliasing = read.msaaINI;
+            QualitySettings.vSyncCount = read.vsyncINI;
+            PauseManager.lastTexLimit = read.textureLimit;
+            QualitySettings.masterTextureLimit = read.textureLimit;
+            AudioListener.volume = read.masterVolume;
+            PauseManager.lastAudioMult = read.effectsVolume;
+            PauseManager.lastMusicMult = read.musicVolume;
+            PauseManager.dofBool = read.dofBool;
+            PauseManager.aoBool = read.aoBool;
+            QualitySettings.SetQualityLevel(read.curQualityLevel);
+            QualitySettings.shadowCascades = read.lastShadowCascade;
+            Screen.SetResolution(read.resWidth, read.resHeight, read.fullscreenBool);
+            if (read.anisoLevel == 0)
+            {
+                QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
+            }
+            else if (read.anisoLevel == 1)
+            {
+                QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
+            }
+            else if (read.anisoLevel == 2)
+            {
+                QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
+            }
             try
             {
-
-                SaveSettings read = (SaveSettings)createJSONOBJ(readString);
-                QualitySettings.antiAliasing = (int)read.aaQualINI;
-                PauseManager.densityINI = read.densityINI;
-                QualitySettings.shadowDistance = read.shadowDistINI;
-                PauseManager.mainCamShared.farClipPlane = read.renderDistINI;
-                PauseManager.treeMeshAmtINI = read.treeMeshAmtINI;
-                PauseManager.mainCamShared.fieldOfView = read.fovINI;
-                QualitySettings.antiAliasing = read.msaaINI;
-                QualitySettings.vSyncCount = read.vsyncINI;
-                PauseManager.lastTexLimit = read.textureLimit;
-                QualitySettings.masterTextureLimit = read.textureLimit;
-                AudioListener.volume = read.masterVolume;
-                PauseManager.lastAudioMult = read.effectsVolume;
-                PauseManager.lastMusicMult = read.musicVolume;
-                PauseManager.dofBool = read.dofBool;
-                PauseManager.aoBool = read.aoBool;
-                QualitySettings.SetQualityLevel(read.curQualityLevel);
-                QualitySettings.shadowCascades = read.lastShadowCascade;
-                Screen.SetResolution(read.resWidth, read.resHeight, read.fullscreenBool);
-                if (read.anisoLevel == 0)
+                if (read.useSimpleTerrain)
                 {
-                    QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
+                    PauseManager.readTerrain.heightmapMaximumLOD = (int)read.terrainHeightMapLOD;
                 }
-                else if (read.anisoLevel == 1)
+                else
                 {
-                    QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
+                    PauseManager.readSimpleTerrain.heightmapMaximumLOD = (int)read.terrainHeightMapLOD;
                 }
-                else if (read.anisoLevel == 2)
-                {
-                    QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
-                }
-                try
-                {
-                    if (read.useSimpleTerrain)
-                    {
-                        PauseManager.readTerrain.heightmapMaximumLOD = (int)read.terrainHeightMapLOD;
-                    }
-                    else
-                    {
-                        PauseManager.readSimpleTerrain.heightmapMaximumLOD = (int)read.terrainHeightMapLOD;
-                    }
-                    PauseManager.readUseSimpleTerrain = read.useSimpleTerrain;
-                }
-                catch
-                {
-                    Debug.Log("Cannot read terain heightmap LOD because the terrain was not assigned.");
-                }
+                PauseManager.readUseSimpleTerrain = read.useSimpleTerrain;
             }
-            catch (FileNotFoundException)
+            catch
             {
-                Debug.Log("Game settings not found in: " + Application.persistentDataPath + "/" + fileName);
+                Debug.Log("Cannot read terain heightmap LOD because the terrain was not assigned.");
             }
-
         }
+
+
+
         /// <summary>
         /// Get the quality/music settings before saving 
         /// </summary>
         public void SaveGameSettings()
         {
+            string jsonString;
             if (File.Exists(Application.persistentDataPath + "/" + fileName))
             {
                 File.Delete(Application.persistentDataPath + "/" + fileName);

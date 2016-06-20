@@ -79,7 +79,7 @@ namespace GreatArcStudios
         /// <summary>
         /// The terrain detail density float. It's only public because you may want to adjust it in editor
         /// </summary> 
-        public  float detailDensity;
+        public float detailDensity;
 
         /// <summary>
         /// Timescale value. The defualt is 1 for most games. You may want to change it if you are pausing the game in a slow motion situation 
@@ -88,11 +88,11 @@ namespace GreatArcStudios
         /// <summary>
         /// One terrain variable used if you have a terrain plugin like rtp. 
         /// </summary>
-        public  Terrain terrain;
+        public Terrain terrain;
         /// <summary>
         /// Other terrain variable used if you want to have an option to target low end harware.
         /// </summary>
-        public  Terrain simpleTerrain;
+        public Terrain simpleTerrain;
         /// <summary>
         /// Inital shadow distance 
         /// </summary>
@@ -169,19 +169,19 @@ namespace GreatArcStudios
         /// <summary>
         /// Lod bias float array. You should manually assign these based on the quality level.
         /// </summary>
-        public  float[] LODBias;
+        public float[] LODBias;
         /// <summary>
         /// Shadow distance array. You should manually assign these based on the quality level.
         /// </summary>
-        public  float[] shadowDist;
+        public float[] shadowDist;
         /// <summary>
         /// An array of music audio sources
         /// </summary>
-        public  AudioSource[] music;
+        public AudioSource[] music;
         /// <summary>
         /// An array of sound effect audio sources
         /// </summary>
-        public  AudioSource[] effects;
+        public AudioSource[] effects;
         /// <summary>
         /// An array of the other UI elements, which is used for disabling the other elements when the game is paused.
         /// </summary>
@@ -193,7 +193,7 @@ namespace GreatArcStudios
         /// <summary>
         /// Boolean for turning on simple terrain
         /// </summary>
-        public  Boolean useSimpleTerrain;
+        public Boolean useSimpleTerrain;
         public static Boolean readUseSimpleTerrain;
         /// <summary>
         /// Event system
@@ -243,7 +243,7 @@ namespace GreatArcStudios
 
         //last shadow cascade value
         internal static int lastShadowCascade;
-       
+
         public static Boolean aoBool;
         public static Boolean dofBool;
         private Boolean lastAOBool;
@@ -279,7 +279,7 @@ namespace GreatArcStudios
         /// </summary>
         public void Start()
         {
-           
+
             readUseSimpleTerrain = useSimpleTerrain;
             if (useSimpleTerrain)
             {
@@ -289,7 +289,7 @@ namespace GreatArcStudios
             {
                 readTerrain = terrain;
             }
-           
+
             mainCamShared = mainCam;
             //Set the lastmusicmult and last audiomult
             lastMusicMult = audioMusicSlider.value;
@@ -333,7 +333,16 @@ namespace GreatArcStudios
             lastTexLimit = QualitySettings.masterTextureLimit;
             //set last shadow cascade 
             lastShadowCascade = QualitySettings.shadowCascades;
-            saveSettings.LoadGameSettings(File.ReadAllText(Application.persistentDataPath + "/" + saveSettings.fileName));
+            try
+            {
+                saveSettings.LoadGameSettings(File.ReadAllText(Application.persistentDataPath + "/" + saveSettings.fileName));
+            }
+            catch
+            {
+                Debug.Log("Game settings not found in: " + Application.persistentDataPath + "/" + saveSettings.fileName);
+                saveSettings.SaveGameSettings();
+            }
+
             try
             {
                 densityINI = Terrain.activeTerrain.detailObjectDensity;
@@ -362,6 +371,7 @@ namespace GreatArcStudios
         {
             Application.LoadLevel(Application.loadedLevel);
             uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
+
         }
         /// <summary>
         /// Method to resume the game, so disable the pause menu and re-enable all other ui elements
@@ -467,7 +477,9 @@ namespace GreatArcStudios
                      blurEffect.enabled = true;
                  }  */
             }
-            else if(Input.GetKeyDown(KeyCode.Escape) && mainPanel.active == true) {
+            else if (Input.GetKeyDown(KeyCode.Escape) && mainPanel.active == true)
+            {
+
                 Time.timeScale = timeScale;
                 mainPanel.SetActive(false);
                 vidPanel.SetActive(false);
@@ -606,7 +618,7 @@ namespace GreatArcStudios
         {
             StartCoroutine(applyAudioMain());
             uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
-           
+
         }
         /// <summary>
         /// Use an IEnumerator to first play the animation and then change the audio settings
@@ -823,7 +835,7 @@ namespace GreatArcStudios
         {
             StartCoroutine(applyVideo());
             uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
-  
+
         }
         /// <summary>
         /// Use an IEnumerator to first play the animation and then change the video settings.
@@ -1062,7 +1074,7 @@ namespace GreatArcStudios
         /// <param name="b"></param>
         public void setFullScreen(Boolean b)
         {
-           
+
 
             if (b == true)
             {
