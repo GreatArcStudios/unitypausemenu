@@ -28,6 +28,10 @@ namespace GreatArcStudios
         /// </summary>
         public GameObject audioPanel;
         /// <summary>
+        /// This is the credits panel holder, which holds all of the silders for the audio panel and should be called "credits panel"
+        /// </summary>
+        public GameObject creditsPanel;
+        /// <summary>
         /// These are the game objects with the title texts like "Pause menu" and "Game Title" 
         /// </summary>
         public GameObject TitleTexts;
@@ -47,6 +51,10 @@ namespace GreatArcStudios
         /// Quit Panel animator  
         /// </summary>
         public Animator quitPanelAnimator;
+        /// <summary>
+        /// Credits Panel animator  
+        /// </summary>
+        public Animator creditsPanelAnimator;
         /// <summary>
         /// Pause menu text 
         /// </summary>
@@ -211,6 +219,7 @@ namespace GreatArcStudios
         /// Defualt selected on the video panel
         /// </summary>
         public GameObject defualtSelectedMain;
+        public GameObject defualtSelectedCredits;
         //last music multiplier; this should be a value between 0-1
         internal static float lastMusicMult;
         //last audio multiplier; this should be a value between 0-1
@@ -252,20 +261,22 @@ namespace GreatArcStudios
         public static Terrain readSimpleTerrain;
 
         private SaveSettings saveSettings = new SaveSettings();
+   
+
         /*
-        //Color fade duration value
-        //public float crossFadeDuration;
-        //custom color
-        //public Color _customColor;
-        
-         //Animation clips
-         private AnimationClip audioIn;
-         private AnimationClip audioOut;
-         public AnimationClip vidIn;
-         public AnimationClip vidOut;
-         public AnimationClip mainIn;
-         public AnimationClip mainOut; 
-          */
+//Color fade duration value
+//public float crossFadeDuration;
+//custom color
+//public Color _customColor;
+
+//Animation clips
+private AnimationClip audioIn;
+private AnimationClip audioOut;
+public AnimationClip vidIn;
+public AnimationClip vidOut;
+public AnimationClip mainIn;
+public AnimationClip mainOut; 
+*/
         //Blur Variables
         //Blur Effect Script (using the standard image effects package) 
         //public Blur blurEffect;
@@ -327,6 +338,7 @@ namespace GreatArcStudios
             mainPanel.SetActive(false);
             vidPanel.SetActive(false);
             audioPanel.SetActive(false);
+            creditsPanel.SetActive(false);
             //Enable mask
             mask.SetActive(false);
             //set last texture limit
@@ -1393,6 +1405,37 @@ namespace GreatArcStudios
             QualitySettings.shadowDistance = shadowDist[6];
             QualitySettings.lodBias = LODBias[6];
         }
+        /// <summary>
+        /// Return to the main menu from the credits panel
+        /// </summary>
+        public void creditsReturn()
+        {
+            StartCoroutine(creditsReturnMain());
+            uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
+        }
+        /// <summary>
+        /// Use an IEnumerator to first play the animation and then hide other panels settings
+        /// </summary>
+        /// <returns></returns>
+        internal IEnumerator creditsReturnMain()
+        {
+            creditsPanelAnimator.Play("Credits Panel Out 1");
+            yield return StartCoroutine(CoroutineUtilities.WaitForRealTime((float)creditsPanelAnimator.GetCurrentAnimatorClipInfo(0).Length));
+            mainPanel.SetActive(true);
+            vidPanel.SetActive(false);
+            audioPanel.SetActive(false);
+            creditsPanel.SetActive(false);
+        }
+        public void creditsIn()
+        {
+            mainPanel.SetActive(false);
+            vidPanel.SetActive(false);
+            audioPanel.SetActive(false);
+            creditsPanel.SetActive(true);
+            creditsPanelAnimator.enabled = true;
+            uiEventSystem.SetSelectedGameObject(defualtSelectedCredits);
+            creditsPanelAnimator.Play("Credits Panel In");
 
+        }
     }
 }
