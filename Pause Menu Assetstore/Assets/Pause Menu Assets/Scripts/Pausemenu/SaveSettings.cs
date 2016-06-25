@@ -102,51 +102,51 @@ namespace GreatArcStudios
         /// <summary>
         /// Read the game settings from the file
         /// </summary>
-        /// <param name="readString"></param>
-        public void LoadGameSettings(String readString)
+        public void LoadGameSettings()
         {
-            SaveSettings read = JsonUtility.FromJson<SaveSettings>(readString);
-            QualitySettings.antiAliasing = (int)read.aaQualINI;
-            PauseManager.densityINI = read.densityINI;
-            QualitySettings.shadowDistance = read.shadowDistINI;
-            PauseManager.mainCamShared.farClipPlane = read.renderDistINI;
-            PauseManager.treeMeshAmtINI = read.treeMeshAmtINI;
-            PauseManager.mainCamShared.fieldOfView = read.fovINI;
-            QualitySettings.antiAliasing = read.msaaINI;
-            QualitySettings.vSyncCount = read.vsyncINI;
-            PauseManager.lastTexLimit = read.textureLimit;
-            QualitySettings.masterTextureLimit = read.textureLimit;
-            AudioListener.volume = read.masterVolume;
-            PauseManager.lastAudioMult = read.effectsVolume;
-            PauseManager.lastMusicMult = read.musicVolume;
-            PauseManager.dofBool = read.dofBool;
-            PauseManager.aoBool = read.aoBool;
-            QualitySettings.SetQualityLevel(read.curQualityLevel);
-            QualitySettings.shadowCascades = read.lastShadowCascade;
-            Screen.SetResolution(read.resWidth, read.resHeight, read.fullscreenBool);
-            if (read.anisoLevel == 0)
+            String readString = File.ReadAllText(Application.persistentDataPath + "/" + fileName);
+            JsonUtility.FromJsonOverwrite(readString, this);
+            QualitySettings.antiAliasing = (int)aaQualINI;
+            PauseManager.densityINI = densityINI;
+            QualitySettings.shadowDistance = shadowDistINI;
+            PauseManager.mainCamShared.farClipPlane = renderDistINI;
+            PauseManager.treeMeshAmtINI = treeMeshAmtINI;
+            PauseManager.mainCamShared.fieldOfView = fovINI;
+            QualitySettings.antiAliasing = msaaINI;
+            QualitySettings.vSyncCount = vsyncINI;
+            PauseManager.lastTexLimit = textureLimit;
+            QualitySettings.masterTextureLimit = textureLimit;
+            AudioListener.volume = masterVolume;
+            PauseManager.lastAudioMult = effectsVolume;
+            PauseManager.lastMusicMult = musicVolume;
+            PauseManager.dofBool = dofBool;
+            PauseManager.aoBool = aoBool;
+            QualitySettings.SetQualityLevel(curQualityLevel);
+            QualitySettings.shadowCascades = lastShadowCascade;
+            Screen.SetResolution(resWidth, resHeight, fullscreenBool);
+            if (anisoLevel == 0)
             {
                 QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
             }
-            else if (read.anisoLevel == 1)
+            else if (anisoLevel == 1)
             {
                 QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
             }
-            else if (read.anisoLevel == 2)
+            else if (anisoLevel == 2)
             {
                 QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
             }
             try
             {
-                if (read.useSimpleTerrain)
+                if (useSimpleTerrain)
                 {
-                    PauseManager.readTerrain.heightmapMaximumLOD = (int)read.terrainHeightMapLOD;
+                    PauseManager.readTerrain.heightmapMaximumLOD = (int)terrainHeightMapLOD;
                 }
                 else
                 {
-                    PauseManager.readSimpleTerrain.heightmapMaximumLOD = (int)read.terrainHeightMapLOD;
+                    PauseManager.readSimpleTerrain.heightmapMaximumLOD = (int)terrainHeightMapLOD;
                 }
-                PauseManager.readUseSimpleTerrain = read.useSimpleTerrain;
+                PauseManager.readUseSimpleTerrain = useSimpleTerrain;
             }
             catch
             {

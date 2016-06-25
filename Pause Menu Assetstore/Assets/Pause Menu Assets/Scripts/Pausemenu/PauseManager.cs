@@ -335,7 +335,7 @@ namespace GreatArcStudios
             lastShadowCascade = QualitySettings.shadowCascades;
             try
             {
-                saveSettings.LoadGameSettings(File.ReadAllText(Application.persistentDataPath + "/" + saveSettings.fileName));
+                saveSettings.LoadGameSettings();
             }
             catch
             {
