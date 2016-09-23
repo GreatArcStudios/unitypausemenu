@@ -313,9 +313,10 @@ public AnimationClip mainOut;
             _currentLevel = QualitySettings.GetQualityLevel();
             //Get the current resoultion, if the game is in fullscreen, and set the label to the original resolution
             allRes = Screen.resolutions;
-            currentRes = Screen.currentResolution;
+            currentRes.width = Screen.width;
+            currentRes.height = Screen.height;
             //Debug.Log("ini res" + currentRes);
-            resolutionLabel.text = Screen.currentResolution.width.ToString() + " x " + Screen.currentResolution.height.ToString();
+            resolutionLabel.text = Screen.width.ToString() + " x " + Screen.height.ToString();
             isFullscreen = Screen.fullScreen;
             //get initial screen effect bools
             lastAOBool = aoToggle.isOn;
@@ -1090,11 +1091,11 @@ public AnimationClip mainOut;
 
             if (b == true)
             {
-                Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
+                Screen.SetResolution(Screen.width, Screen.height, true);
             }
             else
             {
-                Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, false);
+                Screen.SetResolution(Screen.width, Screen.height, false);
             }
         }
         /// <summary>

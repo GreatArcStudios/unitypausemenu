@@ -123,7 +123,8 @@ namespace GreatArcStudios
             PauseManager.aoBool = aoBool;
             QualitySettings.SetQualityLevel(curQualityLevel);
             QualitySettings.shadowCascades = lastShadowCascade;
-            Screen.SetResolution(resWidth, resHeight, fullscreenBool);
+            //Temp solution for recent resoultion problems 
+            //Screen.SetResolution(resWidth, resHeight, fullscreenBool);
             if (anisoLevel == 0)
             {
                 QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
@@ -182,9 +183,10 @@ namespace GreatArcStudios
             dofBool = PauseManager.dofBool;
             curQualityLevel = QualitySettings.GetQualityLevel();
             lastShadowCascade = PauseManager.lastShadowCascade;
-            resHeight = Screen.currentResolution.height;
-            resWidth = Screen.currentResolution.width;
-            fullscreenBool = Screen.fullScreen;
+             //Temp solution for recent resoultion problems 
+            //resHeight = Screen.height;
+            //resWidth = Screen.width;
+            //fullscreenBool = Screen.fullScreen;
             if (QualitySettings.anisotropicFiltering == AnisotropicFiltering.Disable)
             {
                 anisoLevel = 0;
