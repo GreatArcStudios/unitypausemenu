@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -261,7 +262,14 @@ namespace GreatArcStudios
         public static Terrain readSimpleTerrain;
 
         private SaveSettings saveSettings = new SaveSettings();
-   
+
+
+        private Terrain currentTerrain {
+            get {
+                return useSimpleTerrain ? simpleTerrain : terrain;
+            }
+        }
+
 
         /*
 //Color fade duration value
@@ -673,8 +681,6 @@ public AnimationClip mainOut;
             //Debug.Log(_beforeMaster + AudioListener.volume);
             try
             {
-
-
                 for (_audioEffectAmt = 0; _audioEffectAmt < effects.Length; _audioEffectAmt++)
                 {
                     //get the values for all effects before the change
@@ -696,7 +702,6 @@ public AnimationClip mainOut;
         /// </summary>
         public void Video()
         {
-
             mainPanel.SetActive(false);
             vidPanel.SetActive(true);
             audioPanel.SetActive(false);
@@ -705,6 +710,10 @@ public AnimationClip mainOut;
             pauseMenu.text = "Video Menu";
 
         }
+
+
+        private static readonly Dictionary<int, int> aaDict = new Dictionary<int, int>() { {0, 0}, {2, 1}, {4, 2}, {8, 3} };
+
         /// <summary>
         /// Play the "video panel in" animation
         /// </summary>
@@ -713,25 +722,13 @@ public AnimationClip mainOut;
             uiEventSystem.SetSelectedGameObject(defualtSelectedVideo);
             vidPanelAnimator.Play("Video Panel In");
 
-            if (QualitySettings.antiAliasing == 0)
-            {
-                aaCombo.value = 0;
-            }
-            else if (QualitySettings.antiAliasing == 2)
-            {
-                aaCombo.value = 1;
-            }
-            else if (QualitySettings.antiAliasing == 4)
-            {
-                aaCombo.value = 2;
-            }
-            else if (QualitySettings.antiAliasing == 8)
-            {
-                aaCombo.value = 3;
-            }
+            aaCombo.value = aaDict[QualitySettings.antiAliasing];
+            
+            // --------
+            // todo: that stuff is stupid:
             if (QualitySettings.anisotropicFiltering == AnisotropicFiltering.ForceEnable)
             {
-                afCombo.value = 1;
+                afCombo.value = 1;  
             }
             else if (QualitySettings.anisotropicFiltering == AnisotropicFiltering.Disable)
             {
@@ -741,6 +738,14 @@ public AnimationClip mainOut;
             {
                 afCombo.value = 2;
             }
+            /* 
+             * the unity constants already have int values:
+                 * AnisotropicFiltering.ForceEnable = 2
+                 * AnisotropicFiltering.Enable = 1
+             * would be smarter to use them, also this hard coded values just work with the "hardcoded" dropdownlist
+             */
+            // --------
+
             presetLabel.text = presets[QualitySettings.GetQualityLevel()].ToString();
             fovSlider.value = mainCam.fieldOfView;
             modelQualSlider.value = QualitySettings.lodBias;
@@ -761,18 +766,9 @@ public AnimationClip mainOut;
             }
             try
             {
-                if (useSimpleTerrain == true)
-                {
-                    highQualTreeSlider.value = simpleTerrain.treeMaximumFullLODCount;
-                    terrainDensitySlider.value = simpleTerrain.detailObjectDensity;
-                    terrainQualSlider.value = terrain.heightmapMaximumLOD;
-                }
-                else
-                {
-                    highQualTreeSlider.value = terrain.treeMaximumFullLODCount;
-                    terrainDensitySlider.value = terrain.detailObjectDensity;
-                    terrainQualSlider.value = terrain.heightmapMaximumLOD;
-                }
+                highQualTreeSlider.value = currentTerrain.treeMaximumFullLODCount;
+                terrainDensitySlider.value = currentTerrain.detailObjectDensity;
+                terrainQualSlider.value = currentTerrain.heightmapMaximumLOD;
             }
             catch
             {
@@ -876,55 +872,28 @@ public AnimationClip mainOut;
             isFullscreen = Screen.fullScreen;
             try
             {
-                if (useSimpleTerrain == true)
-                {
-                    densityINI = simpleTerrain.detailObjectDensity;
-                    treeMeshAmtINI = simpleTerrain.treeMaximumFullLODCount;
-                }
-                else
-                {
-                    densityINI = terrain.detailObjectDensity;
-                    treeMeshAmtINI = simpleTerrain.treeMaximumFullLODCount;
-                }
+                densityINI = currentTerrain.detailObjectDensity;
+                treeMeshAmtINI = currentTerrain.treeMaximumFullLODCount;
             }
             catch { Debug.Log("Please assign a terrain"); }
             saveSettings.SaveGameSettings();
 
         }
-        /// <summary>
-        /// Video Options
-        /// </summary>
-        /// <param name="B"></param>
-        public void toggleVSync(Boolean B)
-        {
-            vsyncINI = QualitySettings.vSyncCount;
-            if (B == true)
-            {
-                QualitySettings.vSyncCount = 1;
-            }
-            else
-            {
-                QualitySettings.vSyncCount = 0;
-            }
 
+
+        public void TurnOnVSync(bool b){
+            vsyncINI = QualitySettings.vSyncCount;
+            QualitySettings.vSyncCount = b ? 1 : 0;
         }
+
         /// <summary>
         /// Update full high quality tree mesh amount.
         /// </summary>
         /// <param name="f"></param>
-        public void updateTreeMeshAmt(int f)
-        {
-
-            if (useSimpleTerrain == true)
-            {
-                simpleTerrain.treeMaximumFullLODCount = (int)f;
-            }
-            else
-            {
-                terrain.treeMaximumFullLODCount = (int)f;
-            }
-
+        public void updateTreeMeshAmt(int f) {
+            currentTerrain.treeMaximumFullLODCount = f;
         }
+
         /// <summary>
         /// Change the lod bias using
         /// <c>
@@ -949,14 +918,12 @@ public AnimationClip mainOut;
             try
             {
                 mainCam.farClipPlane = f;
-
             }
             catch
             {
                 Debug.Log(" Finding main camera now...it is still suggested that you manually assign this");
                 mainCam = Camera.main;
                 mainCam.farClipPlane = f;
-
             }
 
         }
@@ -967,9 +934,7 @@ public AnimationClip mainOut;
         /// <param name="qual"></param>
         public void updateTex(float qual)
         {
-
-            int f = Mathf.RoundToInt(qual);
-            QualitySettings.masterTextureLimit = f;
+            QualitySettings.masterTextureLimit = (int)qual;
         }
         /// <summary>
         /// Update the shadow distance using 
@@ -981,7 +946,6 @@ public AnimationClip mainOut;
         public void updateShadowDistance(float dist)
         {
             QualitySettings.shadowDistance = dist;
-
         }
         /// <summary>
         /// Change the max amount of high quality trees using 
@@ -992,16 +956,9 @@ public AnimationClip mainOut;
         /// <param name="qual"></param>
         public void treeMaxLod(float qual)
         {
-            if (useSimpleTerrain == true)
-            {
-                simpleTerrain.treeMaximumFullLODCount = (int)qual;
-            }
-            else
-            {
-                terrain.treeMaximumFullLODCount = (int)qual;
-            }
-
+            currentTerrain.treeMaximumFullLODCount = (int)qual;
         }
+
         /// <summary>
         /// Change the height map max LOD using 
         /// <c>
@@ -1009,11 +966,9 @@ public AnimationClip mainOut;
         /// </c>
         /// </summary>
         /// <param name="qual"></param>
-        public void updateTerrainLod(float qual)
-        {
-            try { if (useSimpleTerrain == true) { simpleTerrain.heightmapMaximumLOD = (int)qual; } else { terrain.heightmapMaximumLOD = (int)qual; } }
-            catch { Debug.Log("Terrain not assigned"); return; }
-
+        public void updateTerrainLod(float qual) {
+            if (currentTerrain == null) return; // fail silently
+            currentTerrain.heightmapMaximumLOD = (int) qual;
         }
         /// <summary>
         /// Change the fov using a float. The defualt should be 60.
@@ -1027,54 +982,30 @@ public AnimationClip mainOut;
         /// Toggle on or off Depth of Field. This is meant to be used with a checkbox.
         /// </summary>
         /// <param name="b"></param>
-        public void toggleDOF(Boolean b)
+        public void toggleDOF(bool b)
         {
             try
             {
                 tempScript = (MonoBehaviour)mainCamObj.GetComponent(DOFScriptName);
-
-                if (b == true)
-                {
-                    tempScript.enabled = true;
-                    dofBool = true;
-                }
-                else
-                {
-                    tempScript.enabled = false;
-                    dofBool = false;
-                }
+                tempScript.enabled = b;
+                dofBool = b;
             }
             catch
             {
                 Debug.Log("No AO post processing found");
-                return;
             }
-
-
-
         }
         /// <summary>
         /// Toggle on or off Ambient Occulusion. This is meant to be used with a checkbox.
         /// </summary>
         /// <param name="b"></param>
-        public void toggleAO(Boolean b)
+        public void toggleAO(bool b)
         {
             try
             {
-
                 tempScript = (MonoBehaviour)mainCamObj.GetComponent(AOScriptName);
-
-                if (b == true)
-                {
-                    tempScript.enabled = true;
-                    aoBool = true;
-                }
-                else
-                {
-                    tempScript.enabled = false;
-                    aoBool = false;
-                }
-            }
+                tempScript.enabled = b;
+                aoBool = b;            }
             catch
             {
                 Debug.Log("No AO post processing found");
@@ -1085,19 +1016,20 @@ public AnimationClip mainOut;
         /// Set the game to windowed or full screen. This is meant to be used with a checkbox
         /// </summary>
         /// <param name="b"></param>
-        public void setFullScreen(Boolean b)
-        {
+        public void setFullScreen(bool b){ Screen.SetResolution(Screen.width, Screen.height, b); }
 
 
-            if (b == true)
+        private void changeRes(int index){
+            for (int i = 0; i < allRes.Length; i++)
             {
-                Screen.SetResolution(Screen.width, Screen.height, true);
-            }
-            else
-            {
-                Screen.SetResolution(Screen.width, Screen.height, false);
+                //If the resoultion matches the current resoution height and width then go through the statement.
+                if (allRes[i].height == currentRes.height && allRes[i].width == currentRes.width)
+                {
+                    Screen.SetResolution(allRes[i+index].width, allRes[i+index].height, isFullscreen); isFullscreen = isFullscreen; currentRes = Screen.resolutions[i+index]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString();
+                }
             }
         }
+
         /// <summary>
         /// Method for moving to the next resoution in the allRes array. WARNING: This is not finished/buggy.  
         /// </summary>
@@ -1106,20 +1038,7 @@ public AnimationClip mainOut;
         {
             beforeRes = currentRes;
             //Iterate through all of the resoultions. 
-            for (int i = 0; i < allRes.Length; i++)
-            {
-                //If the resoultion matches the current resoution height and width then go through the statement.
-                if (allRes[i].height == currentRes.height && allRes[i].width == currentRes.width)
-                {
-                    //Debug.Log("found " + i);
-                    //If the user is playing fullscreen. Then set the resoution to one element higher in the array, set the full screen boolean to true, reset the current resolution, and then update the resolution label.
-                    if (isFullscreen == true) { Screen.SetResolution(allRes[i + 1].width, allRes[i + 1].height, true); isFullscreen = true; currentRes = Screen.resolutions[i + 1]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString(); }
-                    //If the user is playing in a window. Then set the resoution to one element higher in the array, set the full screen boolean to false, reset the current resolution, and then update the resolution label.
-                    if (isFullscreen == false) { Screen.SetResolution(allRes[i + 1].width, allRes[i + 1].height, false); isFullscreen = false; currentRes = Screen.resolutions[i + 1]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString(); }
-
-                    //Debug.Log("Res after: " + currentRes);
-                }
-            }
+            changeRes(1);
 
         }
         /// <summary>
@@ -1129,51 +1048,14 @@ public AnimationClip mainOut;
         public void lastRes()
         {
             beforeRes = currentRes;
-            //Iterate through all of the resoultions. 
-            for (int i = 0; i < allRes.Length; i++)
-            {
-                if (allRes[i].height == currentRes.height && allRes[i].width == currentRes.width)
-                {
-
-                    //Debug.Log("found " + i);
-                    //If the user is playing fullscreen. Then set the resoution to one element lower in the array, set the full screen boolean to true, reset the current resolution, and then update the resolution label.
-                    if (isFullscreen == true) { Screen.SetResolution(allRes[i - 1].width, allRes[i - 1].height, true); isFullscreen = true; currentRes = Screen.resolutions[i - 1]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString(); }
-                    //If the user is playing in a window. Then set the resoution to one element lower in the array, set the full screen boolean to false, reset the current resolution, and then update the resolution label.
-                    if (isFullscreen == false) { Screen.SetResolution(allRes[i - 1].width, allRes[i - 1].height, false); isFullscreen = false; currentRes = Screen.resolutions[i - 1]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString(); }
-
-                    //Debug.Log("Res after: " + currentRes);
-                }
-            }
-
+            changeRes(-1);
         }
+        
         public void enableSimpleTerrain(Boolean b)
         {
             useSimpleTerrain = b;
         }
-        /// <summary>
-        /// Force aniso on using quality settings
-        /// </summary>
-        //Force the aniso on.
-        public void forceOnANISO()
-        {
-            QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
-        }
-        /// <summary>
-        /// Per texture aniso using quality settings
-        /// </summary>
-        //Use per texture aniso settings.
-        public void perTexANISO()
-        {
-            QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
-        }
-        /// <summary>
-        /// Disable aniso using quality setttings
-        /// </summary>
-        //Disable aniso all together.
-        public void disableANISO()
-        {
-            QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
-        }
+
         /// <summary>
         /// The method for changing aniso settings
         /// </summary>
@@ -1182,15 +1064,15 @@ public AnimationClip mainOut;
         {
             if (anisoSetting == 0)
             {
-                disableANISO();
+                QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
             }
             else if (anisoSetting == 1)
             {
-                forceOnANISO();
+                QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
             }
             else if (anisoSetting == 2)
             {
-                perTexANISO();
+                QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
             }
         }
 
@@ -1229,67 +1111,25 @@ public AnimationClip mainOut;
             }
 
         }
+
         /// <summary>
-        /// Update MSAA quality using quality settings
+        /// Sets the MSAA to a specific level (between 0 and 4)
         /// </summary>
-        /// <param name="msaaAmount"></param>
-        public void updateMSAA(int msaaAmount)
-        {
-            if (msaaAmount == 0)
-            {
-                disableMSAA();
-            }
-            else if (msaaAmount == 1)
-            {
-                twoMSAA();
-            }
-            else if (msaaAmount == 2)
-            {
-                fourMSAA();
-            }
-            else if (msaaAmount == 3)
-            {
-                eightMSAA();
-            }
+        /// <param name="level">log2 of the desired level. 
+        /// 0 -> 0x MSAA (disabled). 
+        /// 1 -> 2x MSAA.
+        /// 2 -> 4x MSAA.
+        /// 3 -> 8x MSAA.
+        /// </param>
+        public void SetMSAALevel(int level) {
+            level = Mathf.Clamp(level, 0, 4);
+
+            QualitySettings.antiAliasing = level == 0 ? 0 : 1 << level;
 
         }
-        /// <summary>
-        /// Set MSAA to 0x (disabling it) using quality settings
-        /// </summary>
-        public void disableMSAA()
-        {
 
-            QualitySettings.antiAliasing = 0;
-            // aaOption.text = "MSAA: " + QualitySettings.antiAliasing.ToString();
-        }
-        /// <summary>
-        /// Set MSAA to 2x using quality settings
-        /// </summary>
-        public void twoMSAA()
-        {
+#region GraphicPresets
 
-            QualitySettings.antiAliasing = 2;
-            // aaOption.text = "MSAA: " + QualitySettings.antiAliasing.ToString();
-        }
-        /// <summary>
-        /// Set MSAA to 4x using quality settings
-        /// </summary>
-        public void fourMSAA()
-        {
-
-            QualitySettings.antiAliasing = 4;
-
-            // aaOption.text = "MSAA: " + QualitySettings.antiAliasing.ToString();
-        }
-        /// <summary>
-        /// Set MSAA to 8x using quality settings
-        /// </summary>
-        public void eightMSAA()
-        {
-
-            QualitySettings.antiAliasing = 8;
-            // aaOption.text = "MSAA: " + QualitySettings.antiAliasing.ToString();
-        }
         /// <summary>
         /// Set the quality level one level higher. This is done by getting the current quality level, then using 
         /// <c> 
@@ -1299,15 +1139,8 @@ public AnimationClip mainOut;
         /// </summary>
         public void nextPreset()
         {
-            _currentLevel = QualitySettings.GetQualityLevel();
             QualitySettings.IncreaseLevel();
-            _currentLevel = QualitySettings.GetQualityLevel();
-            presetLabel.text = presets[_currentLevel].ToString();
-            if (hardCodeSomeVideoSettings == true)
-            {
-                QualitySettings.shadowDistance = shadowDist[_currentLevel];
-                QualitySettings.lodBias = LODBias[_currentLevel];
-            }
+            FromPreset();
         }
         /// <summary>
         /// Set the quality level one level lower. This is done by getting the current quality level, then using 
@@ -1318,94 +1151,40 @@ public AnimationClip mainOut;
         /// </summary>
         public void lastPreset()
         {
-            _currentLevel = QualitySettings.GetQualityLevel();
             QualitySettings.DecreaseLevel();
-            _currentLevel = QualitySettings.GetQualityLevel();
-            presetLabel.text = presets[_currentLevel].ToString();
-            if (hardCodeSomeVideoSettings == true)
+            FromPreset();
+        }
+
+        private void FromPreset() {
+             _currentLevel = QualitySettings.GetQualityLevel();
+            presetLabel.text = presets[_currentLevel];
+            if (hardCodeSomeVideoSettings)
             {
                 QualitySettings.shadowDistance = shadowDist[_currentLevel];
                 QualitySettings.lodBias = LODBias[_currentLevel];
             }
+        }
 
-        }
+
         /// <summary>
-        /// Hard code the minimal settings
+        /// Sets the Graphic to a Preset (from very low to extreme)
+        ///     (note: UI buttons in the inspector can carry a parameter, so you wont need 7 methods)
         /// </summary>
-        public void setMinimal()
-        {
-            QualitySettings.SetQualityLevel(0);
-            //QualitySettings.shadowDistance = 12.6f;
-            QualitySettings.shadowDistance = shadowDist[0];
-            //QualitySettings.lodBias = 0.3f;
-            QualitySettings.lodBias = LODBias[0];
+        public void SetGraphicsPreset(int preset) {
+            preset = Mathf.Clamp(preset, 0, 6);
+
+            QualitySettings.SetQualityLevel(preset);
+            QualitySettings.shadowDistance = shadowDist[preset];
+            QualitySettings.lodBias = LODBias[preset];
+            
+            // in the previous 7 methods were hardcoded values but commented out
+            // the logic behind those hardcoded values can be archived by this:
+            // QualitySettings.shadowDistance = shadowPreset[preset];
         }
-        /// <summary>
-        /// Hard code the very low settings
-        /// </summary>
-        public void setVeryLow()
-        {
-            QualitySettings.SetQualityLevel(1);
-            //QualitySettings.shadowDistance = 17.4f;
-            QualitySettings.shadowDistance = shadowDist[1];
-            //QualitySettings.lodBias = 0.55f;
-            QualitySettings.lodBias = LODBias[1];
-        }
-        /// <summary>
-        /// Hard code the low settings
-        /// </summary>
-        public void setLow()
-        {
-            QualitySettings.SetQualityLevel(2);
-            //QualitySettings.shadowDistance = 29.7f;
-            //QualitySettings.lodBias = 0.68f;
-            QualitySettings.lodBias = LODBias[2];
-            QualitySettings.shadowDistance = shadowDist[2];
-        }
-        /// <summary>
-        /// Hard code the normal settings
-        /// </summary>
-        public void setNormal()
-        {
-            QualitySettings.SetQualityLevel(3);
-            //QualitySettings.shadowDistance = 82f;
-            //QualitySettings.lodBias = 1.09f;
-            QualitySettings.shadowDistance = shadowDist[3];
-            QualitySettings.lodBias = LODBias[3];
-        }
-        /// <summary>
-        /// Hard code the very high settings
-        /// </summary>
-        public void setVeryHigh()
-        {
-            QualitySettings.SetQualityLevel(4);
-            //QualitySettings.shadowDistance = 110f;
-            //QualitySettings.lodBias = 1.22f;
-            QualitySettings.shadowDistance = shadowDist[4];
-            QualitySettings.lodBias = LODBias[4];
-        }
-        /// <summary>
-        /// Hard code the ultra settings
-        /// </summary>
-        public void setUltra()
-        {
-            QualitySettings.SetQualityLevel(5);
-            //QualitySettings.shadowDistance = 338f;
-            //QualitySettings.lodBias = 1.59f;
-            QualitySettings.shadowDistance = shadowDist[5];
-            QualitySettings.lodBias = LODBias[5];
-        }
-        /// <summary>
-        /// Hard code the extreme settings
-        /// </summary>
-        public void setExtreme()
-        {
-            QualitySettings.SetQualityLevel(6);
-            //QualitySettings.shadowDistance = 800f;
-            //QualitySettings.lodBias = 4.37f;
-            QualitySettings.shadowDistance = shadowDist[6];
-            QualitySettings.lodBias = LODBias[6];
-        }
+        // private static readonly float[] shadowPreset = {12.6f, 17.4f, 29.7f, 82f, 110f, 338f, 800f};
+
+#endregion
+
         /// <summary>
         /// Return to the main menu from the credits panel
         /// </summary>
