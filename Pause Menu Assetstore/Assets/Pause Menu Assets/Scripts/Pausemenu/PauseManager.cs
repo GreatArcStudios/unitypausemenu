@@ -949,14 +949,12 @@ public AnimationClip mainOut;
             try
             {
                 mainCam.farClipPlane = f;
-
             }
             catch
             {
                 Debug.Log(" Finding main camera now...it is still suggested that you manually assign this");
                 mainCam = Camera.main;
                 mainCam.farClipPlane = f;
-
             }
 
         }
@@ -967,9 +965,7 @@ public AnimationClip mainOut;
         /// <param name="qual"></param>
         public void updateTex(float qual)
         {
-
-            int f = Mathf.RoundToInt(qual);
-            QualitySettings.masterTextureLimit = f;
+            QualitySettings.masterTextureLimit = (int)qual;
         }
         /// <summary>
         /// Update the shadow distance using 
@@ -981,7 +977,6 @@ public AnimationClip mainOut;
         public void updateShadowDistance(float dist)
         {
             QualitySettings.shadowDistance = dist;
-
         }
         /// <summary>
         /// Change the max amount of high quality trees using 
@@ -992,7 +987,7 @@ public AnimationClip mainOut;
         /// <param name="qual"></param>
         public void treeMaxLod(float qual)
         {
-            if (useSimpleTerrain == true)
+            if (useSimpleTerrain)
             {
                 simpleTerrain.treeMaximumFullLODCount = (int)qual;
             }
@@ -1085,19 +1080,20 @@ public AnimationClip mainOut;
         /// Set the game to windowed or full screen. This is meant to be used with a checkbox
         /// </summary>
         /// <param name="b"></param>
-        public void setFullScreen(Boolean b)
-        {
+        public void setFullScreen(Boolean b){ Screen.SetResolution(Screen.width, Screen.height, b); }
 
 
-            if (b == true)
+        private void changeRes(int index){
+            for (int i = 0; i < allRes.Length; i++)
             {
-                Screen.SetResolution(Screen.width, Screen.height, true);
-            }
-            else
-            {
-                Screen.SetResolution(Screen.width, Screen.height, false);
+                //If the resoultion matches the current resoution height and width then go through the statement.
+                if (allRes[i].height == currentRes.height && allRes[i].width == currentRes.width)
+                {
+                    Screen.SetResolution(allRes[i+index].width, allRes[i+index].height, isFullscreen); isFullscreen = isFullscreen; currentRes = Screen.resolutions[i+index]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString();
+                }
             }
         }
+
         /// <summary>
         /// Method for moving to the next resoution in the allRes array. WARNING: This is not finished/buggy.  
         /// </summary>
@@ -1106,20 +1102,7 @@ public AnimationClip mainOut;
         {
             beforeRes = currentRes;
             //Iterate through all of the resoultions. 
-            for (int i = 0; i < allRes.Length; i++)
-            {
-                //If the resoultion matches the current resoution height and width then go through the statement.
-                if (allRes[i].height == currentRes.height && allRes[i].width == currentRes.width)
-                {
-                    //Debug.Log("found " + i);
-                    //If the user is playing fullscreen. Then set the resoution to one element higher in the array, set the full screen boolean to true, reset the current resolution, and then update the resolution label.
-                    if (isFullscreen == true) { Screen.SetResolution(allRes[i + 1].width, allRes[i + 1].height, true); isFullscreen = true; currentRes = Screen.resolutions[i + 1]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString(); }
-                    //If the user is playing in a window. Then set the resoution to one element higher in the array, set the full screen boolean to false, reset the current resolution, and then update the resolution label.
-                    if (isFullscreen == false) { Screen.SetResolution(allRes[i + 1].width, allRes[i + 1].height, false); isFullscreen = false; currentRes = Screen.resolutions[i + 1]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString(); }
-
-                    //Debug.Log("Res after: " + currentRes);
-                }
-            }
+            changeRes(1)
 
         }
         /// <summary>
@@ -1129,23 +1112,9 @@ public AnimationClip mainOut;
         public void lastRes()
         {
             beforeRes = currentRes;
-            //Iterate through all of the resoultions. 
-            for (int i = 0; i < allRes.Length; i++)
-            {
-                if (allRes[i].height == currentRes.height && allRes[i].width == currentRes.width)
-                {
-
-                    //Debug.Log("found " + i);
-                    //If the user is playing fullscreen. Then set the resoution to one element lower in the array, set the full screen boolean to true, reset the current resolution, and then update the resolution label.
-                    if (isFullscreen == true) { Screen.SetResolution(allRes[i - 1].width, allRes[i - 1].height, true); isFullscreen = true; currentRes = Screen.resolutions[i - 1]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString(); }
-                    //If the user is playing in a window. Then set the resoution to one element lower in the array, set the full screen boolean to false, reset the current resolution, and then update the resolution label.
-                    if (isFullscreen == false) { Screen.SetResolution(allRes[i - 1].width, allRes[i - 1].height, false); isFullscreen = false; currentRes = Screen.resolutions[i - 1]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString(); }
-
-                    //Debug.Log("Res after: " + currentRes);
-                }
-            }
-
+            changeRes(-1)
         }
+        
         public void enableSimpleTerrain(Boolean b)
         {
             useSimpleTerrain = b;
