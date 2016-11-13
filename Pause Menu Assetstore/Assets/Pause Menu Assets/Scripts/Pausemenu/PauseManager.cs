@@ -19,19 +19,19 @@ namespace GreatArcStudios
         /// <summary>
         /// This is the main panel holder, which holds the main panel and should be called "main panel"
         /// </summary> 
-        public GameObject mainPanel;
+        public GameObject MainPanel;
         /// <summary>
         /// This is the video panel holder, which holds all of the controls for the video panel and should be called "vid panel"
         /// </summary>
-        public GameObject vidPanel;
+        public GameObject VidPanel;
         /// <summary>
         /// This is the audio panel holder, which holds all of the silders for the audio panel and should be called "audio panel"
         /// </summary>
-        public GameObject audioPanel;
+        public GameObject AudioPanel;
         /// <summary>
         /// This is the credits panel holder, which holds all of the silders for the audio panel and should be called "credits panel"
         /// </summary>
-        public GameObject creditsPanel;
+        public GameObject CreditsPanel;
         /// <summary>
         /// These are the game objects with the title texts like "Pause menu" and "Game Title" 
         /// </summary>
@@ -39,97 +39,97 @@ namespace GreatArcStudios
         /// <summary>
         /// The mask that makes the scene darker  
         /// </summary>
-        public GameObject mask;
+        public GameObject Mask;
         /// <summary>
         /// Audio Panel animator
         /// </summary>
-        public Animator audioPanelAnimator;
+        public Animator AudioPanelAnimator;
         /// <summary>
         /// Video Panel animator  
         /// </summary>
-        public Animator vidPanelAnimator;
+        public Animator VidPanelAnimator;
         /// <summary>
         /// Quit Panel animator  
         /// </summary>
-        public Animator quitPanelAnimator;
+        public Animator QuitPanelAnimator;
         /// <summary>
         /// Credits Panel animator  
         /// </summary>
-        public Animator creditsPanelAnimator;
+        public Animator CreditsPanelAnimator;
         /// <summary>
         /// Pause menu text 
         /// </summary>
-        public Text pauseMenu;
+        public Text PauseMenu;
 
         /// <summary>
         /// Main menu level string used for loading the main menu. This means you'll need to type in the editor text box, the name of the main menu level, ie: "mainmenu";
         /// </summary>
-        public String mainMenu;
+        public String MainMenu;
         //DOF script name
         /// <summary>
         /// The Depth of Field script name, ie: "DepthOfField". You can leave this blank in the editor, but will throw a null refrence exception, which is harmless.
         /// </summary>
-        public String DOFScriptName;
+        public String DofScriptName;
 
         /// <summary>
         /// The Ambient Occlusion script name, ie: "AmbientOcclusion". You can leave this blank in the editor, but will throw a null refrence exception, which is harmless.
         /// </summary>
-        public String AOScriptName;
+        public String AoScriptName;
         /// <summary>
         /// The main camera, assign this through the editor. 
         /// </summary>        
-        public Camera mainCam;
-        internal static Camera mainCamShared;
+        public Camera MainCam;
+        internal static Camera MainCamShared;
         /// <summary>
         /// The main camera game object, assign this through the editor. 
         /// </summary> 
-        public GameObject mainCamObj;
+        public GameObject MainCamObj;
 
         /// <summary>
         /// The terrain detail density float. It's only public because you may want to adjust it in editor
         /// </summary> 
-        public float detailDensity;
+        public float DetailDensity;
 
         /// <summary>
         /// Timescale value. The defualt is 1 for most games. You may want to change it if you are pausing the game in a slow motion situation 
         /// </summary> 
-        public float timeScale = 1f;
+        public float TimeScale = 1f;
         /// <summary>
         /// One terrain variable used if you have a terrain plugin like rtp. 
         /// </summary>
-        public Terrain terrain;
+        public Terrain Terrain;
         /// <summary>
         /// Other terrain variable used if you want to have an option to target low end harware.
         /// </summary>
-        public Terrain simpleTerrain;
+        public Terrain SimpleTerrain;
         /// <summary>
         /// Inital shadow distance 
         /// </summary>
-        internal static float shadowDistINI;
+        internal static float ShadowDistIni;
         /// <summary>
         /// Inital render distance 
         /// </summary>
-        internal static float renderDistINI;
+        internal static float RenderDistIni;
         /// <summary>
         /// Inital AA quality 2, 4, or 8
         /// </summary>
-        internal static float aaQualINI;
+        internal static float AaQualIni;
         /// <summary>
         /// Inital terrain detail density
         /// </summary>
-        internal static float densityINI;
+        internal static float DensityIni;
         /// <summary>
         /// Amount of trees that are acutal meshes
         /// </summary>
-        internal static float treeMeshAmtINI;
+        internal static float TreeMeshAmtIni;
         /// <summary>
         /// Inital fov 
         /// </summary>
-        internal static float fovINI;
+        internal static float FovIni;
         /// <summary>
         /// Inital msaa amount 
         /// </summary>
-        internal static int msaaINI;
+        internal static int MsaaIni;
         /// <summary>
         /// Inital vsync count, the Unity docs say,
         /// <code> 
@@ -141,94 +141,94 @@ namespace GreatArcStudios
         /// QualitySettings.vSyncCount = 0;
         /// </code>
         /// </summary>
-        internal static int vsyncINI;
+        internal static int VsyncIni;
         /// <summary>
         /// AA drop down menu.
         /// </summary>
-        public Dropdown aaCombo;
+        public Dropdown AaCombo;
         /// <summary>
         /// Aniso drop down menu.
         /// </summary>
-        public Dropdown afCombo;
+        public Dropdown AfCombo;
 
-        public Slider fovSlider;
-        public Slider modelQualSlider;
-        public Slider terrainQualSlider;
-        public Slider highQualTreeSlider;
-        public Slider renderDistSlider;
-        public Slider terrainDensitySlider;
-        public Slider shadowDistSlider;
-        public Slider audioMasterSlider;
-        public Slider audioMusicSlider;
-        public Slider audioEffectsSlider;
-        public Slider masterTexSlider;
-        public Slider shadowCascadesSlider;
-        public Toggle vSyncToggle;
-        public Toggle aoToggle;
-        public Toggle dofToggle;
-        public Toggle fullscreenToggle;
+        public Slider FovSlider;
+        public Slider ModelQualSlider;
+        public Slider TerrainQualSlider;
+        public Slider HighQualTreeSlider;
+        public Slider RenderDistSlider;
+        public Slider TerrainDensitySlider;
+        public Slider ShadowDistSlider;
+        public Slider AudioMasterSlider;
+        public Slider AudioMusicSlider;
+        public Slider AudioEffectsSlider;
+        public Slider MasterTexSlider;
+        public Slider ShadowCascadesSlider;
+        public Toggle VSyncToggle;
+        public Toggle AoToggle;
+        public Toggle DofToggle;
+        public Toggle FullscreenToggle;
         /// <summary>
         /// The preset text label.
         /// </summary>
-        public Text presetLabel;
+        public Text PresetLabel;
         /// <summary>
         /// Resolution text label.
         /// </summary>
-        public Text resolutionLabel;
+        public Text ResolutionLabel;
         /// <summary>
         /// Lod bias float array. You should manually assign these based on the quality level.
         /// </summary>
-        public float[] LODBias;
+        public float[] LodBias;
         /// <summary>
         /// Shadow distance array. You should manually assign these based on the quality level.
         /// </summary>
-        public float[] shadowDist;
+        public float[] ShadowDist;
         /// <summary>
         /// An array of music audio sources
         /// </summary>
-        public AudioSource[] music;
+        public AudioSource[] Music;
         /// <summary>
         /// An array of sound effect audio sources
         /// </summary>
-        public AudioSource[] effects;
+        public AudioSource[] Effects;
         /// <summary>
         /// An array of the other UI elements, which is used for disabling the other elements when the game is paused.
         /// </summary>
-        public GameObject[] otherUIElements;
+        public GameObject[] OtherUiElements;
         /// <summary>
         /// Editor boolean for hardcoding certain video settings. It will allow you to use the values defined in LOD Bias and Shadow Distance
         /// </summary>
-        public Boolean hardCodeSomeVideoSettings;
+        public Boolean HardCodeSomeVideoSettings;
         /// <summary>
         /// Boolean for turning on simple terrain
         /// </summary>
-        public Boolean useSimpleTerrain;
-        public static Boolean readUseSimpleTerrain;
+        public Boolean UseSimpleTerrain;
+        public static Boolean ReadUseSimpleTerrain;
         /// <summary>
         /// Event system
         /// </summary>
-        public EventSystem uiEventSystem;
+        public EventSystem UiEventSystem;
         /// <summary>
         /// Defualt selected on the video panel
         /// </summary>
-        public GameObject defualtSelectedVideo;
+        public GameObject DefualtSelectedVideo;
         /// <summary>
         /// Defualt selected on the video panel
         /// </summary>
-        public GameObject defualtSelectedAudio;
+        public GameObject DefualtSelectedAudio;
         /// <summary>
         /// Defualt selected on the video panel
         /// </summary>
-        public GameObject defualtSelectedMain;
-        public GameObject defualtSelectedCredits;
+        public GameObject DefualtSelectedMain;
+        public GameObject DefualtSelectedCredits;
         //last music multiplier; this should be a value between 0-1
-        internal static float lastMusicMult;
+        internal static float LastMusicMult;
         //last audio multiplier; this should be a value between 0-1
-        internal static float lastAudioMult;
+        internal static float LastAudioMult;
         //Initial master volume
-        internal static float beforeMaster;
+        internal static float BeforeMaster;
         //last texture limit 
-        internal static int lastTexLimit;
+        internal static int LastTexLimit;
         //int for amount of effects
         private int _audioEffectAmt = 0;
         //Inital audio effect volumes
@@ -239,34 +239,36 @@ namespace GreatArcStudios
         //Preset level
         private int _currentLevel;
         //Resoutions
-        private Resolution[] allRes;
+        private Resolution[] _allRes;
         //Camera dof script
-        private MonoBehaviour tempScript;
+        private MonoBehaviour _tempScript;
         //Presets 
-        private String[] presets;
+        private String[] _presets;
         //Fullscreen Boolean
-        private Boolean isFullscreen;
+        private Boolean _isFullscreen;
         //current resoultion
-        internal static Resolution currentRes;
+        internal static Resolution CurrentRes;
         //Last resoultion 
-        private Resolution beforeRes;
+        private Resolution _beforeRes;
 
         //last shadow cascade value
-        internal static int lastShadowCascade;
+        internal static int LastShadowCascade;
 
-        public static Boolean aoBool;
-        public static Boolean dofBool;
-        private Boolean lastAOBool;
-        private Boolean lastDOFBool;
-        public static Terrain readTerrain;
-        public static Terrain readSimpleTerrain;
+        public static Boolean AoBool;
+        public static Boolean DofBool;
+        private Boolean _lastAoBool;
+        private Boolean _lastDofBool;
+        public static Terrain ReadTerrain;
+        public static Terrain ReadSimpleTerrain;
 
-        private SaveSettings saveSettings = new SaveSettings();
+        private SaveSettings _saveSettings = new SaveSettings();
 
 
-        private Terrain currentTerrain {
-            get {
-                return useSimpleTerrain ? simpleTerrain : terrain;
+        private Terrain CurrentTerrain
+        {
+            get
+            {
+                return UseSimpleTerrain ? SimpleTerrain : Terrain;
             }
         }
 
@@ -299,78 +301,78 @@ public AnimationClip mainOut;
         public void Start()
         {
 
-            readUseSimpleTerrain = useSimpleTerrain;
-            if (useSimpleTerrain)
+            ReadUseSimpleTerrain = UseSimpleTerrain;
+            if (UseSimpleTerrain)
             {
-                readSimpleTerrain = simpleTerrain;
+                ReadSimpleTerrain = SimpleTerrain;
             }
             else
             {
-                readTerrain = terrain;
+                ReadTerrain = Terrain;
             }
 
-            mainCamShared = mainCam;
+            MainCamShared = MainCam;
             //Set the lastmusicmult and last audiomult
-            lastMusicMult = audioMusicSlider.value;
-            lastAudioMult = audioEffectsSlider.value;
+            LastMusicMult = AudioMusicSlider.value;
+            LastAudioMult = AudioEffectsSlider.value;
             //Set the first selected item
-            uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
+            UiEventSystem.firstSelectedGameObject = DefualtSelectedMain;
             //Get the presets from the quality settings 
-            presets = QualitySettings.names;
-            presetLabel.text = presets[QualitySettings.GetQualityLevel()].ToString();
+            _presets = QualitySettings.names;
+            PresetLabel.text = _presets[QualitySettings.GetQualityLevel()].ToString();
             _currentLevel = QualitySettings.GetQualityLevel();
             //Get the current resoultion, if the game is in fullscreen, and set the label to the original resolution
-            allRes = Screen.resolutions;
-            currentRes.width = Screen.width;
-            currentRes.height = Screen.height;
+            _allRes = Screen.resolutions;
+            CurrentRes.width = Screen.width;
+            CurrentRes.height = Screen.height;
             //Debug.Log("ini res" + currentRes);
-            resolutionLabel.text = Screen.width.ToString() + " x " + Screen.height.ToString();
-            isFullscreen = Screen.fullScreen;
+            ResolutionLabel.text = Screen.width.ToString() + " x " + Screen.height.ToString();
+            _isFullscreen = Screen.fullScreen;
             //get initial screen effect bools
-            lastAOBool = aoToggle.isOn;
-            lastDOFBool = dofToggle.isOn;
+            _lastAoBool = AoToggle.isOn;
+            _lastDofBool = DofToggle.isOn;
             //get all specified audio source volumes
             _beforeEffectVol = new float[_audioEffectAmt];
-            beforeMaster = AudioListener.volume;
+            BeforeMaster = AudioListener.volume;
             //get all ini values
-            aaQualINI = QualitySettings.antiAliasing;
-            renderDistINI = mainCam.farClipPlane;
-            shadowDistINI = QualitySettings.shadowDistance;
-            fovINI = mainCam.fieldOfView;
-            msaaINI = QualitySettings.antiAliasing;
-            vsyncINI = QualitySettings.vSyncCount;
+            AaQualIni = QualitySettings.antiAliasing;
+            RenderDistIni = MainCam.farClipPlane;
+            ShadowDistIni = QualitySettings.shadowDistance;
+            FovIni = MainCam.fieldOfView;
+            MsaaIni = QualitySettings.antiAliasing;
+            VsyncIni = QualitySettings.vSyncCount;
             //enable titles
             TitleTexts.SetActive(true);
             //Find terrain
-            terrain = Terrain.activeTerrain;
+            Terrain = Terrain.activeTerrain;
             //Disable other panels
-            mainPanel.SetActive(false);
-            vidPanel.SetActive(false);
-            audioPanel.SetActive(false);
-            creditsPanel.SetActive(false);
+            MainPanel.SetActive(false);
+            VidPanel.SetActive(false);
+            AudioPanel.SetActive(false);
+            CreditsPanel.SetActive(false);
             //Enable mask
-            mask.SetActive(false);
+            Mask.SetActive(false);
             //set last texture limit
-            lastTexLimit = QualitySettings.masterTextureLimit;
+            LastTexLimit = QualitySettings.masterTextureLimit;
             //set last shadow cascade 
-            lastShadowCascade = QualitySettings.shadowCascades;
+            LastShadowCascade = QualitySettings.shadowCascades;
             try
             {
-                saveSettings.LoadGameSettings();
+                _saveSettings.LoadGameSettings();
             }
             catch
             {
-                Debug.Log("Game settings not found in: " + Application.persistentDataPath + "/" + saveSettings.fileName);
-                saveSettings.SaveGameSettings();
+                Debug.Log("Game settings not found in: " + Application.persistentDataPath + "/" + _saveSettings.FileName);
+                _saveSettings.SaveGameSettings();
             }
 
             try
             {
-                densityINI = Terrain.activeTerrain.detailObjectDensity;
+                DensityIni = Terrain.activeTerrain.detailObjectDensity;
             }
             catch
             {
-                if (terrain = null)
+                if (Terrain = null)
                 {
                     Debug.Log("Terrain Not Assigned");
                 }
@@ -391,7 +393,7 @@ public AnimationClip mainOut;
         public void Restart()
         {
             Application.LoadLevel(Application.loadedLevel);
-            uiEventSystem.firstSelectedGameObject = defualtSelectedMain;
+            UiEventSystem.firstSelectedGameObject = DefualtSelectedMain;
 
         }
         /// <summary>
@@ -399,16 +401,16 @@ public AnimationClip mainOut;
         /// </summary>
         public void Resume()
         {
-            Time.timeScale = timeScale;
+            Time.timeScale = TimeScale;
 
-            mainPanel.SetActive(false);
-            vidPanel.SetActive(false);
-            audioPanel.SetActive(false);
+            MainPanel.SetActive(false);
+            VidPanel.SetActive(false);
+            AudioPanel.SetActive(false);
             TitleTexts.SetActive(false);
-            mask.SetActive(false);
-            for (int i = 0; i < otherUIElements.Length; i++)
+            Mask.SetActive(false);
+            for (int i = 0; i < OtherUiElements.Length; i++)
             {
-                otherUIElements[i].gameObject.SetActive(true);
+                OtherUiElements[i].gameObject.SetActive(true);
             }
             /* if (blurBool == false)
              {
@@ -423,18 +425,18 @@ public AnimationClip mainOut;
         /// <summary>
         /// All the methods relating to qutting should be called here.
         /// </summary>
-        public void quitOptions()
+        public void QuitOptions()
         {
-            vidPanel.SetActive(false);
-            audioPanel.SetActive(false);
-            quitPanelAnimator.enabled = true;
-            quitPanelAnimator.Play("QuitPanelIn");
+            VidPanel.SetActive(false);
+            AudioPanel.SetActive(false);
+            QuitPanelAnimator.enabled = true;
+            QuitPanelAnimator.Play("QuitPanelIn");
 
         }
         /// <summary>
         /// Method to quit the game. Call methods such as auto saving before qutting here.
         /// </summary>
-        public void quitGame()
+        public void QuitGame()
         {
             Application.Quit();
 #if UNITY_EDITOR
@@ -444,17 +446,17 @@ public AnimationClip mainOut;
         /// <summary>
         /// Cancels quittting by playing an animation.
         /// </summary>
-        public void quitCancel()
+        public void QuitCancel()
         {
-            quitPanelAnimator.Play("QuitPanelOut");
+            QuitPanelAnimator.Play("QuitPanelOut");
         }
         /// <summary>
         ///Loads the main menu scene.
         /// </summary>
-        public void returnToMenu()
+        public void ReturnToMenu()
         {
-            Application.LoadLevel(mainMenu);
-            uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
+            Application.LoadLevel(MainMenu);
+            UiEventSystem.SetSelectedGameObject(DefualtSelectedMain);
         }
 
         // Update is called once per frame
@@ -463,53 +465,53 @@ public AnimationClip mainOut;
         /// </summary>
         public void Update()
         {
-            readUseSimpleTerrain = useSimpleTerrain;
-            useSimpleTerrain = readUseSimpleTerrain;
+            ReadUseSimpleTerrain = UseSimpleTerrain;
+            UseSimpleTerrain = ReadUseSimpleTerrain;
             //colorCrossfade();
-            if (vidPanel.active == true)
+            if (VidPanel.active == true)
             {
-                pauseMenu.text = "Video Menu";
+                PauseMenu.text = "Video Menu";
             }
-            else if (audioPanel.active == true)
+            else if (AudioPanel.active == true)
             {
-                pauseMenu.text = "Audio Menu";
+                PauseMenu.text = "Audio Menu";
             }
-            else if (mainPanel.active == true)
+            else if (MainPanel.active == true)
             {
-                pauseMenu.text = "Pause Menu";
+                PauseMenu.text = "Pause Menu";
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape) && mainPanel.active == false)
+            if (Input.GetKeyDown(KeyCode.Escape) && MainPanel.active == false)
             {
 
-                uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
-                mainPanel.SetActive(true);
-                vidPanel.SetActive(false);
-                audioPanel.SetActive(false);
+                UiEventSystem.SetSelectedGameObject(DefualtSelectedMain);
+                MainPanel.SetActive(true);
+                VidPanel.SetActive(false);
+                AudioPanel.SetActive(false);
                 TitleTexts.SetActive(true);
-                mask.SetActive(true);
+                Mask.SetActive(true);
                 Time.timeScale = 0;
-                for (int i = 0; i < otherUIElements.Length; i++)
+                for (int i = 0; i < OtherUiElements.Length; i++)
                 {
-                    otherUIElements[i].gameObject.SetActive(false);
+                    OtherUiElements[i].gameObject.SetActive(false);
                 }
                 /* if (blurBool == false)
                   {
                      blurEffect.enabled = true;
                  }  */
             }
-            else if (Input.GetKeyDown(KeyCode.Escape) && mainPanel.active == true)
+            else if (Input.GetKeyDown(KeyCode.Escape) && MainPanel.active == true)
             {
 
-                Time.timeScale = timeScale;
-                mainPanel.SetActive(false);
-                vidPanel.SetActive(false);
-                audioPanel.SetActive(false);
+                Time.timeScale = TimeScale;
+                MainPanel.SetActive(false);
+                VidPanel.SetActive(false);
+                AudioPanel.SetActive(false);
                 TitleTexts.SetActive(false);
-                mask.SetActive(false);
-                for (int i = 0; i < otherUIElements.Length; i++)
+                Mask.SetActive(false);
+                for (int i = 0; i < OtherUiElements.Length; i++)
                 {
-                    otherUIElements[i].gameObject.SetActive(true);
+                    OtherUiElements[i].gameObject.SetActive(true);
                 }
             }
 
@@ -536,47 +538,47 @@ public AnimationClip mainOut;
         /// </summary>
         public void Audio()
         {
-            mainPanel.SetActive(false);
-            vidPanel.SetActive(false);
-            audioPanel.SetActive(true);
-            audioPanelAnimator.enabled = true;
-            audioIn();
-            pauseMenu.text = "Audio Menu";
+            MainPanel.SetActive(false);
+            VidPanel.SetActive(false);
+            AudioPanel.SetActive(true);
+            AudioPanelAnimator.enabled = true;
+            AudioIn();
+            PauseMenu.text = "Audio Menu";
         }
         /// <summary>
         /// Play the "audio panel in" animation.
         /// </summary>
-        public void audioIn()
+        public void AudioIn()
         {
-            uiEventSystem.SetSelectedGameObject(defualtSelectedAudio);
-            audioPanelAnimator.Play("Audio Panel In");
-            audioMasterSlider.value = AudioListener.volume;
+            UiEventSystem.SetSelectedGameObject(DefualtSelectedAudio);
+            AudioPanelAnimator.Play("Audio Panel In");
+            AudioMasterSlider.value = AudioListener.volume;
             //Perform modulo to find factor f to allow for non uniform music volumes
             float a; float b; float f;
             try
             {
-                a = music[0].volume;
-                b = music[1].volume;
+                a = Music[0].volume;
+                b = Music[1].volume;
                 f = a % b;
-                audioMusicSlider.value = f;
+                AudioMusicSlider.value = f;
             }
             catch
             {
                 Debug.Log("You do not have multiple audio sources");
-                audioMusicSlider.value = lastMusicMult;
+                AudioMusicSlider.value = LastMusicMult;
             }
             //Do this with the effects
             try
             {
-                a = effects[0].volume;
-                b = effects[1].volume;
+                a = Effects[0].volume;
+                b = Effects[1].volume;
                 f = a % b;
-                audioEffectsSlider.value = f;
+                AudioEffectsSlider.value = f;
             }
             catch
             {
                 Debug.Log("You do not have multiple audio sources");
-                audioEffectsSlider.value = lastAudioMult;
+                AudioEffectsSlider.value = LastAudioMult;
             }
 
         }
@@ -584,7 +586,7 @@ public AnimationClip mainOut;
         /// Audio Option Methods
         /// </summary>
         /// <param name="f"></param>
-        public void updateMasterVol(float f)
+        public void UpdateMasterVol(float f)
         {
 
             //Controls volume of all audio listeners 
@@ -594,13 +596,13 @@ public AnimationClip mainOut;
         /// Update music effects volume
         /// </summary>
         /// <param name="f"></param>
-        public void updateMusicVol(float f)
+        public void UpdateMusicVol(float f)
         {
             try
             {
-                for (int _musicAmt = 0; _musicAmt < music.Length; _musicAmt++)
+                for (int musicAmt = 0; musicAmt < Music.Length; musicAmt++)
                 {
-                    music[_musicAmt].volume *= f;
+                    Music[musicAmt].volume *= f;
                 }
             }
             catch
@@ -613,17 +615,17 @@ public AnimationClip mainOut;
         /// Update the audio effects volume
         /// </summary>
         /// <param name="f"></param>
-        public void updateEffectsVol(float f)
+        public void UpdateEffectsVol(float f)
         {
             try
             {
-                for (_audioEffectAmt = 0; _audioEffectAmt < effects.Length; _audioEffectAmt++)
+                for (_audioEffectAmt = 0; _audioEffectAmt < Effects.Length; _audioEffectAmt++)
                 {
                     //get the values for all effects before the change
-                    _beforeEffectVol[_audioEffectAmt] = effects[_audioEffectAmt].volume;
+                    _beforeEffectVol[_audioEffectAmt] = Effects[_audioEffectAmt].volume;
 
                     //lower it by a factor of f because we don't want every effect to be set to a uniform volume
-                    effects[_audioEffectAmt].volume *= f;
+                    Effects[_audioEffectAmt].volume *= f;
                 }
             }
             catch
@@ -635,60 +637,60 @@ public AnimationClip mainOut;
         /// <summary> 
         /// The method for changing the applying new audio settings
         /// </summary>
-        public void applyAudio()
+        public void ApplyAudio()
         {
-            StartCoroutine(applyAudioMain());
-            uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
+            StartCoroutine(ApplyAudioMain());
+            UiEventSystem.SetSelectedGameObject(DefualtSelectedMain);
 
         }
         /// <summary>
         /// Use an IEnumerator to first play the animation and then change the audio settings
         /// </summary>
         /// <returns></returns>
-        internal IEnumerator applyAudioMain()
+        internal IEnumerator ApplyAudioMain()
         {
-            audioPanelAnimator.Play("Audio Panel Out");
-            yield return StartCoroutine(CoroutineUtilities.WaitForRealTime((float)audioPanelAnimator.GetCurrentAnimatorClipInfo(0).Length));
-            mainPanel.SetActive(true);
-            vidPanel.SetActive(false);
-            audioPanel.SetActive(false);
-            beforeMaster = AudioListener.volume;
-            lastMusicMult = audioMusicSlider.value;
-            lastAudioMult = audioEffectsSlider.value;
-            saveSettings.SaveGameSettings();
+            AudioPanelAnimator.Play("Audio Panel Out");
+            yield return StartCoroutine(CoroutineUtilities.WaitForRealTime((float)AudioPanelAnimator.GetCurrentAnimatorClipInfo(0).Length));
+            MainPanel.SetActive(true);
+            VidPanel.SetActive(false);
+            AudioPanel.SetActive(false);
+            BeforeMaster = AudioListener.volume;
+            LastMusicMult = AudioMusicSlider.value;
+            LastAudioMult = AudioEffectsSlider.value;
+            _saveSettings.SaveGameSettings();
         }
         /// <summary>
         /// Cancel the audio setting changes
         /// </summary>
-        public void cancelAudio()
+        public void CancelAudio()
         {
-            uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
-            StartCoroutine(cancelAudioMain());
+            UiEventSystem.SetSelectedGameObject(DefualtSelectedMain);
+            StartCoroutine(CancelAudioMain());
         }
         /// <summary>
         /// Use an IEnumerator to first play the animation and then change the audio settings
         /// </summary>
         /// <returns></returns>
-        internal IEnumerator cancelAudioMain()
+        internal IEnumerator CancelAudioMain()
         {
-            audioPanelAnimator.Play("Audio Panel Out");
+            AudioPanelAnimator.Play("Audio Panel Out");
             // Debug.Log(audioPanelAnimator.GetCurrentAnimatorClipInfo(0).Length);
-            yield return StartCoroutine(CoroutineUtilities.WaitForRealTime((float)audioPanelAnimator.GetCurrentAnimatorClipInfo(0).Length));
-            mainPanel.SetActive(true);
-            vidPanel.SetActive(false);
-            audioPanel.SetActive(false);
-            AudioListener.volume = beforeMaster;
+            yield return StartCoroutine(CoroutineUtilities.WaitForRealTime((float)AudioPanelAnimator.GetCurrentAnimatorClipInfo(0).Length));
+            MainPanel.SetActive(true);
+            VidPanel.SetActive(false);
+            AudioPanel.SetActive(false);
+            AudioListener.volume = BeforeMaster;
             //Debug.Log(_beforeMaster + AudioListener.volume);
             try
             {
-                for (_audioEffectAmt = 0; _audioEffectAmt < effects.Length; _audioEffectAmt++)
+                for (_audioEffectAmt = 0; _audioEffectAmt < Effects.Length; _audioEffectAmt++)
                 {
                     //get the values for all effects before the change
-                    effects[_audioEffectAmt].volume = _beforeEffectVol[_audioEffectAmt];
+                    Effects[_audioEffectAmt].volume = _beforeEffectVol[_audioEffectAmt];
                 }
-                for (int _musicAmt = 0; _musicAmt < music.Length; _musicAmt++)
+                for (int musicAmt = 0; musicAmt < Music.Length; musicAmt++)
                 {
-                    music[_musicAmt].volume = _beforeMusic;
+                    Music[musicAmt].volume = _beforeMusic;
                 }
             }
             catch
@@ -702,41 +704,41 @@ public AnimationClip mainOut;
         /// </summary>
         public void Video()
         {
-            mainPanel.SetActive(false);
-            vidPanel.SetActive(true);
-            audioPanel.SetActive(false);
-            vidPanelAnimator.enabled = true;
-            videoIn();
-            pauseMenu.text = "Video Menu";
+            MainPanel.SetActive(false);
+            VidPanel.SetActive(true);
+            AudioPanel.SetActive(false);
+            VidPanelAnimator.enabled = true;
+            VideoIn();
+            PauseMenu.text = "Video Menu";
 
         }
 
 
-        private static readonly Dictionary<int, int> aaDict = new Dictionary<int, int>() { {0, 0}, {2, 1}, {4, 2}, {8, 3} };
+        private static readonly Dictionary<int, int> AaDict = new Dictionary<int, int>() { { 0, 0 }, { 2, 1 }, { 4, 2 }, { 8, 3 } };
 
         /// <summary>
         /// Play the "video panel in" animation
         /// </summary>
-        public void videoIn()
+        public void VideoIn()
         {
-            uiEventSystem.SetSelectedGameObject(defualtSelectedVideo);
-            vidPanelAnimator.Play("Video Panel In");
+            UiEventSystem.SetSelectedGameObject(DefualtSelectedVideo);
+            VidPanelAnimator.Play("Video Panel In");
 
-            aaCombo.value = aaDict[QualitySettings.antiAliasing];
-            
+            AaCombo.value = AaDict[QualitySettings.antiAliasing];
+
             // --------
             // todo: that stuff is stupid:
             if (QualitySettings.anisotropicFiltering == AnisotropicFiltering.ForceEnable)
             {
-                afCombo.value = 1;  
+                AfCombo.value = 1;
             }
             else if (QualitySettings.anisotropicFiltering == AnisotropicFiltering.Disable)
             {
-                afCombo.value = 0;
+                AfCombo.value = 0;
             }
             else if (QualitySettings.anisotropicFiltering == AnisotropicFiltering.Enable)
             {
-                afCombo.value = 2;
+                AfCombo.value = 2;
             }
             /* 
              * the unity constants already have int values:
@@ -746,29 +748,29 @@ public AnimationClip mainOut;
              */
             // --------
 
-            presetLabel.text = presets[QualitySettings.GetQualityLevel()].ToString();
-            fovSlider.value = mainCam.fieldOfView;
-            modelQualSlider.value = QualitySettings.lodBias;
-            renderDistSlider.value = mainCam.farClipPlane;
-            shadowDistSlider.value = QualitySettings.shadowDistance;
-            masterTexSlider.value = QualitySettings.masterTextureLimit;
-            shadowCascadesSlider.value = QualitySettings.shadowCascades;
-            fullscreenToggle.isOn = Screen.fullScreen;
-            aoToggle.isOn = aoBool;
-            dofToggle.isOn = dofBool;
+            PresetLabel.text = _presets[QualitySettings.GetQualityLevel()].ToString();
+            FovSlider.value = MainCam.fieldOfView;
+            ModelQualSlider.value = QualitySettings.lodBias;
+            RenderDistSlider.value = MainCam.farClipPlane;
+            ShadowDistSlider.value = QualitySettings.shadowDistance;
+            MasterTexSlider.value = QualitySettings.masterTextureLimit;
+            ShadowCascadesSlider.value = QualitySettings.shadowCascades;
+            FullscreenToggle.isOn = Screen.fullScreen;
+            AoToggle.isOn = AoBool;
+            DofToggle.isOn = DofBool;
             if (QualitySettings.vSyncCount == 0)
             {
-                vSyncToggle.isOn = false;
+                VSyncToggle.isOn = false;
             }
             else if (QualitySettings.vSyncCount == 1)
             {
-                vSyncToggle.isOn = true;
+                VSyncToggle.isOn = true;
             }
             try
             {
-                highQualTreeSlider.value = currentTerrain.treeMaximumFullLODCount;
-                terrainDensitySlider.value = currentTerrain.detailObjectDensity;
-                terrainQualSlider.value = currentTerrain.heightmapMaximumLOD;
+                HighQualTreeSlider.value = CurrentTerrain.treeMaximumFullLODCount;
+                TerrainDensitySlider.value = CurrentTerrain.detailObjectDensity;
+                TerrainQualSlider.value = CurrentTerrain.heightmapMaximumLOD;
             }
             catch
             {
@@ -780,57 +782,57 @@ public AnimationClip mainOut;
         /// <summary>
         /// Cancel the video setting changes 
         /// </summary>
-        public void cancelVideo()
+        public void CancelVideo()
         {
-            uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
-            StartCoroutine(cancelVideoMain());
+            UiEventSystem.SetSelectedGameObject(DefualtSelectedMain);
+            StartCoroutine(CancelVideoMain());
         }
         /// <summary>
         /// Use an IEnumerator to first play the animation and then changethe video settings
         /// </summary>
         /// <returns></returns>
-        internal IEnumerator cancelVideoMain()
+        internal IEnumerator CancelVideoMain()
         {
-            vidPanelAnimator.Play("Video Panel Out");
+            VidPanelAnimator.Play("Video Panel Out");
 
-            yield return StartCoroutine(CoroutineUtilities.WaitForRealTime((float)vidPanelAnimator.GetCurrentAnimatorClipInfo(0).Length));
+            yield return StartCoroutine(CoroutineUtilities.WaitForRealTime((float)VidPanelAnimator.GetCurrentAnimatorClipInfo(0).Length));
             try
             {
-                mainCam.farClipPlane = renderDistINI;
-                Terrain.activeTerrain.detailObjectDensity = densityINI;
-                mainCam.fieldOfView = fovINI;
-                mainPanel.SetActive(true);
-                vidPanel.SetActive(false);
-                audioPanel.SetActive(false);
-                aoBool = lastAOBool;
-                dofBool = lastDOFBool;
-                Screen.SetResolution(beforeRes.width, beforeRes.height, Screen.fullScreen);
-                QualitySettings.shadowDistance = shadowDistINI;
-                QualitySettings.antiAliasing = (int)aaQualINI;
-                QualitySettings.antiAliasing = msaaINI;
-                QualitySettings.vSyncCount = vsyncINI;
-                QualitySettings.masterTextureLimit = lastTexLimit;
-                QualitySettings.shadowCascades = lastShadowCascade;
-                Screen.fullScreen = isFullscreen;
+                MainCam.farClipPlane = RenderDistIni;
+                Terrain.activeTerrain.detailObjectDensity = DensityIni;
+                MainCam.fieldOfView = FovIni;
+                MainPanel.SetActive(true);
+                VidPanel.SetActive(false);
+                AudioPanel.SetActive(false);
+                AoBool = _lastAoBool;
+                DofBool = _lastDofBool;
+                Screen.SetResolution(_beforeRes.width, _beforeRes.height, Screen.fullScreen);
+                QualitySettings.shadowDistance = ShadowDistIni;
+                QualitySettings.antiAliasing = (int)AaQualIni;
+                QualitySettings.antiAliasing = MsaaIni;
+                QualitySettings.vSyncCount = VsyncIni;
+                QualitySettings.masterTextureLimit = LastTexLimit;
+                QualitySettings.shadowCascades = LastShadowCascade;
+                Screen.fullScreen = _isFullscreen;
             }
             catch
             {
 
                 Debug.Log("A problem occured (chances are the terrain was not assigned )");
-                mainCam.farClipPlane = renderDistINI;
-                mainCam.fieldOfView = fovINI;
-                mainPanel.SetActive(true);
-                vidPanel.SetActive(false);
-                audioPanel.SetActive(false);
-                aoBool = lastAOBool;
-                dofBool = lastDOFBool;
-                QualitySettings.shadowDistance = shadowDistINI;
-                Screen.SetResolution(beforeRes.width, beforeRes.height, Screen.fullScreen);
-                QualitySettings.antiAliasing = (int)aaQualINI;
-                QualitySettings.antiAliasing = msaaINI;
-                QualitySettings.vSyncCount = vsyncINI;
-                QualitySettings.masterTextureLimit = lastTexLimit;
-                QualitySettings.shadowCascades = lastShadowCascade;
+                MainCam.farClipPlane = RenderDistIni;
+                MainCam.fieldOfView = FovIni;
+                MainPanel.SetActive(true);
+                VidPanel.SetActive(false);
+                AudioPanel.SetActive(false);
+                AoBool = _lastAoBool;
+                DofBool = _lastDofBool;
+                QualitySettings.shadowDistance = ShadowDistIni;
+                Screen.SetResolution(_beforeRes.width, _beforeRes.height, Screen.fullScreen);
+                QualitySettings.antiAliasing = (int)AaQualIni;
+                QualitySettings.antiAliasing = MsaaIni;
+                QualitySettings.vSyncCount = VsyncIni;
+                QualitySettings.masterTextureLimit = LastTexLimit;
+                QualitySettings.shadowCascades = LastShadowCascade;
                 //Screen.fullScreen = isFullscreen;
 
             }
@@ -840,49 +842,50 @@ public AnimationClip mainOut;
         /// <summary>
         /// Apply the video settings
         /// </summary>
-        public void apply()
+        public void Apply()
         {
-            StartCoroutine(applyVideo());
-            uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
+            StartCoroutine(ApplyVideo());
+            UiEventSystem.SetSelectedGameObject(DefualtSelectedMain);
 
         }
         /// <summary>
         /// Use an IEnumerator to first play the animation and then change the video settings.
         /// </summary>
         /// <returns></returns>
-        internal IEnumerator applyVideo()
+        internal IEnumerator ApplyVideo()
         {
-            vidPanelAnimator.Play("Video Panel Out");
-            yield return StartCoroutine(CoroutineUtilities.WaitForRealTime((float)vidPanelAnimator.GetCurrentAnimatorClipInfo(0).Length));
-            mainPanel.SetActive(true);
-            vidPanel.SetActive(false);
-            audioPanel.SetActive(false);
-            renderDistINI = mainCam.farClipPlane;
-            shadowDistINI = QualitySettings.shadowDistance;
-            Debug.Log("Shadow dist ini" + shadowDistINI);
-            fovINI = mainCam.fieldOfView;
-            aoBool = aoToggle.isOn;
-            dofBool = dofToggle.isOn;
-            lastAOBool = aoBool;
-            lastDOFBool = dofBool;
-            beforeRes = currentRes;
-            lastTexLimit = QualitySettings.masterTextureLimit;
-            lastShadowCascade = QualitySettings.shadowCascades;
-            vsyncINI = QualitySettings.vSyncCount;
-            isFullscreen = Screen.fullScreen;
+            VidPanelAnimator.Play("Video Panel Out");
+            yield return StartCoroutine(CoroutineUtilities.WaitForRealTime((float)VidPanelAnimator.GetCurrentAnimatorClipInfo(0).Length));
+            MainPanel.SetActive(true);
+            VidPanel.SetActive(false);
+            AudioPanel.SetActive(false);
+            RenderDistIni = MainCam.farClipPlane;
+            ShadowDistIni = QualitySettings.shadowDistance;
+            Debug.Log("Shadow dist ini" + ShadowDistIni);
+            FovIni = MainCam.fieldOfView;
+            AoBool = AoToggle.isOn;
+            DofBool = DofToggle.isOn;
+            _lastAoBool = AoBool;
+            _lastDofBool = DofBool;
+            _beforeRes = CurrentRes;
+            LastTexLimit = QualitySettings.masterTextureLimit;
+            LastShadowCascade = QualitySettings.shadowCascades;
+            VsyncIni = QualitySettings.vSyncCount;
+            _isFullscreen = Screen.fullScreen;
             try
             {
-                densityINI = currentTerrain.detailObjectDensity;
-                treeMeshAmtINI = currentTerrain.treeMaximumFullLODCount;
+                DensityIni = CurrentTerrain.detailObjectDensity;
+                TreeMeshAmtIni = CurrentTerrain.treeMaximumFullLODCount;
             }
             catch { Debug.Log("Please assign a terrain"); }
-            saveSettings.SaveGameSettings();
+            _saveSettings.SaveGameSettings();
 
         }
 
 
-        public void TurnOnVSync(bool b){
-            vsyncINI = QualitySettings.vSyncCount;
+        public void TurnOnVSync(bool b)
+        {
+            VsyncIni = QualitySettings.vSyncCount;
             QualitySettings.vSyncCount = b ? 1 : 0;
         }
 
@@ -890,8 +893,9 @@ public AnimationClip mainOut;
         /// Update full high quality tree mesh amount.
         /// </summary>
         /// <param name="f"></param>
-        public void updateTreeMeshAmt(int f) {
-            currentTerrain.treeMaximumFullLODCount = f;
+        public void UpdateTreeMeshAmt(int f)
+        {
+            CurrentTerrain.treeMaximumFullLODCount = f;
         }
 
         /// <summary>
@@ -901,10 +905,10 @@ public AnimationClip mainOut;
         /// </c> 
         /// LoDBias is only divided by 2.15 because the max is set to 10 on the slider, and dividing by 2.15 results in 4.65, our desired max. However, deleting or changing 2.15 is compeletly fine.
         /// </summary>
-        /// <param name="LoDBias"></param>
-        public void lodBias(float LoDBias)
+        /// <param name="loDBias"></param>
+        public void SetLodBias(float loDBias)
         {
-            QualitySettings.lodBias = LoDBias / 2.15f;
+            QualitySettings.lodBias = loDBias / 2.15f;
         }
         /// <summary>
         /// Update the render distance using 
@@ -913,17 +917,17 @@ public AnimationClip mainOut;
         /// </c>
         /// </summary>
         /// <param name="f"></param>
-        public void updateRenderDist(float f)
+        public void UpdateRenderDist(float f)
         {
             try
             {
-                mainCam.farClipPlane = f;
+                MainCam.farClipPlane = f;
             }
             catch
             {
                 Debug.Log(" Finding main camera now...it is still suggested that you manually assign this");
-                mainCam = Camera.main;
-                mainCam.farClipPlane = f;
+                MainCam = Camera.main;
+                MainCam.farClipPlane = f;
             }
 
         }
@@ -932,7 +936,7 @@ public AnimationClip mainOut;
         /// <c>QualitySettings.masterTextureLimit </c>
         /// </summary>
         /// <param name="qual"></param>
-        public void updateTex(float qual)
+        public void UpdateTex(float qual)
         {
             QualitySettings.masterTextureLimit = (int)qual;
         }
@@ -943,7 +947,7 @@ public AnimationClip mainOut;
         /// </c>
         /// </summary>
         /// <param name="dist"></param>
-        public void updateShadowDistance(float dist)
+        public void UpdateShadowDistance(float dist)
         {
             QualitySettings.shadowDistance = dist;
         }
@@ -954,9 +958,9 @@ public AnimationClip mainOut;
         /// </c>
         /// </summary>
         /// <param name="qual"></param>
-        public void treeMaxLod(float qual)
+        public void TreeMaxLod(float qual)
         {
-            currentTerrain.treeMaximumFullLODCount = (int)qual;
+            CurrentTerrain.treeMaximumFullLODCount = (int)qual;
         }
 
         /// <summary>
@@ -966,29 +970,30 @@ public AnimationClip mainOut;
         /// </c>
         /// </summary>
         /// <param name="qual"></param>
-        public void updateTerrainLod(float qual) {
-            if (currentTerrain == null) return; // fail silently
-            currentTerrain.heightmapMaximumLOD = (int) qual;
+        public void UpdateTerrainLod(float qual)
+        {
+            if (CurrentTerrain == null) return; // fail silently
+            CurrentTerrain.heightmapMaximumLOD = (int)qual;
         }
         /// <summary>
         /// Change the fov using a float. The defualt should be 60.
         /// </summary>
         /// <param name="fov"></param>
-        public void updateFOV(float fov)
+        public void UpdateFov(float fov)
         {
-            mainCam.fieldOfView = fov;
+            MainCam.fieldOfView = fov;
         }
         /// <summary>
         /// Toggle on or off Depth of Field. This is meant to be used with a checkbox.
         /// </summary>
         /// <param name="b"></param>
-        public void toggleDOF(bool b)
+        public void ToggleDof(bool b)
         {
             try
             {
-                tempScript = (MonoBehaviour)mainCamObj.GetComponent(DOFScriptName);
-                tempScript.enabled = b;
-                dofBool = b;
+                _tempScript = (MonoBehaviour)MainCamObj.GetComponent(DofScriptName);
+                _tempScript.enabled = b;
+                DofBool = b;
             }
             catch
             {
@@ -999,13 +1004,14 @@ public AnimationClip mainOut;
         /// Toggle on or off Ambient Occulusion. This is meant to be used with a checkbox.
         /// </summary>
         /// <param name="b"></param>
-        public void toggleAO(bool b)
+        public void ToggleAo(bool b)
         {
             try
             {
-                tempScript = (MonoBehaviour)mainCamObj.GetComponent(AOScriptName);
-                tempScript.enabled = b;
-                aoBool = b;            }
+                _tempScript = (MonoBehaviour)MainCamObj.GetComponent(AoScriptName);
+                _tempScript.enabled = b;
+                AoBool = b;
+            }
             catch
             {
                 Debug.Log("No AO post processing found");
@@ -1016,16 +1022,17 @@ public AnimationClip mainOut;
         /// Set the game to windowed or full screen. This is meant to be used with a checkbox
         /// </summary>
         /// <param name="b"></param>
-        public void setFullScreen(bool b){ Screen.SetResolution(Screen.width, Screen.height, b); }
+        public void SetFullScreen(bool b) { Screen.SetResolution(Screen.width, Screen.height, b); }
 
 
-        private void changeRes(int index){
-            for (int i = 0; i < allRes.Length; i++)
+        private void ChangeRes(int index)
+        {
+            for (int i = 0; i < _allRes.Length; i++)
             {
                 //If the resoultion matches the current resoution height and width then go through the statement.
-                if (allRes[i].height == currentRes.height && allRes[i].width == currentRes.width)
+                if (_allRes[i].height == CurrentRes.height && _allRes[i].width == CurrentRes.width)
                 {
-                    Screen.SetResolution(allRes[i+index].width, allRes[i+index].height, isFullscreen); isFullscreen = isFullscreen; currentRes = Screen.resolutions[i+index]; resolutionLabel.text = currentRes.width.ToString() + " x " + currentRes.height.ToString();
+                    Screen.SetResolution(_allRes[i + index].width, _allRes[i + index].height, _isFullscreen); _isFullscreen = _isFullscreen; CurrentRes = Screen.resolutions[i + index]; ResolutionLabel.text = CurrentRes.width.ToString() + " x " + CurrentRes.height.ToString();
                 }
             }
         }
@@ -1034,33 +1041,33 @@ public AnimationClip mainOut;
         /// Method for moving to the next resoution in the allRes array. WARNING: This is not finished/buggy.  
         /// </summary>
         //Method for moving to the next resoution in the allRes array. WARNING: This is not finished/buggy.  
-        public void nextRes()
+        public void NextRes()
         {
-            beforeRes = currentRes;
+            _beforeRes = CurrentRes;
             //Iterate through all of the resoultions. 
-            changeRes(1);
+            ChangeRes(1);
 
         }
         /// <summary>
         /// Method for moving to the last resoution in the allRes array. WARNING: This is not finished/buggy.  
         /// </summary>
         //Method for moving to the last resoution in the allRes array. WARNING: This is not finished/buggy.  
-        public void lastRes()
+        public void LastRes()
         {
-            beforeRes = currentRes;
-            changeRes(-1);
+            _beforeRes = CurrentRes;
+            ChangeRes(-1);
         }
-        
-        public void enableSimpleTerrain(Boolean b)
+
+        public void EnableSimpleTerrain(Boolean b)
         {
-            useSimpleTerrain = b;
+            UseSimpleTerrain = b;
         }
 
         /// <summary>
         /// The method for changing aniso settings
         /// </summary>
         /// <param name="anisoSetting"></param>
-        public void updateANISO(int anisoSetting)
+        public void UpdateAniso(int anisoSetting)
         {
             if (anisoSetting == 0)
             {
@@ -1080,7 +1087,7 @@ public AnimationClip mainOut;
         /// The method for setting the amount of shadow cascades
         /// </summary>
         /// <param name="cascades"></param>
-        public void updateCascades(float cascades)
+        public void UpdateCascades(float cascades)
         {
 
             int c = Mathf.RoundToInt(cascades);
@@ -1098,12 +1105,12 @@ public AnimationClip mainOut;
         /// Update terrain density
         /// </summary>
         /// <param name="density"></param>
-        public void updateDensity(float density)
+        public void UpdateDensity(float density)
         {
-            detailDensity = density;
+            DetailDensity = density;
             try
             {
-                terrain.detailObjectDensity = detailDensity;
+                Terrain.detailObjectDensity = DetailDensity;
             }
             catch
             {
@@ -1121,14 +1128,15 @@ public AnimationClip mainOut;
         /// 2 -> 4x MSAA.
         /// 3 -> 8x MSAA.
         /// </param>
-        public void SetMSAALevel(int level) {
+        public void SetMsaaLevel(int level)
+        {
             level = Mathf.Clamp(level, 0, 4);
 
             QualitySettings.antiAliasing = level == 0 ? 0 : 1 << level;
 
         }
 
-#region GraphicPresets
+        #region GraphicPresets
 
         /// <summary>
         /// Set the quality level one level higher. This is done by getting the current quality level, then using 
@@ -1137,7 +1145,7 @@ public AnimationClip mainOut;
         /// </c>
         /// to increase the level. The current level variable is set to the new quality setting, and the label is updated.
         /// </summary>
-        public void nextPreset()
+        public void NextPreset()
         {
             QualitySettings.IncreaseLevel();
             FromPreset();
@@ -1149,19 +1157,20 @@ public AnimationClip mainOut;
         /// </c>
         /// to decrease the level. The current level variable is set to the new quality setting, and the label is updated.
         /// </summary>
-        public void lastPreset()
+        public void LastPreset()
         {
             QualitySettings.DecreaseLevel();
             FromPreset();
         }
 
-        private void FromPreset() {
-             _currentLevel = QualitySettings.GetQualityLevel();
-            presetLabel.text = presets[_currentLevel];
-            if (hardCodeSomeVideoSettings)
+        private void FromPreset()
+        {
+            _currentLevel = QualitySettings.GetQualityLevel();
+            PresetLabel.text = _presets[_currentLevel];
+            if (HardCodeSomeVideoSettings)
             {
-                QualitySettings.shadowDistance = shadowDist[_currentLevel];
-                QualitySettings.lodBias = LODBias[_currentLevel];
+                QualitySettings.shadowDistance = ShadowDist[_currentLevel];
+                QualitySettings.lodBias = LodBias[_currentLevel];
             }
         }
 
@@ -1170,51 +1179,52 @@ public AnimationClip mainOut;
         /// Sets the Graphic to a Preset (from very low to extreme)
         ///     (note: UI buttons in the inspector can carry a parameter, so you wont need 7 methods)
         /// </summary>
-        public void SetGraphicsPreset(int preset) {
+        public void SetGraphicsPreset(int preset)
+        {
             preset = Mathf.Clamp(preset, 0, 6);
 
             QualitySettings.SetQualityLevel(preset);
-            QualitySettings.shadowDistance = shadowDist[preset];
-            QualitySettings.lodBias = LODBias[preset];
-            
+            QualitySettings.shadowDistance = ShadowDist[preset];
+            QualitySettings.lodBias = LodBias[preset];
+
             // in the previous 7 methods were hardcoded values but commented out
             // the logic behind those hardcoded values can be archived by this:
             // QualitySettings.shadowDistance = shadowPreset[preset];
         }
         // private static readonly float[] shadowPreset = {12.6f, 17.4f, 29.7f, 82f, 110f, 338f, 800f};
 
-#endregion
+        #endregion
 
         /// <summary>
         /// Return to the main menu from the credits panel
         /// </summary>
-        public void creditsReturn()
+        public void CreditsReturn()
         {
-            StartCoroutine(creditsReturnMain());
-            uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
+            StartCoroutine(CreditsReturnMain());
+            UiEventSystem.SetSelectedGameObject(DefualtSelectedMain);
         }
         /// <summary>
         /// Use an IEnumerator to first play the animation and then hide other panels settings
         /// </summary>
         /// <returns></returns>
-        internal IEnumerator creditsReturnMain()
+        internal IEnumerator CreditsReturnMain()
         {
-            creditsPanelAnimator.Play("Credits Panel Out 1");
-            yield return StartCoroutine(CoroutineUtilities.WaitForRealTime((float)creditsPanelAnimator.GetCurrentAnimatorClipInfo(0).Length));
-            mainPanel.SetActive(true);
-            vidPanel.SetActive(false);
-            audioPanel.SetActive(false);
-            creditsPanel.SetActive(false);
+            CreditsPanelAnimator.Play("Credits Panel Out 1");
+            yield return StartCoroutine(CoroutineUtilities.WaitForRealTime((float)CreditsPanelAnimator.GetCurrentAnimatorClipInfo(0).Length));
+            MainPanel.SetActive(true);
+            VidPanel.SetActive(false);
+            AudioPanel.SetActive(false);
+            CreditsPanel.SetActive(false);
         }
-        public void creditsIn()
+        public void CreditsIn()
         {
-            mainPanel.SetActive(false);
-            vidPanel.SetActive(false);
-            audioPanel.SetActive(false);
-            creditsPanel.SetActive(true);
-            creditsPanelAnimator.enabled = true;
-            uiEventSystem.SetSelectedGameObject(defualtSelectedCredits);
-            creditsPanelAnimator.Play("Credits Panel In");
+            MainPanel.SetActive(false);
+            VidPanel.SetActive(false);
+            AudioPanel.SetActive(false);
+            CreditsPanel.SetActive(true);
+            CreditsPanelAnimator.enabled = true;
+            UiEventSystem.SetSelectedGameObject(DefualtSelectedCredits);
+            CreditsPanelAnimator.Play("Credits Panel In");
 
         }
     }

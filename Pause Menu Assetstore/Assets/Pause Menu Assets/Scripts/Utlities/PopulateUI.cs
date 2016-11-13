@@ -7,15 +7,15 @@ using System.Collections;
 namespace GreatArcStudios
 {
 
-    public class PopulateUI : MonoBehaviour
+    public class PopulateUi : MonoBehaviour
     {
-        public Transform parentPanel;
-        public GameObject populatePrefab;
-        public float borderY;
-        public bool changeControls;
-        public Text controlName;
-        public Text controlButton;
-        private string[] keys = { "backspace",
+        public Transform ParentPanel;
+        public GameObject PopulatePrefab;
+        public float BorderY;
+        public bool ChangeControls;
+        public Text ControlName;
+        public Text ControlButton;
+        private string[] _keys = { "backspace",
  "delete",
  "tab",
  "clear",
@@ -122,10 +122,10 @@ namespace GreatArcStudios
         // Populate panel
         void Start()
         {
-            if (changeControls)
+            if (ChangeControls)
             {
                 //Iterate thorugh list of controls
-                for(int i =0; i < keys.Length; i++)
+                for(int i =0; i < _keys.Length; i++)
                 {
               
                 }
@@ -133,7 +133,7 @@ namespace GreatArcStudios
             }
         }
 
-        public void clickButton()
+        public void ClickButton()
         {
 
         }

@@ -11,9 +11,9 @@ namespace GreatArcStudios
 
     public class Rotate : MonoBehaviour
     {
-        public int x =5;
-        public int y =3 ;
-        public int z = 5;
+        public int X =5;
+        public int Y =3 ;
+        public int Z = 5;
        
         // Update is called once per frame
         /// <summary>
@@ -21,9 +21,9 @@ namespace GreatArcStudios
         /// </summary>
         public void Update()
         {
-            transform.Rotate(Vector3.right, x*Time.deltaTime); 
-            transform.Rotate(Vector3.up, y * Time.deltaTime);
-            transform.Rotate(Vector3.down, z * Time.deltaTime);
+            transform.Rotate(Vector3.right, X*Time.deltaTime); 
+            transform.Rotate(Vector3.up, Y * Time.deltaTime);
+            transform.Rotate(Vector3.down, Z * Time.deltaTime);
         }
     }
 }
