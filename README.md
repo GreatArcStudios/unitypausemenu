@@ -13,7 +13,7 @@ The docs are located here: https://github.com/GreatArcStudios/UnityPauseMenuDocs
 Using a joystick/controller should work fine. Just remeber to change the highlighted dropdown to Joystick.
 ![alt text](http://i.imgur.com/Pf7poMk.png)
  
-### Enbaling pause blur
+### Enabling pause blur
 First, make sure you have the unity image effects package. Then follow the next few steps.
 
 Uncomment the following variable declarations found starting at line <b>270</b>
