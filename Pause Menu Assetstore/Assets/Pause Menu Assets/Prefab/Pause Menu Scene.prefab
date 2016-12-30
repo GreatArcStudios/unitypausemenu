@@ -1066,7 +1066,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &126222
 GameObject:
   m_ObjectHideFlags: 1
@@ -1077,7 +1077,7 @@ GameObject:
   - 224: {fileID: 22408794}
   - 114: {fileID: 11471606}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: Ambient occ toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1370,7 +1370,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &132036
 GameObject:
   m_ObjectHideFlags: 1
@@ -1828,7 +1828,7 @@ GameObject:
   - 224: {fileID: 22485134}
   - 114: {fileID: 11454238}
   m_Layer: 5
-  m_Name: Terrain LOD Slider
+  m_Name: Tree High Quality Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2132,7 +2132,7 @@ GameObject:
   - 224: {fileID: 22407440}
   - 114: {fileID: 11488310}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: Simple terrain toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3621,7 +3621,7 @@ GameObject:
   - 224: {fileID: 22481642}
   - 114: {fileID: 11426484}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: Vsync Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4310,7 +4310,7 @@ GameObject:
   - 224: {fileID: 22460454}
   - 114: {fileID: 11450416}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: Depth of field toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4342,7 +4342,7 @@ GameObject:
   - 224: {fileID: 22460256}
   - 114: {fileID: 11466218}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: Fullscreen toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4671,7 +4671,7 @@ GameObject:
   - 224: {fileID: 22446726}
   - 114: {fileID: 11448752}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Render distance Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4704,7 +4704,7 @@ GameObject:
   - 222: {fileID: 22230390}
   - 114: {fileID: 11415008}
   m_Layer: 5
-  m_Name: Terrain LOD  label
+  m_Name: Three High Quality slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6613,7 +6613,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: lodBias
+        m_MethodName: SetLodBias
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6735,7 +6735,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 11499738}
-          m_MethodName: returnToMenu
+          m_MethodName: ReturnToMenu
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -6843,7 +6843,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: apply
+        m_MethodName: Apply
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6903,10 +6903,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: f67bd30f338f33a46b83b4ab9a8d5e51, type: 3}
-    m_FontSize: 17
+    m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -6914,7 +6914,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: High Qual Trees
+  m_Text: High Quality Trees
 --- !u!114 &11415090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7157,7 +7157,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: updateTerrainLod
+        m_MethodName: UpdateTerrainLod
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7209,7 +7209,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: lastRes
+        m_MethodName: LastRes
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7501,7 +7501,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: updateANISO
+        m_MethodName: UpdateAniso
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7554,7 +7554,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: cancelAudio
+        m_MethodName: CancelAudio
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7921,7 +7921,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: toggleVSync
+        m_MethodName: TurnOnVSync
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8229,7 +8229,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: lastPreset
+        m_MethodName: LastPreset
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8390,7 +8390,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: quitOptions
+        m_MethodName: QuitOptions
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8616,7 +8616,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: updateCascades
+        m_MethodName: UpdateCascades
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8904,7 +8904,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: updateFOV
+        m_MethodName: UpdateFov
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9119,7 +9119,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: updateMSAA
+        m_MethodName: SetMsaaLevel
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9560,7 +9560,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: nextRes
+        m_MethodName: NextRes
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9928,7 +9928,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: updateMusicVol
+        m_MethodName: UpdateMusicVol
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10014,7 +10014,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: updateRenderDist
+        m_MethodName: UpdateRenderDist
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10247,7 +10247,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: toggleDOF
+        m_MethodName: ToggleDof
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10388,7 +10388,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: cancelVideo
+        m_MethodName: CancelVideo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10522,7 +10522,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: lodBias
+        m_MethodName: TreeMaxLod
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10879,7 +10879,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: nextPreset
+        m_MethodName: NextPreset
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11035,7 +11035,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 11402470}
   m_HandleRect: {fileID: 22434152}
   m_Direction: 3
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -11081,7 +11081,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 11490222}
   m_HandleRect: {fileID: 22494680}
   m_Direction: 3
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 1
   m_OnValueChanged:
@@ -11270,7 +11270,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: creditsIn
+        m_MethodName: CreditsIn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11662,7 +11662,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: setFullScreen
+        m_MethodName: SetFullScreen
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11770,7 +11770,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: applyAudio
+        m_MethodName: ApplyAudio
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11940,7 +11940,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: updateDensity
+        m_MethodName: UpdateDensity
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12200,7 +12200,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: updateTex
+        m_MethodName: UpdateTex
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12420,7 +12420,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: toggleAO
+        m_MethodName: ToggleAo
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12921,7 +12921,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: quitCancel
+        m_MethodName: QuitCancel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13147,7 +13147,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: returnToMenu
+        m_MethodName: ReturnToMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13170,9 +13170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18e9cb462273b0c42baf948c7dd388d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 5
-  y: 3
-  z: 5
+  X: 5
+  Y: 3
+  Z: 5
 --- !u!114 &11486692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13214,7 +13214,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: quitGame
+        m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13356,7 +13356,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: enableSimpleTerrain
+        m_MethodName: EnableSimpleTerrain
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13614,7 +13614,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: updateShadowDistance
+        m_MethodName: UpdateShadowDistance
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13673,7 +13673,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: updateEffectsVol
+        m_MethodName: UpdateEffectsVol
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13839,7 +13839,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11499738}
-        m_MethodName: updateMasterVol
+        m_MethodName: UpdateMasterVol
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14293,47 +14293,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc997a6468b3484fb1dc2380fa842f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainPanel: {fileID: 161058}
-  vidPanel: {fileID: 126156}
-  audioPanel: {fileID: 169654}
-  creditsPanel: {fileID: 131496}
+  MainPanel: {fileID: 161058}
+  VidPanel: {fileID: 126156}
+  AudioPanel: {fileID: 169654}
+  CreditsPanel: {fileID: 131496}
   TitleTexts: {fileID: 132848}
-  mask: {fileID: 173790}
-  audioPanelAnimator: {fileID: 9562026}
-  vidPanelAnimator: {fileID: 9571294}
-  quitPanelAnimator: {fileID: 9593558}
-  creditsPanelAnimator: {fileID: 9530686}
-  pauseMenu: {fileID: 11490214}
-  mainMenu: Pausemenu
-  DOFScriptName: DepthOfField
-  AOScriptName: AmbientOcclusion
-  mainCam: {fileID: 2056428}
-  mainCamObj: {fileID: 144214}
-  detailDensity: 0
-  timeScale: 1
-  terrain: {fileID: 0}
-  simpleTerrain: {fileID: 0}
-  aaCombo: {fileID: 11438744}
-  afCombo: {fileID: 11420418}
-  fovSlider: {fileID: 11436232}
-  modelQualSlider: {fileID: 11409684}
-  terrainQualSlider: {fileID: 11416764}
-  highQualTreeSlider: {fileID: 11454238}
-  renderDistSlider: {fileID: 11448752}
-  terrainDensitySlider: {fileID: 11467922}
-  shadowDistSlider: {fileID: 11490708}
-  audioMasterSlider: {fileID: 11492438}
-  audioMusicSlider: {fileID: 11448166}
-  audioEffectsSlider: {fileID: 11491080}
-  masterTexSlider: {fileID: 11469526}
-  shadowCascadesSlider: {fileID: 11433018}
-  vSyncToggle: {fileID: 11426484}
-  aoToggle: {fileID: 11471606}
-  dofToggle: {fileID: 11450416}
-  fullscreenToggle: {fileID: 11466218}
-  presetLabel: {fileID: 11496472}
-  resolutionLabel: {fileID: 11498880}
-  LODBias:
+  Mask: {fileID: 173790}
+  AudioPanelAnimator: {fileID: 9562026}
+  VidPanelAnimator: {fileID: 9571294}
+  QuitPanelAnimator: {fileID: 9593558}
+  CreditsPanelAnimator: {fileID: 9530686}
+  PauseMenu: {fileID: 11490214}
+  MainMenu: Pausemenu
+  DofScriptName: DepthOfField
+  AoScriptName: AmbientOcclusion
+  MainCam: {fileID: 2056428}
+  MainCamObj: {fileID: 144214}
+  DetailDensity: 0
+  TimeScale: 1
+  Terrain: {fileID: 0}
+  SimpleTerrain: {fileID: 0}
+  AaCombo: {fileID: 11438744}
+  AfCombo: {fileID: 11420418}
+  FovSlider: {fileID: 11436232}
+  ModelQualSlider: {fileID: 11409684}
+  TerrainQualSlider: {fileID: 11416764}
+  HighQualTreeSlider: {fileID: 11454238}
+  RenderDistSlider: {fileID: 11448752}
+  TerrainDensitySlider: {fileID: 11467922}
+  ShadowDistSlider: {fileID: 11490708}
+  AudioMasterSlider: {fileID: 11492438}
+  AudioMusicSlider: {fileID: 11448166}
+  AudioEffectsSlider: {fileID: 11491080}
+  MasterTexSlider: {fileID: 11469526}
+  ShadowCascadesSlider: {fileID: 11433018}
+  VSyncToggle: {fileID: 11426484}
+  AoToggle: {fileID: 11471606}
+  DofToggle: {fileID: 11450416}
+  FullscreenToggle: {fileID: 11466218}
+  PresetLabel: {fileID: 11496472}
+  ResolutionLabel: {fileID: 11498880}
+  LodBias:
   - 0.3
   - 0.55
   - 0.68
@@ -14341,7 +14341,7 @@ MonoBehaviour:
   - 1.22
   - 1.59
   - 4.37
-  shadowDist:
+  ShadowDist:
   - 12.6
   - 17.4
   - 29.7
@@ -14349,18 +14349,18 @@ MonoBehaviour:
   - 110
   - 338
   - 800
-  music:
+  Music:
   - {fileID: 8275414}
-  effects:
+  Effects:
   - {fileID: 8275414}
-  otherUIElements: []
-  hardCodeSomeVideoSettings: 0
-  useSimpleTerrain: 0
-  uiEventSystem: {fileID: 11456238}
-  defualtSelectedVideo: {fileID: 192700}
-  defualtSelectedAudio: {fileID: 107158}
-  defualtSelectedMain: {fileID: 118702}
-  defualtSelectedCredits: {fileID: 147166}
+  OtherUiElements: []
+  HardCodeSomeVideoSettings: 0
+  UseSimpleTerrain: 0
+  UiEventSystem: {fileID: 11456238}
+  DefualtSelectedVideo: {fileID: 192700}
+  DefualtSelectedAudio: {fileID: 113764}
+  DefualtSelectedMain: {fileID: 118702}
+  DefualtSelectedCredits: {fileID: 147166}
 --- !u!114 &11499784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -16418,8 +16418,8 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -177.9, y: 14}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -185.35, y: 10.250019}
+  m_SizeDelta: {x: 146.3, y: 28.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22415556
 RectTransform:
@@ -16626,7 +16626,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0.000011444092}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &22420126
@@ -17077,8 +17077,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22429908}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0.091836736, y: 0}
-  m_AnchorMax: {x: 0.091836736, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0.000015258789, y: 0.0000064373016}
   m_SizeDelta: {x: 21.8, y: -8}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -17117,9 +17117,9 @@ RectTransform:
   m_Father: {fileID: 22443588}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &22429178
 RectTransform:
@@ -17249,9 +17249,9 @@ RectTransform:
   m_Father: {fileID: 22403486}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -6.54, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &22431480
 RectTransform:
@@ -17387,7 +17387,7 @@ RectTransform:
   m_Father: {fileID: 22495968}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -17466,8 +17466,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22480834}
   m_RootOrder: 0
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -17484,8 +17484,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22462790}
   m_RootOrder: 0
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0.000015258789, y: 0.0000064373016}
   m_SizeDelta: {x: 21.8, y: -8}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -17790,7 +17790,7 @@ RectTransform:
   m_Father: {fileID: 22445902}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -17907,7 +17907,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0, y: -0.000020980835}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &22442454
@@ -18237,7 +18237,7 @@ RectTransform:
   m_Father: {fileID: 22427002}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -18553,8 +18553,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22453280}
   m_RootOrder: 0
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0.000015258789, y: 0.0000064373016}
   m_SizeDelta: {x: 21.8, y: -8}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -18571,8 +18571,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22425332}
   m_RootOrder: 0
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -18795,8 +18795,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22450954}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.725844}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -18909,7 +18909,7 @@ RectTransform:
   m_Father: {fileID: 22491586}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -19468,7 +19468,7 @@ RectTransform:
   m_Father: {fileID: 22434572}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.4, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -19638,8 +19638,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22425032}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0.4, y: 0}
-  m_AnchorMax: {x: 0.4, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -19789,9 +19789,9 @@ RectTransform:
   m_Father: {fileID: 22472214}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &22477816
 RectTransform:
@@ -19807,7 +19807,7 @@ RectTransform:
   m_Father: {fileID: 22448510}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -20094,8 +20094,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22454246}
   m_RootOrder: 0
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -20235,7 +20235,7 @@ RectTransform:
   m_Father: {fileID: 22420998}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -20350,8 +20350,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22466350}
   m_RootOrder: 0
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0.000015258789, y: 0.0000064373016}
   m_SizeDelta: {x: 21.8, y: -8}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -20407,8 +20407,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22444036}
   m_RootOrder: 0
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -20426,7 +20426,7 @@ RectTransform:
   m_Father: {fileID: 22444126}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -20479,8 +20479,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22458264}
   m_RootOrder: 0
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0.000015258789, y: 0.0000064373016}
   m_SizeDelta: {x: 21.8, y: -8}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -20576,7 +20576,7 @@ RectTransform:
   m_Father: {fileID: 22441570}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.091836736, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -20706,7 +20706,7 @@ RectTransform:
   m_Father: {fileID: 22445910}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}

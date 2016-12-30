@@ -394,7 +394,7 @@ public AnimationClip mainOut;
         {
             Application.LoadLevel(Application.loadedLevel);
             UiEventSystem.firstSelectedGameObject = DefualtSelectedMain;
-
+	        Time.timeScale = TimeScale; 	
         }
         /// <summary>
         /// Method to resume the game, so disable the pause menu and re-enable all other ui elements
@@ -1122,17 +1122,21 @@ public AnimationClip mainOut;
         /// <summary>
         /// Sets the MSAA to a specific level (between 0 and 4)
         /// </summary>
-        /// <param name="level">log2 of the desired level. 
+        /// <param name="level">
         /// 0 -> 0x MSAA (disabled). 
         /// 1 -> 2x MSAA.
         /// 2 -> 4x MSAA.
         /// 3 -> 8x MSAA.
+        /// Left shift works too by getting the log2 of the desired level. 
+        /// <c>
+        /// QualitySettings.antiAliasing = level == 0 ? 0 : 1 *left shift operator* level ;
+        /// </c>
         /// </param>
         public void SetMsaaLevel(int level)
         {
             level = Mathf.Clamp(level, 0, 4);
 
-            QualitySettings.antiAliasing = level == 0 ? 0 : 1 << level;
+            QualitySettings.antiAliasing = level == 0 ? 0 : (int)Math.Pow(2.0d, level);
 
         }
 
