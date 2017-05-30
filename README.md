@@ -1,14 +1,16 @@
 ![alt text](http://i.imgur.com/QvaVqvN.png)
-##Setup
+### Setup
 Just drag the pause menu prefab from the prefab folder into your scene, and then bring it into view by editing the x value of the PREFAB to 0 , y to 0 and Z to 0. 
-##Updating
+### Updating
 Completely delete the pause menu **folder** and install the new version. 
 
 If you have a custom prefab or manager you can always keep that version in a different folder and merge the changes from there.
-##Things to note
-Assign the main cam obj as the camera with your image effects like DOF and AO. 
+-
+### Things to note
+1. Assign the main cam obj as the camera with your image effects like DOF and AO. 
+2. The docs are located here: https://github.com/GreatArcStudios/UnityPauseMenuDocs
+3. **Special note for 5.4 and above:** you may ignore the _Coroutine Utlities_ folder and or update the script due to Unity 5.4's (and above) addition of a [WaitForSecondsRealTime](https://docs.unity3d.com/ScriptReference/WaitForSecondsRealtime.html)  method.   
 
-The docs are located here: https://github.com/GreatArcStudios/UnityPauseMenuDocs
 ### Joystick/Controller support
 Using a joystick/controller should work fine. Just remeber to change the highlighted dropdown to Joystick.
 ![alt text](http://i.imgur.com/Pf7poMk.png)
@@ -16,7 +18,7 @@ Using a joystick/controller should work fine. Just remeber to change the highlig
 ### Enabling pause blur
 First, make sure you have the unity image effects package. Then follow the next few steps.
 
-Uncomment the following variable declarations found starting at line <b>270</b>
+Uncomment the following variable declarations found starting at line ***270***
 ```csharp
  //Blur Variables
  //Blur Effect Script (using the standard image effects package) 
@@ -26,8 +28,8 @@ Uncomment the following variable declarations found starting at line <b>270</b>
  //Boolean for if the blur effect was originally enabled
  public Boolean blurBool;
  ```
- <br>
- Find and uncomment the following code found starting at line <b>349</b>
+
+ Find and uncomment the following code found starting at line ***349***
  ```csharp
   //set the blur boolean to false;
   blurBool = false;
@@ -37,8 +39,8 @@ Uncomment the following variable declarations found starting at line <b>270</b>
   blurEffect.blurShader = blurEffectShader;
   blurEffect.enabled = false;  
   ```
-  <br>
-  Uncomment the following code found starting at line <b>382</b> .
+ 
+  Uncomment the following code found starting at line ***382***
   ```csharp
  if (blurBool == false)
   {
@@ -50,8 +52,8 @@ Uncomment the following variable declarations found starting at line <b>270</b>
    return;
    } 
    ```
-   <br>
-  Uncomment the following code found starting at line <b>465</b> .
+   
+  Uncomment the following code found starting at line ***465*** .
   ```csharp
   if (blurBool == false)
   {
