@@ -5,7 +5,7 @@ Just drag the pause menu prefab from the prefab folder into your scene, and then
 Completely delete the pause menu **folder** and install the new version. 
 
 If you have a custom prefab or manager you can always keep that version in a different folder and merge the changes from there.
--
+
 ### Things to note
 1. Assign the main cam obj as the camera with your image effects like DOF and AO. 
 2. The docs are located here: https://github.com/GreatArcStudios/UnityPauseMenuDocs
